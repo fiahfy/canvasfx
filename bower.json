@@ -6,7 +6,7 @@
     "jquery": "~2.1.0",
     "angular": "~1.2.15",
     "bootstrap": "~3.1.1",
-    "closure-library": "*"
+    "closurelibrary": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.16"
