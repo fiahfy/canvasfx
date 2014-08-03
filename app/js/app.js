@@ -8,8 +8,7 @@
 
 goog.provide('com.blogspot.fiahfy.App');
 
-goog.require('com.blogspot.fiahfy');
-goog.require('com.blogspot.fiahfy.Math');
+goog.require('com.blogspot.fiahfy.mod.Math');
 
 
 /**
