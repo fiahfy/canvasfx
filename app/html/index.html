@@ -4,12 +4,17 @@
 	<meta charset="utf-8">
     <script src="../libs/closurelibrary/closure/goog/base.js"></script>
     <script src="../js/deps.js"></script>
+    <script src="../js/mod/application.js"></script>
     <script src="../js/app.js"></script>
     <script>
-        var app = new com.blogspot.fiahfy.App();
-        app.run();
+    window.onload = function(){
+        var element = document.getElementById('app');
+        var app = new com.blogspot.fiahfy.sample.App(element);
+        app.start();
+    }	
     </script>
 </head>
 <body>
+    <div id="app"></div>
 </body>
 </html>

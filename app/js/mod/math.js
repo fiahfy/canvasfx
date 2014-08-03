@@ -6,15 +6,15 @@
  */
 
 
-goog.provide('com.blogspot.fiahfy.mod.Math');
+goog.provide('com.blogspot.fiahfy.mod.math.Math');
 
 
 /**
  * @constructor
  */
-com.blogspot.fiahfy.mod.Math = function() {
+com.blogspot.fiahfy.mod.math.Math = function() {
 
 };
 
 /** @const */
-com.blogspot.fiahfy.mod.Math.PI = Math.PI;
+com.blogspot.fiahfy.mod.math.Math.PI = Math.PI;
