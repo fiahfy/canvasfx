@@ -5,7 +5,7 @@ goog.addDependency('../../../../js/mod/application.js', ['fiahfy.mod.application
 goog.addDependency('../../../../js/mod/base.js', ['fiahfy.mod'], []);
 goog.addDependency('../../../../js/mod/geometry.js', ['fiahfy.mod.geometry.Dimension', 'fiahfy.mod.geometry.Point'], []);
 goog.addDependency('../../../../js/mod/math.js', ['fiahfy.mod.math.Math'], []);
-goog.addDependency('../../../../js/mod/scene.js', ['fiahfy.mod.scene.Scene'], ['fiahfy.mod.scene.paint.Color']);
+goog.addDependency('../../../../js/mod/scene.js', ['fiahfy.mod.scene.Scene'], ['fiahfy.mod.scene.shape.Shape']);
 goog.addDependency('../../../../js/mod/scene/paint.js', ['fiahfy.mod.scene.paint.Color'], []);
-goog.addDependency('../../../../js/mod/scene/shape.js', ['fiahfy.mod.scene.shape.Line', 'fiahfy.mod.scene.shape.Rectangle'], ['fiahfy.mod.geometry.Dimension', 'fiahfy.mod.geometry.Point', 'fiahfy.mod.scene.Shape', 'fiahfy.mod.scene.paint.Color']);
+goog.addDependency('../../../../js/mod/scene/shape.js', ['fiahfy.mod.scene.shape.Line', 'fiahfy.mod.scene.shape.Rectangle', 'fiahfy.mod.scene.shape.Shape'], ['fiahfy.mod.geometry.Dimension', 'fiahfy.mod.geometry.Point', 'fiahfy.mod.scene.paint.Color']);
 goog.addDependency('../../../../js/mod/stage.js', ['fiahfy.mod.stage.Stage'], ['fiahfy.mod.geometry.Dimension', 'fiahfy.mod.scene.Scene']);

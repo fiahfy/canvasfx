@@ -6,13 +6,74 @@
  */
 
 
+goog.provide('fiahfy.mod.scene.shape.Shape');
 goog.provide('fiahfy.mod.scene.shape.Line');
 goog.provide('fiahfy.mod.scene.shape.Rectangle');
 
 goog.require('fiahfy.mod.geometry.Dimension');
 goog.require('fiahfy.mod.geometry.Point');
-goog.require('fiahfy.mod.scene.Shape');
 goog.require('fiahfy.mod.scene.paint.Color');
+
+
+/**
+ * @constructor
+ */
+fiahfy.mod.scene.shape.Shape = function() {
+    /**
+     * Stroke width
+     * @protected
+     * @type {number}
+     */
+    this.strokeWidth = 1.0;
+
+    /**
+     * Stroke color
+     * @protected
+     * @type {?fiahfy.mod.scene.paint.Color}
+     */
+    this.stroke = null;
+
+    /**
+     * Fill color
+     * @protected
+     * @type {?fiahfy.mod.scene.paint.Color}
+     */
+    this.fill = null;
+};
+
+/**
+ * @public
+ * @param {CanvasRenderingContext2D} context Canvas DOM element
+ * @override
+ */
+ fiahfy.mod.scene.shape.Shape.prototype.draw = goog.abstractMethod;
+
+/**
+ * @public
+ * @param {number} width
+ * @override
+ */
+fiahfy.mod.scene.shape.Shape.prototype.setStrokeWidth = function(width) {
+    this.strokeWidth = width;
+};
+
+/**
+ * @public
+ * @param {?fiahfy.mod.scene.paint.Color} color
+ * @override
+ */
+fiahfy.mod.scene.shape.Shape.prototype.setStroke = function(color) {
+    this.stroke = color;
+};
+
+/**
+ * @public
+ * @param {?fiahfy.mod.scene.paint.Color} color
+ * @override
+ */
+fiahfy.mod.scene.shape.Shape.prototype.setFill = function(color) {
+    this.fill = color;
+};
 
 
 /**
@@ -24,7 +85,7 @@ goog.require('fiahfy.mod.scene.paint.Color');
  * @extends {fiahfy.mod.scene.Shape}
  */
 fiahfy.mod.scene.shape.Rectangle = function(x, y, width, height) {
-    fiahfy.mod.scene.Shape.call(this);
+    fiahfy.mod.scene.shape.Shape.call(this);
     /**
      * Position
      * @protected
@@ -38,7 +99,7 @@ fiahfy.mod.scene.shape.Rectangle = function(x, y, width, height) {
      */
     this.size = new fiahfy.mod.geometry.Dimension(width, height);
 };
-goog.inherits(fiahfy.mod.scene.shape.Rectangle, fiahfy.mod.scene.Shape);
+goog.inherits(fiahfy.mod.scene.shape.Rectangle, fiahfy.mod.scene.shape.Shape);
 
 /**
  * @public
@@ -64,7 +125,7 @@ fiahfy.mod.scene.shape.Rectangle.prototype.draw = function(context) {
  * @extends {fiahfy.mod.scene.Shape}
  */
 fiahfy.mod.scene.shape.Line = function(startX, startY, endX, endY) {
-    fiahfy.mod.scene.Shape.call(this);
+    fiahfy.mod.scene.shape.Shape.call(this);
     /**
      * Start position
      * @protected
@@ -80,7 +141,7 @@ fiahfy.mod.scene.shape.Line = function(startX, startY, endX, endY) {
 
     this.stroke = fiahfy.mod.scene.paint.Color.BLACK;
 };
-goog.inherits(fiahfy.mod.scene.shape.Line, fiahfy.mod.scene.Shape);
+goog.inherits(fiahfy.mod.scene.shape.Line, fiahfy.mod.scene.shape.Shape);
 
 /**
  * @public
