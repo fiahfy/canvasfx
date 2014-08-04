@@ -37,23 +37,23 @@ fiahfy.sample.App.prototype.start = function() {
     var scene = new fiahfy.mod.scene.Scene();
     this.stage.setScene(scene);
 
-    var rect = new fiahfy.mod.scene.shape.Rectangle(10, 20, 30, 40);
-    scene.add(rect);
-
-    for (var i = 10; i < this.stage.getSize().getWidth(); i += 10)
+    for (var i = 0; i <= this.stage.getSize().getWidth(); i += 10)
     {
         var y = new fiahfy.mod.scene.shape.Line(i, 0,
             i, this.stage.getSize().getHeight());
-        y.setStroke(fiahfy.mod.scene.paint.Color.color(0.8, 0.8, 0.8));
+        y.setStroke(fiahfy.mod.scene.paint.Color.GRAY);
         scene.add(y);
     }
-    for (var j = 10; j < this.stage.getSize().getHeight(); j += 10)
+    for (var j = 0; j <= this.stage.getSize().getHeight(); j += 10)
     {
         var x = new fiahfy.mod.scene.shape.Line(0, j,
             this.stage.getSize().getWidth(), j);
-        x.setStroke(fiahfy.mod.scene.paint.Color.color(0.8, 0.8, 0.8));
+        x.setStroke(fiahfy.mod.scene.paint.Color.GRAY);
         scene.add(x);
     }
 
-    this.stage.show();
+    var rect = new fiahfy.mod.scene.shape.Rectangle(10, 20, 30, 40);
+    scene.add(rect);
+
+   this.stage.show();
 };
