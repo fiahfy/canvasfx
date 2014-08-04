@@ -6,88 +6,94 @@
  */
 
 
-goog.provide('com.blogspot.fiahfy.mod.scene.Scene');
-goog.provide('com.blogspot.fiahfy.mod.scene.shape.Rectangle');
+goog.provide('fiahfy.mod.scene.Scene');
+goog.provide('fiahfy.mod.scene.shape.Rectangle');
 
-goog.require('com.blogspot.fiahfy.mod.geometory.Point');
-goog.require('com.blogspot.fiahfy.mod.geometory.Dimension');
+goog.require('fiahfy.mod.geometory.Dimension');
+goog.require('fiahfy.mod.geometory.Point');
 
 
 /**
  * @constructor
  */
-com.blogspot.fiahfy.mod.scene.Scene = function(element) {
+fiahfy.mod.scene.Scene = function() {
     /**
      * Placed shapes on this scene
-     * @type {Array}
      * @private
+     * @type {Array}
      */
     this.shapes_ = [];
 };
 
 /**
  * @public
- * @param {com.blogspot.fiahfy.mod.scene.Shape} 
+ * @param {fiahfy.mod.scene.Shape} shape
  */
-com.blogspot.fiahfy.mod.scene.Scene.prototype.add = function(shape) {
-	this.shapes_.push(shape);
+fiahfy.mod.scene.Scene.prototype.add = function(shape) {
+    this.shapes_.push(shape);
 };
 
 /**
  * @public
- * @param {CanvasRenderingContext2D} 
+ * @param {CanvasRenderingContext2D} context
  */
-com.blogspot.fiahfy.mod.scene.Scene.prototype.draw = function(context) {
-	for (var i = 0; i < this.shapes_.length; i++)
-	{
-		var shape = this.shapes_[i];
-		shape.draw(context);
-	}
+fiahfy.mod.scene.Scene.prototype.draw = function(context) {
+    for (var i = 0; i < this.shapes_.length; i++)
+    {
+        var shape = this.shapes_[i];
+        shape.draw(context);
+    }
 };
 
 
 /**
+ * @param {Number} x Position x
+ * @param {Number} y Position y
  * @constructor
  */
-com.blogspot.fiahfy.mod.scene.Shape = function(x, y) {
+fiahfy.mod.scene.Shape = function(x, y) {
     /**
      * Position
-     * @type {com.blogspot.fiahfy.mod.geometory.Point}
+     * @type {fiahfy.mod.geometory.Point}
      * @public
      */
-    this.position = new com.blogspot.fiahfy.mod.geometory.Point(x, y);
+    this.position = new fiahfy.mod.geometory.Point(x, y);
 };
 
 /**
  * @public
- * @param {CanvasRenderingContext2D} Canvas DOM element
+ * @param {CanvasRenderingContext2D} context Canvas DOM element
  * @override
  */
- com.blogspot.fiahfy.mod.scene.Shape.prototype.draw = function(context) {};
+ fiahfy.mod.scene.Shape.prototype.draw = function(context) {};
 
 
 /**
+ * @param {Number} x Position x
+ * @param {Number} y Position y
+ * @param {Number} width Dimension width
+ * @param {Number} height Dimension height
  * @constructor
- * @extends {com.blogspot.fiahfy.mod.scene.Shape}
+ * @extends {fiahfy.mod.scene.Shape}
  */
-com.blogspot.fiahfy.mod.scene.shape.Rectangle = function(x, y, width, height) {
-	com.blogspot.fiahfy.mod.scene.Shape.call(this, x, y);
+fiahfy.mod.scene.shape.Rectangle = function(x, y, width, height) {
+    fiahfy.mod.scene.Shape.call(this, x, y);
     /**
      * Size
-     * @type {com.blogspot.fiahfy.mod.geometory.Dimension}
+     * @type {fiahfy.mod.geometory.Dimension}
      * @public
      */
-    this.size = new com.blogspot.fiahfy.mod.geometory.Dimension(width, height);
+    this.size = new fiahfy.mod.geometory.Dimension(width, height);
 };
-goog.inherits(com.blogspot.fiahfy.mod.scene.shape.Rectangle, com.blogspot.fiahfy.mod.scene.Shape);
+goog.inherits(fiahfy.mod.scene.shape.Rectangle, fiahfy.mod.scene.Shape);
 
 /**
  * @public
- * @param {CanvasRenderingContext2D} Canvas DOM element
+ * @param {CanvasRenderingContext2D} context Canvas DOM element
  * @override
  */
-com.blogspot.fiahfy.mod.scene.shape.Rectangle.prototype.draw = function(context) {
-	context.beginPath();
-	context.strokeRect(this.position.getX(), this.position.getY(),
-		this.size.getWidth(), this.size.getHeight());
+fiahfy.mod.scene.shape.Rectangle.prototype.draw = function(context) {
+    context.beginPath();
+    context.strokeRect(this.position.getX(), this.position.getY(),
+        this.size.getWidth(), this.size.getHeight());
 }

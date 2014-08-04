@@ -6,27 +6,27 @@
  */
 
 
-goog.provide('com.blogspot.fiahfy.mod.geometory.Point');
-goog.provide('com.blogspot.fiahfy.mod.geometory.Dimension');
+goog.provide('fiahfy.mod.geometory.Dimension');
+goog.provide('fiahfy.mod.geometory.Point');
 
 
 /**
- * @param {Number} Dimension x
- * @param {Number} Dimension y
+ * @param {Number} x Position x
+ * @param {Number} y Position y
  * @constructor
  */
-com.blogspot.fiahfy.mod.geometory.Point = function(x, y) {
+fiahfy.mod.geometory.Point = function(x, y) {
     /**
      * Position x
-     * @type {Number}
      * @private
+     * @type {Number}
      */
     this.x_ = x;
 
     /**
      * Position y
-     * @type {Number}
      * @private
+     * @type {Number}
      */
     this.y_ = y;
 };
@@ -35,25 +35,25 @@ com.blogspot.fiahfy.mod.geometory.Point = function(x, y) {
  * @public
  * @return {Number} Position x
  */
-com.blogspot.fiahfy.mod.geometory.Point.prototype.getX = function() {
-	return this.x_;
+fiahfy.mod.geometory.Point.prototype.getX = function() {
+    return this.x_;
 }
 
 /**
  * @public
  * @return {Number} Position y
  */
-com.blogspot.fiahfy.mod.geometory.Point.prototype.getY = function() {
-	return this.y_;
+fiahfy.mod.geometory.Point.prototype.getY = function() {
+    return this.y_;
 }
 
 
 /**
- * @param {Number} Dimension width
- * @param {Number} Dimension height
+ * @param {Number} width Dimension width
+ * @param {Number} height Dimension height
  * @constructor
  */
-com.blogspot.fiahfy.mod.geometory.Dimension = function(width, height) {
+fiahfy.mod.geometory.Dimension = function(width, height) {
     /**
      * Dimension width
      * @type {Number}
@@ -73,14 +73,14 @@ com.blogspot.fiahfy.mod.geometory.Dimension = function(width, height) {
  * @public
  * @return {Number} Dimension width
  */
-com.blogspot.fiahfy.mod.geometory.Dimension.prototype.getWidth = function() {
-	return this.width_;
+fiahfy.mod.geometory.Dimension.prototype.getWidth = function() {
+    return this.width_;
 }
 
 /**
  * @public
  * @return {Number} Dimension height
  */
-com.blogspot.fiahfy.mod.geometory.Dimension.prototype.getHeight = function() {
-	return this.height_;
+fiahfy.mod.geometory.Dimension.prototype.getHeight = function() {
+    return this.height_;
 }

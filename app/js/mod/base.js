@@ -6,7 +6,7 @@
  */
 
 
-goog.provide('com.blogspot.fiahfy.mod');
+goog.provide('fiahfy.mod');
 
 /** @const */
-com.blogspot.fiahfy.mod.VERSION = '1.0.0';
+fiahfy.mod.VERSION = '1.0.0';

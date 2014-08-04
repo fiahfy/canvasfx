@@ -6,47 +6,48 @@
  */
 
 
-goog.provide('com.blogspot.fiahfy.mod.stage.Stage');
+goog.provide('fiahfy.mod.stage.Stage');
 
-goog.require('com.blogspot.fiahfy.mod.scene.Scene');
+goog.require('fiahfy.mod.scene.Scene');
 
 
 /**
+ * @param {Element} element DOM node
  * @constructor
  */
-com.blogspot.fiahfy.mod.stage.Stage = function(element) {
+fiahfy.mod.stage.Stage = function(element) {
     /**
      * Canvas DOM element
-     * @type {Element}
      * @private
+     * @type {Element}
      */
-	this.canvas_ = document.createElement('canvas');
-	element.appendChild(this.canvas_);
+    this.canvas_ = document.createElement('canvas');
+    element.appendChild(this.canvas_);
 
     /**
      * Canvas Context
-     * @type {CanvasRenderingContext2D}
      * @private
+     * @type {CanvasRenderingContext2D}
      */
-	this.context_ = this.canvas_.getContext('2d');
+    this.context_ = this.canvas_.getContext('2d');
 
     /**
      * Current Scene
-     * @type {com.blogspot.fiahfy.mod.scene.Scene}
      * @private
-     */
+     * @type {fiahfy.mod.scene.Scene}
+x     */
     this.scene_ = null;
 };
 
 /**
  * @public
- * @param {com.blogspot.fiahfy.mod.scene.Scene} scene
+ * @param {fiahfy.mod.scene.Scene} scene
  */
-com.blogspot.fiahfy.mod.stage.Stage.prototype.setScene = function(scene) {
-	this.scene_ = scene;
+fiahfy.mod.stage.Stage.prototype.setScene = function(scene) {
+    this.scene_ = scene;
 };
 
 /** @public */
-com.blogspot.fiahfy.mod.stage.Stage.prototype.show = function() {
-	this.scene_.draw(this.context_);
+fiahfy.mod.stage.Stage.prototype.show = function() {
+    this.scene_.draw(this.context_);
 };
