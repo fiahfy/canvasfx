@@ -13,7 +13,7 @@ goog.provide('fiahfy.mod.math.Math');
  * @constructor
  */
 fiahfy.mod.math.Math = function() {
-
+    //
 };
 
 /** @const */

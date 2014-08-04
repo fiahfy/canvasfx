@@ -23,4 +23,4 @@ fiahfy.mod.application.Application = function(element) {
  * @public
  * @param {fiahfy.mod.stage.Stage} stage
  */
-fiahfy.mod.application.Application.prototype.start = function(stage) {};
+fiahfy.mod.application.Application.prototype.start = goog.abstractMethod;

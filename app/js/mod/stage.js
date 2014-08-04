@@ -8,6 +8,7 @@
 
 goog.provide('fiahfy.mod.stage.Stage');
 
+goog.require('fiahfy.mod.geometry.Dimension');
 goog.require('fiahfy.mod.scene.Scene');
 
 
@@ -35,8 +36,32 @@ fiahfy.mod.stage.Stage = function(element) {
      * Current Scene
      * @private
      * @type {fiahfy.mod.scene.Scene}
-x     */
+     */
     this.scene_ = null;
+
+    /**
+     * Size
+     * @private
+     * @type {fiahfy.mod.geometry.Dimension}
+     */
+    this.size_ = new fiahfy.mod.geometry.Dimension(0, 0);
+};
+
+/**
+ * @public
+ * @param {number} width width
+ * @param {number} height height
+ */
+fiahfy.mod.stage.Stage.prototype.setSize = function(width, height) {
+    this.size_ = new fiahfy.mod.geometry.Dimension(width, height);
+};
+
+/**
+ * @public
+ * @return {fiahfy.mod.geometry.Dimension} Size
+ */
+fiahfy.mod.stage.Stage.prototype.getSize = function() {
+    return this.size_;
 };
 
 /**
@@ -47,7 +72,18 @@ fiahfy.mod.stage.Stage.prototype.setScene = function(scene) {
     this.scene_ = scene;
 };
 
-/** @public */
+/**
+ * @public
+ */
 fiahfy.mod.stage.Stage.prototype.show = function() {
+    this.resize_();
     this.scene_.draw(this.context_);
+};
+
+/**
+ * @private
+ */
+fiahfy.mod.stage.Stage.prototype.resize_ = function() {
+    this.canvas_.width = this.size_.getWidth();
+    this.canvas_.height = this.size_.getHeight();
 };
