@@ -56,7 +56,8 @@ fiahfy.sample.App.prototype.start = function() {
     }
 
     // draw rectangle
-    var rect = new fiahfy.mod.scene.shape.Rectangle(10, 20, 30, 40);
+    var rect = new fiahfy.mod.scene.shape.Rectangle(10, 10, 100, 100);
+    rect.setFill(fiahfy.mod.scene.paint.Color.GREEN);
     scene.add(rect);
 
     // show

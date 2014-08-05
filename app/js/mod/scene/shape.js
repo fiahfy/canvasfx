@@ -6,9 +6,9 @@
  */
 
 
-goog.provide('fiahfy.mod.scene.shape.Shape');
 goog.provide('fiahfy.mod.scene.shape.Line');
 goog.provide('fiahfy.mod.scene.shape.Rectangle');
+goog.provide('fiahfy.mod.scene.shape.Shape');
 
 goog.require('fiahfy.mod.geometry.Dimension');
 goog.require('fiahfy.mod.geometry.Point');
@@ -98,6 +98,8 @@ fiahfy.mod.scene.shape.Rectangle = function(x, y, width, height) {
      * @type {fiahfy.mod.geometry.Dimension}
      */
     this.size = new fiahfy.mod.geometry.Dimension(width, height);
+
+    this.fill = fiahfy.mod.scene.paint.Color.BLACK;
 };
 goog.inherits(fiahfy.mod.scene.shape.Rectangle, fiahfy.mod.scene.shape.Shape);
 
@@ -108,11 +110,20 @@ goog.inherits(fiahfy.mod.scene.shape.Rectangle, fiahfy.mod.scene.shape.Shape);
  */
 fiahfy.mod.scene.shape.Rectangle.prototype.draw = function(context) {
     context.beginPath();
-    //context.fillStyle = '#f00';
-    context.fillRect(this.position.getX(), this.position.getY(),
+    if (this.fill) {
+        context.fillStyle = this.fill.getWeb();
+        context.fillRect(
+            parseInt(this.position.getX()),
+            parseInt(this.position.getY()),
+            parseInt(this.size.getWidth()),
+            parseInt(this.size.getHeight())
+        );
+    }
+    return;
+    context.strokeStyle = 'red';
+    context.lineWidth = 2;
+    context.strokeRect(this.position.getX(), this.position.getY(),
         this.size.getWidth(), this.size.getHeight());
-    //context.strokeRect(this.position.getX(), this.position.getY(),
-    //    this.size.getWidth(), this.size.getHeight());
 };
 
 
@@ -154,11 +165,14 @@ fiahfy.mod.scene.shape.Line.prototype.draw = function(context) {
     context.beginPath();
     context.lineWidth = this.strokeWidth;
     var offset = (this.strokeWidth % 2) * 0.5;
-    context.strokeStyle = 'rgb(' +
-        255 * this.stroke.getRed() + ',' +
-        255 * this.stroke.getGreen() + ',' +
-        255 * this.stroke.getBlue() + ')';
-    context.moveTo(this.start.getX() + offset, this.start.getY() + offset);
-    context.lineTo(this.end.getX() + offset, this.end.getY() + offset);
+    context.strokeStyle = this.stroke.getWeb();
+    context.moveTo(
+        parseInt(this.start.getX()) + offset,
+        parseInt(this.start.getY()) + offset
+    );
+    context.lineTo(
+        parseInt(this.end.getX()) + offset,
+        parseInt(this.end.getY()) + offset
+    );
     context.stroke();
 };

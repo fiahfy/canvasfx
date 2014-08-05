@@ -85,6 +85,18 @@ fiahfy.mod.scene.paint.Color.prototype.getBlue = function() {
 /**
  * @const
  * @public
+ * @return {string} Color string
+ */
+fiahfy.mod.scene.paint.Color.prototype.getWeb = function() {
+    return '#' +
+        ('00' + (this.red_ * 255).toString(16)).slice(-2) +
+        ('00' + (this.green_ * 255).toString(16)).slice(-2) +
+        ('00' + (this.blue_ * 255).toString(16)).slice(-2);
+};
+
+/**
+ * @const
+ * @public
  * @param {number} red
  * @param {number} green
  * @param {number} blue
