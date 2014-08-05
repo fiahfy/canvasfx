@@ -32,14 +32,18 @@ goog.inherits(fiahfy.sample.App, fiahfy.mod.application.Application);
  * @override
  */
 fiahfy.sample.App.prototype.start = function() {
+    // set stage size
     this.stage.setSize(1000, 1000);
 
+    // scene
     var scene = new fiahfy.mod.scene.Scene();
     this.stage.setScene(scene);
 
+    // draw rectangle
     var rect = new fiahfy.mod.scene.shape.Rectangle(10, 20, 30, 40);
     scene.add(rect);
 
+    // draw grid
     for (var i = 10; i < this.stage.getSize().getWidth(); i += 10)
     {
         var y = new fiahfy.mod.scene.shape.Line(i, 0,
@@ -55,5 +59,6 @@ fiahfy.sample.App.prototype.start = function() {
         scene.add(x);
     }
 
+    // show
     this.stage.show();
 };
