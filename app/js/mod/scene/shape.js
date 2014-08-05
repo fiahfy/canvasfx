@@ -158,7 +158,7 @@ fiahfy.mod.scene.shape.Line.prototype.draw = function(context) {
         255 * this.stroke.getRed() + ',' +
         255 * this.stroke.getGreen() + ',' +
         255 * this.stroke.getBlue() + ')';
-    context.moveTo(this.start.getX()+offset, this.start.getY()+offset);
-    context.lineTo(this.end.getX()+offset, this.end.getY()+offset);
+    context.moveTo(this.start.getX() + offset, this.start.getY() + offset);
+    context.lineTo(this.end.getX() + offset, this.end.getY() + offset);
     context.stroke();
 };

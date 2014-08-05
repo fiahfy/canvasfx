@@ -13,14 +13,14 @@ goog.require('fiahfy.mod.scene.Scene');
 
 
 /**
- * @param {Element} element DOM node
+ * @param {HTMLElement} element DOM node
  * @constructor
  */
 fiahfy.mod.stage.Stage = function(element) {
     /**
      * Canvas DOM element
      * @private
-     * @type {Element}
+     * @type {HTMLElement}
      */
     this.canvas_ = document.createElement('canvas');
     element.appendChild(this.canvas_);
@@ -44,7 +44,10 @@ fiahfy.mod.stage.Stage = function(element) {
      * @private
      * @type {fiahfy.mod.geometry.Dimension}
      */
-    this.size_ = new fiahfy.mod.geometry.Dimension(0, 0);
+    this.size_ = new fiahfy.mod.geometry.Dimension(
+        element.offsetWidth,
+        element.offsetHeight
+    );
 };
 
 /**

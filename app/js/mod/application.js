@@ -12,7 +12,7 @@ goog.require('fiahfy.mod.stage.Stage');
 
 
 /**
- * @param {Element} element DOM node
+ * @param {HTMLElement} element DOM node
  * @constructor
  */
 fiahfy.mod.application.Application = function(element) {

@@ -20,9 +20,9 @@ fiahfy.mod.scene.paint.Color = function(red, green, blue, opacity) {
     if (typeof red === 'string' && red.charAt(0) == '#') {
         var colorString = red.substr(1);
         if (colorString.length == 3) {
-            colorString = colorString.charAt(0)+colorString.charAt(0)+
-                          colorString.charAt(1)+colorString.charAt(1)+
-                          colorString.charAt(2)+colorString.charAt(2);
+            colorString = colorString.charAt(0) + colorString.charAt(0) +
+                          colorString.charAt(1) + colorString.charAt(1) +
+                          colorString.charAt(2) + colorString.charAt(2);
         }
         red = parseInt(colorString.substr(0, 2), 16);
         green = parseInt(colorString.substr(2, 2), 16);
@@ -34,21 +34,21 @@ fiahfy.mod.scene.paint.Color = function(red, green, blue, opacity) {
      * @private
      * @type {number}
      */
-    this.red_ = (red <= 1) ? red : red/255;
+    this.red_ = (red <= 1) ? red : red / 255;
 
     /**
      * Green color range
      * @private
      * @type {number}
      */
-    this.green_ = (green <= 1) ? green : green/255;
+    this.green_ = (green <= 1) ? green : green / 255;
 
     /**
      * Blue color range
      * @private
      * @type {number}
      */
-    this.blue_ = (blue <= 1) ? blue : blue/255;
+    this.blue_ = (blue <= 1) ? blue : blue / 255;
 
     /**
      * Opacity
@@ -56,7 +56,7 @@ fiahfy.mod.scene.paint.Color = function(red, green, blue, opacity) {
      * @type {number}
      */
     opacity = (opacity !== null) ? opacity : 1.0;
-    this.opacity_ = (opacity <= 1) ? opacity : opacity/255;
+    this.opacity_ = (opacity <= 1) ? opacity : opacity / 255;
 };
 
 /**

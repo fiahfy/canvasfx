@@ -33,14 +33,14 @@ goog.inherits(fiahfy.sample.App, fiahfy.mod.application.Application);
  */
 fiahfy.sample.App.prototype.start = function() {
     // set stage size
-    this.stage.setSize(1000, 1000);
+    //this.stage.setSize(1000, 1000);
 
     // scene
     var scene = new fiahfy.mod.scene.Scene();
     this.stage.setScene(scene);
 
     // draw grid
-    for (var i = 0; i <= this.stage.gitgetSize().getWidth(); i += 10)
+    for (var i = 0; i <= this.stage.getSize().getWidth(); i += 10)
     {
         var y = new fiahfy.mod.scene.shape.Line(i, 0,
             i, this.stage.getSize().getHeight());
