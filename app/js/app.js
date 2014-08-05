@@ -12,6 +12,7 @@ goog.require('fiahfy.mod.application.Application');
 goog.require('fiahfy.mod.math.Math');
 goog.require('fiahfy.mod.scene.Scene');
 goog.require('fiahfy.mod.scene.paint.Color');
+goog.require('fiahfy.mod.scene.shape.Circle');
 goog.require('fiahfy.mod.scene.shape.Line');
 goog.require('fiahfy.mod.scene.shape.Rectangle');
 goog.require('fiahfy.mod.stage.Stage');
@@ -45,6 +46,7 @@ fiahfy.sample.App.prototype.start = function() {
         var y = new fiahfy.mod.scene.shape.Line(i, 0,
             i, this.stage.getSize().getHeight());
         y.setStroke(fiahfy.mod.scene.paint.Color.GRAY);
+        if (i % 100 == 0) y.setStrokeWidth(2.0);
         scene.add(y);
     }
     for (var j = 0; j <= this.stage.getSize().getHeight(); j += 10)
@@ -52,13 +54,25 @@ fiahfy.sample.App.prototype.start = function() {
         var x = new fiahfy.mod.scene.shape.Line(0, j,
             this.stage.getSize().getWidth(), j);
         x.setStroke(fiahfy.mod.scene.paint.Color.GRAY);
+        if (j % 100 == 0) x.setStrokeWidth(2.0);
         scene.add(x);
     }
 
     // draw rectangle
-    var rect = new fiahfy.mod.scene.shape.Rectangle(10, 10, 100, 100);
+    var rect = new fiahfy.mod.scene.shape.Rectangle(50, 150, 100, 100);
     rect.setFill(fiahfy.mod.scene.paint.Color.GREEN);
+    rect.setStroke(fiahfy.mod.scene.paint.Color.RED)
+    rect.setStrokeWidth(1);
+    rect.setStrokeType(fiahfy.mod.scene.shape.StrokeType.CENTERD);
     scene.add(rect);
+
+    //
+    var circle = new fiahfy.mod.scene.shape.Circle(100, 100, 50);
+    circle.setFill(fiahfy.mod.scene.paint.Color.BLUE);
+    circle.setStroke(fiahfy.mod.scene.paint.Color.RED)
+    circle.setStrokeWidth(1);
+    circle.setStrokeType(fiahfy.mod.scene.shape.StrokeType.CENTERD);
+    scene.add(circle);
 
     // show
     this.stage.show();
