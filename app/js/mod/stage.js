@@ -8,6 +8,7 @@
 
 goog.provide('fiahfy.mod.stage.Stage');
 
+goog.require('fiahfy.mod.Object');
 goog.require('fiahfy.mod.geometry.Dimension');
 goog.require('fiahfy.mod.scene.Scene');
 
@@ -17,6 +18,8 @@ goog.require('fiahfy.mod.scene.Scene');
  * @constructor
  */
 fiahfy.mod.stage.Stage = function(element) {
+    fiahfy.mod.Object.call(this);
+
     /**
      * Canvas DOM element
      * @private
@@ -44,19 +47,25 @@ fiahfy.mod.stage.Stage = function(element) {
      * @private
      * @type {fiahfy.mod.geometry.Dimension}
      */
-    this.size_ = new fiahfy.mod.geometry.Dimension(
-        element.offsetWidth,
-        element.offsetHeight
-    );
+    this.size_ = new fiahfy.mod.geometry.Dimension();
+
+    this.setSize(element.offsetWidth, element.offsetHeight);
 };
+goog.inherits(fiahfy.mod.stage.Stage, fiahfy.mod.Object);
 
 /**
  * @public
- * @param {number} width width
- * @param {number} height height
+ * @param {number|fiahfy.mod.geometry.Dimension} width Width or Dimension
+ * @param {number} height Height
  */
 fiahfy.mod.stage.Stage.prototype.setSize = function(width, height) {
-    this.size_ = new fiahfy.mod.geometry.Dimension(width, height);
+    if (width instanceof fiahfy.mod.geometry.Dimension) {
+        this.size_ = width.clone();
+    } else {
+        this.size_ = new fiahfy.mod.geometry.Dimension(width, height);
+    }
+    this.canvas_.width = this.size_.getWidth();
+    this.canvas_.height = this.size_.getHeight();
 };
 
 /**
@@ -73,21 +82,13 @@ fiahfy.mod.stage.Stage.prototype.getSize = function() {
  */
 fiahfy.mod.stage.Stage.prototype.setScene = function(scene) {
     this.scene_ = scene;
+    this.scene_.setSize(this.size_);
 };
 
 /**
  * @public
  */
 fiahfy.mod.stage.Stage.prototype.show = function() {
-    this.resize_();
+    //this.resize_();
     this.scene_.draw(this.context_);
-};
-
-/**
- * @private
- */
-fiahfy.mod.stage.Stage.prototype.resize_ = function() {
-    this.canvas_.width = this.size_.getWidth();
-    this.canvas_.height = this.size_.getHeight();
-    this.scene_.setSize(this.size_.getWidth(), this.size_.getHeight());
 };

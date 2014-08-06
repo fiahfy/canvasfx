@@ -8,15 +8,19 @@
 
 goog.provide('fiahfy.mod.scene.paint.Color');
 
+goog.require('fiahfy.mod.Object');
+
 
 /**
- * @param {number|string} red
+ * @param {number|string=} red
  * @param {number=} green
  * @param {number=} blue
  * @param {number=1} opacity
  * @constructor
  */
 fiahfy.mod.scene.paint.Color = function(red, green, blue, opacity) {
+    fiahfy.mod.Object.call(this);
+
     // TODO:
     if (typeof red === 'string' && red.charAt(0) == '#') {
         var colorString = red.substr(1);
@@ -30,6 +34,11 @@ fiahfy.mod.scene.paint.Color = function(red, green, blue, opacity) {
         green = parseInt(colorString.substr(2, 2), 16);
         blue = parseInt(colorString.substr(4, 2), 16);
     }
+
+    red = red || 0.0;
+    green = green || 0.0;
+    blue = blue || 0.0;
+    opacity = opacity || 1.0;
 
     /**
      * Red color range
@@ -57,9 +66,9 @@ fiahfy.mod.scene.paint.Color = function(red, green, blue, opacity) {
      * @private
      * @type {number}
      */
-    opacity = (opacity !== null) ? opacity : 1.0;
     this.opacity_ = (opacity <= 1) ? opacity : opacity / 255;
 };
+goog.inherits(fiahfy.mod.scene.paint.Color, fiahfy.mod.Object);
 
 /**
  * @public

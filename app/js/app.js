@@ -37,15 +37,24 @@ fiahfy.sample.App.prototype.start = function() {
     // set stage size
     //this.stage.setSize(1000, 1000);
 
-
-
-
     var me = this;
-    var timer = (function() {
+    (function() {
         var start = 0;
         var before = 0;
         var time = 0;
         var sec = 0;
+        var d = 0;
+
+
+        var ax = 0;
+        var ay = 0.00098;
+
+        var vx = 0.05;
+        var vy = 0;
+
+        var px = 0;
+        var py = 0;
+
         var t = new fiahfy.mod.animation.AnimationTimer();
         t.handle = function(now) {
             if (!start) start = now;
@@ -56,7 +65,10 @@ fiahfy.sample.App.prototype.start = function() {
                 console.log(parseInt(1000 / (now - before)));
                 sec++;
             }
-            if (time > 10 * 1000) timer.stop();
+            if (before) {
+                d = now - before;
+            }
+            if (time > 10*6 * 1000) this.stop();
             before = now;
             this.update();
         };
@@ -98,8 +110,27 @@ fiahfy.sample.App.prototype.start = function() {
             scene.add(rect);
             */
             //
-            var circle = new fiahfy.mod.scene.shape.Circle(100*time/1000*0.2, 100, 5);
-            //circle.setFill(fiahfy.mod.scene.paint.Color.BLUE);
+            
+            //console.log(px,py);
+            
+            vx = vx + ax*d;
+            vy = vy + ay*d;
+            px = px + vx*d;
+            py = py + vy*d;
+            if (py > 500) {vy = - Math.abs(vy); }
+            if (px < 0) vx = Math.abs(vx);
+            if (px > 500) vx = - Math.abs(vx);
+            /*
+            px = 0 + vx*time + ax * time * time / 2;
+            py = 0 + vy*time + ay * time * time / 2;
+
+            if (py > 500) {vy = - Math.abs(vy); }
+            if (px < 0) vx = Math.abs(vx);
+            if (px > 500) vx = - Math.abs(vx);
+            */
+            //console.log(vx);
+            var circle = new fiahfy.mod.scene.shape.Circle(px, py, 5);
+            circle.setFill(fiahfy.mod.scene.paint.Color.BLUE);
             //circle.setStroke(fiahfy.mod.scene.paint.Color.RED);
             //circle.setStrokeWidth(1);
             //circle.setStrokeType(fiahfy.mod.scene.shape.StrokeType.CENTERED);
@@ -109,6 +140,5 @@ fiahfy.sample.App.prototype.start = function() {
             me.stage.show();
         };
         return t;
-    })();
-    timer.start();
+    })().start();
 };

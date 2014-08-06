@@ -9,27 +9,32 @@
 goog.provide('fiahfy.mod.geometry.Dimension');
 goog.provide('fiahfy.mod.geometry.Point');
 
+goog.require('fiahfy.mod.Object');
+
 
 /**
- * @param {number} x x
- * @param {number} y y
+ * @param {number=0} x x
+ * @param {number=0} y y
  * @constructor
  */
 fiahfy.mod.geometry.Point = function(x, y) {
+    fiahfy.mod.Object.call(this);
+
     /**
      * x
      * @private
      * @type {number}
      */
-    this.x_ = x;
+    this.x_ = x || 0.0;
 
     /**
      * y
      * @private
      * @type {number}
      */
-    this.y_ = y;
+    this.y_ = y || 0.0;
 };
+goog.inherits(fiahfy.mod.geometry.Point, fiahfy.mod.Object);
 
 /**
  * @public
@@ -49,25 +54,28 @@ fiahfy.mod.geometry.Point.prototype.getY = function() {
 
 
 /**
- * @param {number} width width
- * @param {number} height height
+ * @param {number=0} width width
+ * @param {number=0} height height
  * @constructor
  */
 fiahfy.mod.geometry.Dimension = function(width, height) {
+    fiahfy.mod.Object.call(this);
+
     /**
      * width
      * @type {number}
      * @private
      */
-    this.width_ = width;
+    this.width_ = width || 0.0;
 
     /**
      * height
      * @type {number}
      * @private
      */
-    this.height_ = height;
+    this.height_ = height || 0.0;
 };
+goog.inherits(fiahfy.mod.geometry.Dimension, fiahfy.mod.Object);
 
 /**
  * @public

@@ -10,6 +10,7 @@ goog.provide('fiahfy.mod.animation.Animation');
 goog.provide('fiahfy.mod.animation.AnimationTimer');
 goog.provide('fiahfy.mod.animation.Timeline');
 
+goog.require('fiahfy.mod.Object');
 goog.require('fiahfy.mod.time.Duration');
 
 
@@ -18,8 +19,9 @@ goog.require('fiahfy.mod.time.Duration');
  * @constructor
  */
 fiahfy.mod.animation.Animation = function(targetFramerate) {
-    //
+    fiahfy.mod.Object.call(this);
 };
+goog.inherits(fiahfy.mod.animation.Animation, fiahfy.mod.Object);
 
 
 /**
@@ -38,14 +40,17 @@ goog.inherits(fiahfy.mod.animation.Timeline, fiahfy.mod.animation.Animation);
  * @constructor
  */
 fiahfy.mod.animation.KeyFrame = function(duration) {
-    //
+    fiahfy.mod.Object.call(this);
 };
+goog.inherits(fiahfy.mod.animation.KeyFrame, fiahfy.mod.Object);
 
 
 /**
  * @constructor
  */
 fiahfy.mod.animation.AnimationTimer = function() {
+    fiahfy.mod.Object.call(this);
+
     /**
      * Timer id
      * @private
@@ -53,6 +58,7 @@ fiahfy.mod.animation.AnimationTimer = function() {
      */
     this.id_ = null;
 };
+goog.inherits(fiahfy.mod.animation.AnimationTimer, fiahfy.mod.Object);
 
 /**
  * @public
@@ -88,7 +94,7 @@ fiahfy.mod.animation.AnimationTimer.prototype.stop = function() {
 /**
  * @const
  * @private
- * @return {!Function} Enable request animation frame func
+ * @return {Function} Enable request animation frame func
  */
 fiahfy.mod.animation.AnimationTimer.requestAnimationFrame_ = function() {
     return window.requestAnimationFrame ||
@@ -105,7 +111,7 @@ fiahfy.mod.animation.AnimationTimer.requestAnimationFrame_ = function() {
 /**
  * @const
  * @private
- * @return {!Function} Enable cancel request animation frame func
+ * @return {Function} Enable cancel request animation frame func
  */
 fiahfy.mod.animation.AnimationTimer.canceRequestlAnimationFrame_ = function() {
     return window.cancelRequestAnimationFrame ||

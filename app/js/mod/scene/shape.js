@@ -12,6 +12,7 @@ goog.provide('fiahfy.mod.scene.shape.Rectangle');
 goog.provide('fiahfy.mod.scene.shape.Shape');
 goog.provide('fiahfy.mod.scene.shape.StrokeType');
 
+goog.require('fiahfy.mod.Object');
 goog.require('fiahfy.mod.geometry.Dimension');
 goog.require('fiahfy.mod.geometry.Point');
 goog.require('fiahfy.mod.scene.paint.Color');
@@ -31,6 +32,8 @@ fiahfy.mod.scene.shape.StrokeType = {
  * @constructor
  */
 fiahfy.mod.scene.shape.Shape = function() {
+    fiahfy.mod.Object.call(this);
+
     /**
      * Fill color
      * @protected
@@ -59,6 +62,7 @@ fiahfy.mod.scene.shape.Shape = function() {
      */
     this.strokeType = fiahfy.mod.scene.shape.StrokeType.CENTERED;
 };
+goog.inherits(fiahfy.mod.scene.shape.Shape, fiahfy.mod.Object);
 
 /**
  * @public
@@ -100,15 +104,21 @@ fiahfy.mod.scene.shape.Shape.prototype.setStrokeType = function(type) {
 
 
 /**
- * @param {number} x Position x
- * @param {number} y Position y
- * @param {number} width Size width
- * @param {number} height Size height
+ * @param {number=} x Position x
+ * @param {number=} y Position y
+ * @param {number=} width Size width
+ * @param {number=} height Size height
  * @constructor
  * @extends {fiahfy.mod.scene.Shape}
  */
 fiahfy.mod.scene.shape.Rectangle = function(x, y, width, height) {
     fiahfy.mod.scene.shape.Shape.call(this);
+
+    x = x || 0.0;
+    y = y || 0.0;
+    width = width || 0.0;
+    height = height || 0.0;
+
     /**
      * Position
      * @protected
@@ -173,14 +183,19 @@ fiahfy.mod.scene.shape.Rectangle.prototype.draw = function(context) {
 
 
 /**
- * @param {number} x Position x
- * @param {number} y Position y
- * @param {number} radius Radius
+ * @param {number=} x Position x
+ * @param {number=} y Position y
+ * @param {number=} radius Radius
  * @constructor
  * @extends {fiahfy.mod.scene.Shape}
  */
 fiahfy.mod.scene.shape.Circle = function(x, y, radius) {
     fiahfy.mod.scene.shape.Shape.call(this);
+
+    x = x || 0.0;
+    y = y || 0.0;
+    radius = radius || 0.0;
+
     /**
      * Position
      * @protected
@@ -246,15 +261,21 @@ fiahfy.mod.scene.shape.Circle.prototype.draw = function(context) {
 
 
 /**
- * @param {number} startX Start position x
- * @param {number} startY Start position y
- * @param {number} endX End position x
- * @param {number} endY End position y
+ * @param {number=} startX Start position x
+ * @param {number=} startY Start position y
+ * @param {number=} endX End position x
+ * @param {number=} endY End position y
  * @constructor
  * @extends {fiahfy.mod.scene.Shape}
  */
 fiahfy.mod.scene.shape.Line = function(startX, startY, endX, endY) {
     fiahfy.mod.scene.shape.Shape.call(this);
+
+    startX = startX || 0.0;
+    startY = startY || 0.0;
+    endX = endX || 0.0;
+    endY = endY || 0.0;
+
     /**
      * Start position
      * @protected
