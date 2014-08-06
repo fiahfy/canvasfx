@@ -17,12 +17,14 @@ goog.provide('fiahfy.mod.scene.paint.Color');
  * @constructor
  */
 fiahfy.mod.scene.paint.Color = function(red, green, blue, opacity) {
+    // TODO:
     if (typeof red === 'string' && red.charAt(0) == '#') {
         var colorString = red.substr(1);
         if (colorString.length == 3) {
-            colorString = colorString.charAt(0) + colorString.charAt(0) +
-                          colorString.charAt(1) + colorString.charAt(1) +
-                          colorString.charAt(2) + colorString.charAt(2);
+            colorString =
+                colorString.charAt(0) + colorString.charAt(0) +
+                colorString.charAt(1) + colorString.charAt(1) +
+                colorString.charAt(2) + colorString.charAt(2);
         }
         red = parseInt(colorString.substr(0, 2), 16);
         green = parseInt(colorString.substr(2, 2), 16);
@@ -136,7 +138,7 @@ fiahfy.mod.scene.paint.Color.web = function(colorString) {
  * @type {fiahfy.mod.scene.paint.Color}
  */
 fiahfy.mod.scene.paint.Color.RED =
-    fiahfy.mod.scene.paint.Color.color('#ff0000');
+    fiahfy.mod.scene.paint.Color.web('#ff0000');
 
 /**
  * @const
@@ -144,7 +146,7 @@ fiahfy.mod.scene.paint.Color.RED =
  * @type {fiahfy.mod.scene.paint.Color}
  */
 fiahfy.mod.scene.paint.Color.GREEN =
-    fiahfy.mod.scene.paint.Color.color('#00ff00');
+    fiahfy.mod.scene.paint.Color.web('#00ff00');
 
 /**
  * @const
@@ -152,7 +154,7 @@ fiahfy.mod.scene.paint.Color.GREEN =
  * @type {fiahfy.mod.scene.paint.Color}
  */
 fiahfy.mod.scene.paint.Color.BLUE =
-    fiahfy.mod.scene.paint.Color.color('#0000ff');
+    fiahfy.mod.scene.paint.Color.web('#0000ff');
 
 /**
  * @const
@@ -160,7 +162,7 @@ fiahfy.mod.scene.paint.Color.BLUE =
  * @type {fiahfy.mod.scene.paint.Color}
  */
 fiahfy.mod.scene.paint.Color.BLACK =
-    fiahfy.mod.scene.paint.Color.color('#000000');
+    fiahfy.mod.scene.paint.Color.web('#000000');
 
 /**
  * @const
@@ -168,7 +170,7 @@ fiahfy.mod.scene.paint.Color.BLACK =
  * @type {fiahfy.mod.scene.paint.Color}
  */
 fiahfy.mod.scene.paint.Color.GRAY =
-    fiahfy.mod.scene.paint.Color.color('#808080');
+    fiahfy.mod.scene.paint.Color.web('#808080');
 
 /**
  * @const
@@ -176,4 +178,4 @@ fiahfy.mod.scene.paint.Color.GRAY =
  * @type {fiahfy.mod.scene.paint.Color}
  */
 fiahfy.mod.scene.paint.Color.WHITE =
-    fiahfy.mod.scene.paint.Color.color('#ffffff');
+    fiahfy.mod.scene.paint.Color.web('#ffffff');

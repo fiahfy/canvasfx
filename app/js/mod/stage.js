@@ -89,4 +89,5 @@ fiahfy.mod.stage.Stage.prototype.show = function() {
 fiahfy.mod.stage.Stage.prototype.resize_ = function() {
     this.canvas_.width = this.size_.getWidth();
     this.canvas_.height = this.size_.getHeight();
+    this.scene_.setSize(this.size_.getWidth(), this.size_.getHeight());
 };

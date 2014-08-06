@@ -44,7 +44,7 @@ fiahfy.mod.scene.shape.Shape = function() {
      * @type {?fiahfy.mod.scene.paint.Color}
      */
     this.stroke = null;
-    
+
     /**
      * Stroke width
      * @protected
@@ -159,7 +159,7 @@ fiahfy.mod.scene.shape.Rectangle.prototype.draw = function(context) {
             case fiahfy.mod.scene.shape.StrokeType.CENTERED:
             default:
                 offsetPosition = 0.5 * (this.strokeWidth % 2);
-                offsetSize = 0
+                offsetSize = 0;
                 break;
         }
         context.strokeRect(
@@ -231,7 +231,7 @@ fiahfy.mod.scene.shape.Circle.prototype.draw = function(context) {
                 break;
             case fiahfy.mod.scene.shape.StrokeType.CENTERED:
             default:
-                offset = 0
+                offset = 0;
                 break;
         }
         context.arc(
