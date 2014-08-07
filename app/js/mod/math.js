@@ -13,6 +13,7 @@ goog.require('fiahfy.mod.Object');
 
 /**
  * @constructor
+ * @extends {fiahfy.mod.Object}
  */
 fiahfy.mod.math.Math = function() {
     fiahfy.mod.Object.call(this);

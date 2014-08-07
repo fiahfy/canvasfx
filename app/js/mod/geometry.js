@@ -13,9 +13,10 @@ goog.require('fiahfy.mod.Object');
 
 
 /**
- * @param {number=} x x.
- * @param {number=} y y.
+ * @param {number=} x X.
+ * @param {number=} y Y.
  * @constructor
+ * @extends {fiahfy.mod.Object}
  */
 fiahfy.mod.geometry.Point = function(x, y) {
     fiahfy.mod.Object.call(this);
@@ -24,14 +25,14 @@ fiahfy.mod.geometry.Point = function(x, y) {
     y = this.supplement(y, 0.0);
 
     /**
-     * x
+     * X
      * @private
      * @type {number}
      */
     this.x_ = x;
 
     /**
-     * y
+     * Y
      * @private
      * @type {number}
      */
@@ -41,7 +42,7 @@ goog.inherits(fiahfy.mod.geometry.Point, fiahfy.mod.Object);
 
 /**
  * @public
- * @return {number} x X.
+ * @return {number} X.
  */
 fiahfy.mod.geometry.Point.prototype.getX = function() {
     return this.x_;
@@ -49,17 +50,27 @@ fiahfy.mod.geometry.Point.prototype.getX = function() {
 
 /**
  * @public
- * @return {number} y Y.
+ * @return {number} Y.
  */
 fiahfy.mod.geometry.Point.prototype.getY = function() {
     return this.y_;
 }
 
+/**
+ * @public
+ * @param {number} x X.
+ * @param {number} y Y.
+ * @return {fiahfy.mod.geometry.Point} Point added the coordinates.
+ */
+fiahfy.mod.geometry.Point.prototype.add = function(x, y) {
+    return new fiahfy.mod.geometry.Point(this.x_ + x, this.y_ + y);
+}
 
 /**
  * @param {number=} width Width.
  * @param {number=} height Height.
  * @constructor
+ * @extends {fiahfy.mod.Object}
  */
 fiahfy.mod.geometry.Dimension = function(width, height) {
     fiahfy.mod.Object.call(this);
@@ -68,14 +79,14 @@ fiahfy.mod.geometry.Dimension = function(width, height) {
     height = this.supplement(height, 0.0);
 
     /**
-     * width
+     * Width
      * @type {number}
      * @private
      */
     this.width_ = width;
 
     /**
-     * height
+     * Height
      * @type {number}
      * @private
      */
@@ -85,7 +96,7 @@ goog.inherits(fiahfy.mod.geometry.Dimension, fiahfy.mod.Object);
 
 /**
  * @public
- * @return {number} width Width.
+ * @return {number} Width.
  */
 fiahfy.mod.geometry.Dimension.prototype.getWidth = function() {
     return this.width_;
@@ -93,7 +104,7 @@ fiahfy.mod.geometry.Dimension.prototype.getWidth = function() {
 
 /**
  * @public
- * @return {number} height Height.
+ * @return {number} Height.
  */
 fiahfy.mod.geometry.Dimension.prototype.getHeight = function() {
     return this.height_;

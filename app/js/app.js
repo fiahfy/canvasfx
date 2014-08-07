@@ -37,6 +37,13 @@ fiahfy.sample.App.prototype.start = function() {
     // set stage size
     //this.stage.setSize(1000, 1000);
 
+    var c = new fiahfy.mod.scene.shape.Circle(10, 10, 5);
+    var r = new fiahfy.mod.scene.shape.Rectangle(5, 20, 10, 10);
+    var g = new fiahfy.mod.scene.Group(c, r);
+    var s = new fiahfy.mod.scene.Scene();
+    this.stage.setScene(s);
+    s.add(g);
+
     var me = this;
     (function() {
         var start = 0;
@@ -76,7 +83,7 @@ fiahfy.sample.App.prototype.start = function() {
 
             // scene
             var scene = new fiahfy.mod.scene.Scene();
-            me.stage.setScene(scene);
+            //me.stage.setScene(scene);
 
             // draw grid
             for (var i = 0; i <= me.stage.getSize().getWidth(); i += 10)
@@ -134,10 +141,12 @@ fiahfy.sample.App.prototype.start = function() {
             //circle.setStroke(fiahfy.mod.scene.paint.Color.RED);
             //circle.setStrokeWidth(1);
             //circle.setStrokeType(fiahfy.mod.scene.shape.StrokeType.CENTERED);
-            scene.add(circle);
+            //scene.add(circle);
 
+
+            g.setLayoutX(0.1);
             // show
-            //me.stage.show();
+            me.stage.show();
         };
         return t;
     })().start();

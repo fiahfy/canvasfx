@@ -15,6 +15,7 @@ goog.provide('fiahfy.mod.scene.shape.StrokeType');
 goog.require('fiahfy.mod.Object');
 goog.require('fiahfy.mod.geometry.Dimension');
 goog.require('fiahfy.mod.geometry.Point');
+goog.require('fiahfy.mod.scene.Node');
 goog.require('fiahfy.mod.scene.paint.Color');
 
 
@@ -30,9 +31,10 @@ fiahfy.mod.scene.shape.StrokeType = {
 
 /**
  * @constructor
+ * @extends {fiahfy.mod.scene.Node}
  */
 fiahfy.mod.scene.shape.Shape = function() {
-    fiahfy.mod.Object.call(this);
+    fiahfy.mod.scene.Node.call(this);
 
     /**
      * Fill color
@@ -62,13 +64,7 @@ fiahfy.mod.scene.shape.Shape = function() {
      */
     this.strokeType = fiahfy.mod.scene.shape.StrokeType.CENTERED;
 };
-goog.inherits(fiahfy.mod.scene.shape.Shape, fiahfy.mod.Object);
-
-/**
- * @public
- * @param {CanvasRenderingContext2D} context Canvas DOM element.
- */
- fiahfy.mod.scene.shape.Shape.prototype.draw = goog.abstractMethod;
+goog.inherits(fiahfy.mod.scene.shape.Shape, fiahfy.mod.scene.Node);
 
 /**
  * @public
@@ -135,6 +131,24 @@ fiahfy.mod.scene.shape.Rectangle = function(x, y, width, height) {
     this.fill = fiahfy.mod.scene.paint.Color.BLACK;
 };
 goog.inherits(fiahfy.mod.scene.shape.Rectangle, fiahfy.mod.scene.shape.Shape);
+
+/**
+ * @public
+ * @param {number} x
+ * @override
+ */
+fiahfy.mod.scene.shape.Rectangle.prototype.setLayoutX = function(x) {
+    this.position = this.position.add(x, 0);
+};
+
+/**
+ * @public
+ * @param {number} y
+ * @override
+ */
+fiahfy.mod.scene.shape.Rectangle.prototype.setLayoutY = function(y) {
+    this.position = this.position.add(0, y);
+};
 
 /**
  * @public
@@ -215,6 +229,24 @@ goog.inherits(fiahfy.mod.scene.shape.Circle, fiahfy.mod.scene.shape.Shape);
 
 /**
  * @public
+ * @param {number} x
+ * @override
+ */
+fiahfy.mod.scene.shape.Circle.prototype.setLayoutX = function(x) {
+    this.position = this.position.add(x, 0);
+};
+
+/**
+ * @public
+ * @param {number} y
+ * @override
+ */
+fiahfy.mod.scene.shape.Circle.prototype.setLayoutY = function(y) {
+    this.position = this.position.add(0, y);
+};
+
+/**
+ * @public
  * @param {CanvasRenderingContext2D} context Canvas DOM element.
  * @override
  */
@@ -292,6 +324,26 @@ fiahfy.mod.scene.shape.Line = function(startX, startY, endX, endY) {
     this.stroke = fiahfy.mod.scene.paint.Color.BLACK;
 };
 goog.inherits(fiahfy.mod.scene.shape.Line, fiahfy.mod.scene.shape.Shape);
+
+/**
+ * @public
+ * @param {number} x
+ * @override
+ */
+fiahfy.mod.scene.shape.Line.prototype.setLayoutX = function(x) {
+    this.start = this.start.add(x, 0);
+    this.end = this.end.add(x, 0);
+};
+
+/**
+ * @public
+ * @param {number} y
+ * @override
+ */
+fiahfy.mod.scene.shape.Line.prototype.setLayoutY = function(y) {
+    this.start = this.start.add(0, y);
+    this.end = this.end.add(0, y);
+};
 
 /**
  * @public

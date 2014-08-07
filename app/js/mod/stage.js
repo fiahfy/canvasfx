@@ -16,6 +16,7 @@ goog.require('fiahfy.mod.scene.Scene');
 /**
  * @param {HTMLElement} element DOM node.
  * @constructor
+ * @extends {fiahfy.mod.Object}
  */
 fiahfy.mod.stage.Stage = function(element) {
     fiahfy.mod.Object.call(this);

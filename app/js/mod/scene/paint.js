@@ -17,6 +17,7 @@ goog.require('fiahfy.mod.Object');
  * @param {number=} blue The blue component of the color.
  * @param {number=} opacity The opacity component of the color.
  * @constructor
+ * @extends {fiahfy.mod.Object}
  */
 fiahfy.mod.scene.paint.Color = function(red, green, blue, opacity) {
     fiahfy.mod.Object.call(this);

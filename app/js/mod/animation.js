@@ -17,6 +17,7 @@ goog.require('fiahfy.mod.time.Duration');
 /**
  * @param {number=} targetFramerate Frame rate for this animation.
  * @constructor
+ * @extends {fiahfy.mod.Object}
  */
 fiahfy.mod.animation.Animation = function(targetFramerate) {
     fiahfy.mod.Object.call(this);
@@ -38,6 +39,7 @@ goog.inherits(fiahfy.mod.animation.Timeline, fiahfy.mod.animation.Animation);
 /**
  * @param {fiahfy.mod.time.Duration} duration Key frame offset.
  * @constructor
+ * @extends {fiahfy.mod.Object}
  */
 fiahfy.mod.animation.KeyFrame = function(duration) {
     fiahfy.mod.Object.call(this);
@@ -47,6 +49,7 @@ goog.inherits(fiahfy.mod.animation.KeyFrame, fiahfy.mod.Object);
 
 /**
  * @constructor
+ * @extends {fiahfy.mod.Object}
  */
 fiahfy.mod.animation.AnimationTimer = function() {
     fiahfy.mod.Object.call(this);
