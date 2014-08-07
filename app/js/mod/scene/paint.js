@@ -12,16 +12,21 @@ goog.require('fiahfy.mod.Object');
 
 
 /**
- * @param {number|string=} red
- * @param {number=} green
- * @param {number=} blue
- * @param {number=1} opacity
+ * @param {number|string=} red The red component of the color or color string.
+ * @param {number=} green The green component of the color.
+ * @param {number=} blue The blue component of the color.
+ * @param {number=} opacity The opacity component of the color.
  * @constructor
  */
 fiahfy.mod.scene.paint.Color = function(red, green, blue, opacity) {
     fiahfy.mod.Object.call(this);
 
-    // TODO:
+    red = this.supplement(red, 0.0);
+    green = this.supplement(green, 0.0);
+    blue = this.supplement(blue, 0.0);
+    opacity = this.supplement(opacity, 0.0);
+
+    // TODO: parse web color string
     if (typeof red === 'string' && red.charAt(0) == '#') {
         var colorString = red.substr(1);
         if (colorString.length == 3) {
@@ -35,27 +40,22 @@ fiahfy.mod.scene.paint.Color = function(red, green, blue, opacity) {
         blue = parseInt(colorString.substr(4, 2), 16);
     }
 
-    red = red || 0.0;
-    green = green || 0.0;
-    blue = blue || 0.0;
-    opacity = opacity || 1.0;
-
     /**
-     * Red color range
+     * Red
      * @private
      * @type {number}
      */
     this.red_ = (red <= 1) ? red : red / 255;
 
     /**
-     * Green color range
+     * Green
      * @private
      * @type {number}
      */
     this.green_ = (green <= 1) ? green : green / 255;
 
     /**
-     * Blue color range
+     * Blue
      * @private
      * @type {number}
      */
@@ -72,7 +72,7 @@ goog.inherits(fiahfy.mod.scene.paint.Color, fiahfy.mod.Object);
 
 /**
  * @public
- * @return {number} Red color range
+ * @return {number} The red component of the Color.
  */
 fiahfy.mod.scene.paint.Color.prototype.getRed = function() {
     return this.red_;
@@ -80,14 +80,14 @@ fiahfy.mod.scene.paint.Color.prototype.getRed = function() {
 
 /**
  * @public
- * @return {number} Green color range
+ * @return {number} The green component of the Color.
  */
 fiahfy.mod.scene.paint.Color.prototype.getGreen = function() {
     return this.green_;
 };
 /**
  * @public
- * @return {number} Blue color range
+ * @return {number} The blue component of the Color.
  */
 fiahfy.mod.scene.paint.Color.prototype.getBlue = function() {
     return this.blue_;
@@ -96,7 +96,7 @@ fiahfy.mod.scene.paint.Color.prototype.getBlue = function() {
 /**
  * @const
  * @public
- * @return {string} Color string
+ * @return {string} Color string.
  */
 fiahfy.mod.scene.paint.Color.prototype.getWeb = function() {
     return '#' +
@@ -108,11 +108,11 @@ fiahfy.mod.scene.paint.Color.prototype.getWeb = function() {
 /**
  * @const
  * @public
- * @param {number} red
- * @param {number} green
- * @param {number} blue
- * @param {number=1} opacity
- * @return {fiahfy.mod.scene.paint.Color} Color
+ * @param {number} red The red component of the Color.
+ * @param {number} green The green component of the Color.
+ * @param {number} blue The blue component of the Color.
+ * @param {number=} opacity The opacity component of the Color.
+ * @return {fiahfy.mod.scene.paint.Color} Color object.
  */
 fiahfy.mod.scene.paint.Color.color = function(red, green, blue, opacity) {
     return new fiahfy.mod.scene.paint.Color(red, green, blue, opacity);
@@ -121,11 +121,11 @@ fiahfy.mod.scene.paint.Color.color = function(red, green, blue, opacity) {
 /**
  * @const
  * @public
- * @param {number} red
- * @param {number} green
- * @param {number} blue
- * @param {number=255} opacity
- * @return {fiahfy.mod.scene.paint.Color} Color
+ * @param {number} red The red component of the Color.
+ * @param {number} green The green component of the Color.
+ * @param {number} blue The blue component of the Color.
+ * @param {number=} opacity The opacity component of the Color.
+ * @return {fiahfy.mod.scene.paint.Color} Color object.
  */
 fiahfy.mod.scene.paint.Color.rgb = function(red, green, blue, opacity) {
     return new fiahfy.mod.scene.paint.Color(red, green, blue, opacity);
@@ -134,8 +134,8 @@ fiahfy.mod.scene.paint.Color.rgb = function(red, green, blue, opacity) {
 /**
  * @const
  * @public
- * @param {string} colorString
- * @return {fiahfy.mod.scene.paint.Color} Color
+ * @param {string} colorString Color string.
+ * @return {fiahfy.mod.scene.paint.Color} Color object.
  */
 fiahfy.mod.scene.paint.Color.web = function(colorString) {
     return new fiahfy.mod.scene.paint.Color(colorString);

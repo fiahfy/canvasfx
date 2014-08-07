@@ -12,7 +12,7 @@ goog.require('fiahfy.mod.Object');
 
 
 /**
- * @param {number} millis Create a new Duration with milliseconds.
+ * @param {number} millis Create a new instance with milliseconds.
  * @constructor
  */
 fiahfy.mod.time.Duration = function(millis) {

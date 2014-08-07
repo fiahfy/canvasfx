@@ -27,7 +27,7 @@ fiahfy.mod.Object = function() {
 
 /**
  * @public
- * @return {Object}
+ * @return {Object} Cloned object.
  */
 fiahfy.mod.Object.prototype.clone = function() {
   var clone = {};
@@ -35,4 +35,17 @@ fiahfy.mod.Object.prototype.clone = function() {
     clone[key] = this[key];
   }
   return clone;
+};
+
+/**
+ * @protected
+ * @param {*} value Argument value.
+ * @param {*=} defaultValue Default value if argument value is undefined.
+ * @return {*}
+ */
+fiahfy.mod.Object.prototype.supplement = function(value, defaultValue) {
+    if (typeof value === 'undefined' && typeof defaultValue !== 'undefined') {
+        return defaultValue;
+    }
+    return value;
 };

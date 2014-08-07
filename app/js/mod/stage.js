@@ -14,7 +14,7 @@ goog.require('fiahfy.mod.scene.Scene');
 
 
 /**
- * @param {HTMLElement} element DOM node
+ * @param {HTMLElement} element DOM node.
  * @constructor
  */
 fiahfy.mod.stage.Stage = function(element) {
@@ -29,7 +29,7 @@ fiahfy.mod.stage.Stage = function(element) {
     element.appendChild(this.canvas_);
 
     /**
-     * Canvas Context
+     * Canvas context
      * @private
      * @type {CanvasRenderingContext2D}
      */
@@ -55,8 +55,8 @@ goog.inherits(fiahfy.mod.stage.Stage, fiahfy.mod.Object);
 
 /**
  * @public
- * @param {number|fiahfy.mod.geometry.Dimension} width Width or Dimension
- * @param {number} height Height
+ * @param {number|fiahfy.mod.geometry.Dimension} width Width or dimension.
+ * @param {number=} height Height.
  */
 fiahfy.mod.stage.Stage.prototype.setSize = function(width, height) {
     if (width instanceof fiahfy.mod.geometry.Dimension) {
@@ -89,6 +89,5 @@ fiahfy.mod.stage.Stage.prototype.setScene = function(scene) {
  * @public
  */
 fiahfy.mod.stage.Stage.prototype.show = function() {
-    //this.resize_();
     this.scene_.draw(this.context_);
 };

@@ -37,8 +37,8 @@ goog.inherits(fiahfy.mod.scene.Scene, fiahfy.mod.Object);
 
 /**
  * @public
- * @param {number|fiahfy.mod.geometry.Dimension} width Width or Dimension
- * @param {number} height height
+ * @param {number|fiahfy.mod.geometry.Dimension} width Width or dimension.
+ * @param {number=} height height.
  */
 fiahfy.mod.scene.Scene.prototype.setSize = function(width, height) {
     if (width instanceof fiahfy.mod.geometry.Dimension) {
@@ -50,7 +50,7 @@ fiahfy.mod.scene.Scene.prototype.setSize = function(width, height) {
 
 /**
  * @public
- * @param {fiahfy.mod.scene.shape.Shape} shape
+ * @param {fiahfy.mod.scene.shape.Shape} shape Shape object.
  */
 fiahfy.mod.scene.Scene.prototype.add = function(shape) {
     this.shapes_.push(shape);
@@ -58,7 +58,7 @@ fiahfy.mod.scene.Scene.prototype.add = function(shape) {
 
 /**
  * @public
- * @param {CanvasRenderingContext2D} context
+ * @param {CanvasRenderingContext2D} context Canvas DOM element.
  */
 fiahfy.mod.scene.Scene.prototype.draw = function(context) {
     this.clear(context);
@@ -72,7 +72,7 @@ fiahfy.mod.scene.Scene.prototype.draw = function(context) {
 
 /**
  * @public
- * @param {CanvasRenderingContext2D} context
+ * @param {CanvasRenderingContext2D} context Canvas DOM element.
  */
 fiahfy.mod.scene.Scene.prototype.clear = function(context) {
     var rect = new fiahfy.mod.scene.shape.Rectangle(

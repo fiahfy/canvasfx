@@ -36,7 +36,7 @@ goog.inherits(fiahfy.mod.animation.Timeline, fiahfy.mod.animation.Animation);
 
 
 /**
- * @param {fiahfy.mod.time.Duration} duration Key frame offset
+ * @param {fiahfy.mod.time.Duration} duration Key frame offset.
  * @constructor
  */
 fiahfy.mod.animation.KeyFrame = function(duration) {
@@ -62,7 +62,7 @@ goog.inherits(fiahfy.mod.animation.AnimationTimer, fiahfy.mod.Object);
 
 /**
  * @public
- * @param {number} now
+ * @param {number} now The timestamp of the current frame.
  */
 fiahfy.mod.animation.AnimationTimer.prototype.handle = goog.abstractMethod;
 
@@ -85,7 +85,7 @@ fiahfy.mod.animation.AnimationTimer.prototype.start = function() {
  * @public
  */
 fiahfy.mod.animation.AnimationTimer.prototype.stop = function() {
-    fiahfy.mod.animation.AnimationTimer.canceRequestlAnimationFrame_()(
+    fiahfy.mod.animation.AnimationTimer.cancelRequestlAnimationFrame_()(
         this.id_
     );
     this.id_ = null;
@@ -94,7 +94,7 @@ fiahfy.mod.animation.AnimationTimer.prototype.stop = function() {
 /**
  * @const
  * @private
- * @return {Function} Enable request animation frame func
+ * @return {Function} Enable request animation frame func.
  */
 fiahfy.mod.animation.AnimationTimer.requestAnimationFrame_ = function() {
     return window.requestAnimationFrame ||
@@ -111,9 +111,9 @@ fiahfy.mod.animation.AnimationTimer.requestAnimationFrame_ = function() {
 /**
  * @const
  * @private
- * @return {Function} Enable cancel request animation frame func
+ * @return {Function} Enable cancel request animation frame func.
  */
-fiahfy.mod.animation.AnimationTimer.canceRequestlAnimationFrame_ = function() {
+fiahfy.mod.animation.AnimationTimer.cancelRequestlAnimationFrame_ = function() {
     return window.cancelRequestAnimationFrame ||
         window.webkitCancelRequestAnimationFrame ||
         window.mozCancelRequestAnimationFrame ||

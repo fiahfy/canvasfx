@@ -137,7 +137,7 @@ fiahfy.sample.App.prototype.start = function() {
             scene.add(circle);
 
             // show
-            me.stage.show();
+            //me.stage.show();
         };
         return t;
     })().start();

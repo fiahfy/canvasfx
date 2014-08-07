@@ -66,13 +66,13 @@ goog.inherits(fiahfy.mod.scene.shape.Shape, fiahfy.mod.Object);
 
 /**
  * @public
- * @param {CanvasRenderingContext2D} context Canvas DOM element
+ * @param {CanvasRenderingContext2D} context Canvas DOM element.
  */
  fiahfy.mod.scene.shape.Shape.prototype.draw = goog.abstractMethod;
 
 /**
  * @public
- * @param {?fiahfy.mod.scene.paint.Color} color
+ * @param {?fiahfy.mod.scene.paint.Color} color Fill color.
  */
 fiahfy.mod.scene.shape.Shape.prototype.setFill = function(color) {
     this.fill = color;
@@ -80,7 +80,7 @@ fiahfy.mod.scene.shape.Shape.prototype.setFill = function(color) {
 
 /**
  * @public
- * @param {?fiahfy.mod.scene.paint.Color} color
+ * @param {?fiahfy.mod.scene.paint.Color} color Stroke color.
  */
 fiahfy.mod.scene.shape.Shape.prototype.setStroke = function(color) {
     this.stroke = color;
@@ -88,7 +88,7 @@ fiahfy.mod.scene.shape.Shape.prototype.setStroke = function(color) {
 
 /**
  * @public
- * @param {number} width
+ * @param {number} width Stroke width.
  */
 fiahfy.mod.scene.shape.Shape.prototype.setStrokeWidth = function(width) {
     this.strokeWidth = width;
@@ -96,7 +96,7 @@ fiahfy.mod.scene.shape.Shape.prototype.setStrokeWidth = function(width) {
 
 /**
  * @public
- * @param {fiahfy.mod.scene.shape.StrokeType} type
+ * @param {fiahfy.mod.scene.shape.StrokeType} type Stroke type.
  */
 fiahfy.mod.scene.shape.Shape.prototype.setStrokeType = function(type) {
     this.strokeType = type;
@@ -104,20 +104,20 @@ fiahfy.mod.scene.shape.Shape.prototype.setStrokeType = function(type) {
 
 
 /**
- * @param {number=} x Position x
- * @param {number=} y Position y
- * @param {number=} width Size width
- * @param {number=} height Size height
+ * @param {number=} x Position x.
+ * @param {number=} y Position y.
+ * @param {number=} width Size width.
+ * @param {number=} height Size height.
  * @constructor
  * @extends {fiahfy.mod.scene.Shape}
  */
 fiahfy.mod.scene.shape.Rectangle = function(x, y, width, height) {
     fiahfy.mod.scene.shape.Shape.call(this);
 
-    x = x || 0.0;
-    y = y || 0.0;
-    width = width || 0.0;
-    height = height || 0.0;
+    x = this.supplement(x, 0.0);
+    y = this.supplement(y, 0.0);
+    width = this.supplement(width, 0.0);
+    height = this.supplement(height, 0.0);
 
     /**
      * Position
@@ -138,7 +138,7 @@ goog.inherits(fiahfy.mod.scene.shape.Rectangle, fiahfy.mod.scene.shape.Shape);
 
 /**
  * @public
- * @param {CanvasRenderingContext2D} context Canvas DOM element
+ * @param {CanvasRenderingContext2D} context Canvas DOM element.
  * @override
  */
 fiahfy.mod.scene.shape.Rectangle.prototype.draw = function(context) {
@@ -183,18 +183,18 @@ fiahfy.mod.scene.shape.Rectangle.prototype.draw = function(context) {
 
 
 /**
- * @param {number=} x Position x
- * @param {number=} y Position y
- * @param {number=} radius Radius
+ * @param {number=} x Position x.
+ * @param {number=} y Position y.
+ * @param {number=} radius Radius.
  * @constructor
  * @extends {fiahfy.mod.scene.Shape}
  */
 fiahfy.mod.scene.shape.Circle = function(x, y, radius) {
     fiahfy.mod.scene.shape.Shape.call(this);
 
-    x = x || 0.0;
-    y = y || 0.0;
-    radius = radius || 0.0;
+    x = this.supplement(x, 0.0);
+    y = this.supplement(y, 0.0);
+    radius = this.supplement(radius, 0.0);
 
     /**
      * Position
@@ -215,7 +215,7 @@ goog.inherits(fiahfy.mod.scene.shape.Circle, fiahfy.mod.scene.shape.Shape);
 
 /**
  * @public
- * @param {CanvasRenderingContext2D} context Canvas DOM element
+ * @param {CanvasRenderingContext2D} context Canvas DOM element.
  * @override
  */
 fiahfy.mod.scene.shape.Circle.prototype.draw = function(context) {
@@ -261,20 +261,20 @@ fiahfy.mod.scene.shape.Circle.prototype.draw = function(context) {
 
 
 /**
- * @param {number=} startX Start position x
- * @param {number=} startY Start position y
- * @param {number=} endX End position x
- * @param {number=} endY End position y
+ * @param {number=} startX Start position x.
+ * @param {number=} startY Start position y.
+ * @param {number=} endX End position x.
+ * @param {number=} endY End position y.
  * @constructor
  * @extends {fiahfy.mod.scene.Shape}
  */
 fiahfy.mod.scene.shape.Line = function(startX, startY, endX, endY) {
     fiahfy.mod.scene.shape.Shape.call(this);
 
-    startX = startX || 0.0;
-    startY = startY || 0.0;
-    endX = endX || 0.0;
-    endY = endY || 0.0;
+    startX = this.supplement(startX, 0.0);
+    startY = this.supplement(startY, 0.0);
+    endX = this.supplement(endX, 0.0);
+    endY = this.supplement(endY, 0.0);
 
     /**
      * Start position
@@ -295,7 +295,7 @@ goog.inherits(fiahfy.mod.scene.shape.Line, fiahfy.mod.scene.shape.Shape);
 
 /**
  * @public
- * @param {CanvasRenderingContext2D} context Canvas DOM element
+ * @param {CanvasRenderingContext2D} context Canvas DOM element.
  * @override
  */
 fiahfy.mod.scene.shape.Line.prototype.draw = function(context) {
