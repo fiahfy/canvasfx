@@ -15,74 +15,28 @@ goog.require('fiahfy.mod.scene.shape.Shape');
 
 
 /**
+ * @param {fiahfy.mod.scene.Node} root
  * @constructor
  * @extends {fiahfy.mod.Object}
  */
-fiahfy.mod.scene.Scene = function() {
+fiahfy.mod.scene.Scene = function(root) {
     fiahfy.mod.Object.call(this);
 
     /**
-     * Placed nodes on this scene
+     * Root node on this scene
      * @private
      * @type {Array}
      */
-    this.nodes_ = [];
-
-    /**
-     * Size
-     * @private
-     * @type {fiahfy.mod.geometry.Dimension}
-     */
-    this.size_ = new fiahfy.mod.geometry.Dimension();
+    this.root_ = root;
 };
 goog.inherits(fiahfy.mod.scene.Scene, fiahfy.mod.Object);
 
 /**
  * @public
- * @param {number|fiahfy.mod.geometry.Dimension} width Width or dimension.
- * @param {number=} height height.
+ * @return {fiahfy.mod.scene.Node} Root node.
  */
-fiahfy.mod.scene.Scene.prototype.setSize = function(width, height) {
-    if (width instanceof fiahfy.mod.geometry.Dimension) {
-        this.size_ = width.clone();
-    } else {
-        this.size_ = new fiahfy.mod.geometry.Dimension(width, height);
-    }
-};
-
-/**
- * @public
- * @param {fiahfy.mod.scene.Node} node Node object.
- */
-fiahfy.mod.scene.Scene.prototype.add = function(node) {
-    this.nodes_.push(node);
-};
-
-/**
- * @public
- * @param {CanvasRenderingContext2D} context Canvas DOM element.
- */
-fiahfy.mod.scene.Scene.prototype.draw = function(context) {
-    this.clear(context);
-
-    for (var i = 0; i < this.nodes_.length; i++)
-    {
-        var node = this.nodes_[i];
-        node.draw(context);
-    }
-};
-
-/**
- * @public
- * @param {CanvasRenderingContext2D} context Canvas DOM element.
- */
-fiahfy.mod.scene.Scene.prototype.clear = function(context) {
-    var rect = new fiahfy.mod.scene.shape.Rectangle(
-        0, 0,
-        this.size_.getWidth(), this.size_.getHeight()
-    );
-    rect.setFill(fiahfy.mod.scene.paint.Color.WHITE);
-    rect.draw(context);
+fiahfy.mod.scene.Scene.prototype.getRoot = function() {
+    return this.root_;
 };
 
 
@@ -92,8 +46,29 @@ fiahfy.mod.scene.Scene.prototype.clear = function(context) {
  */
 fiahfy.mod.scene.Node = function() {
     fiahfy.mod.Object.call(this);
+
+    /**
+     * @private
+     * @type {fiahfy.mod.event.EventListener}
+     */
+     this.onMouseClicked = null;
 };
 goog.inherits(fiahfy.mod.scene.Node, fiahfy.mod.Object);
+
+/**
+ * @public
+ * @param {number|fiahfy.mod.geometory.Point} x
+ * @param {number} y
+ */
+fiahfy.mod.scene.Node.prototype.contains = goog.abstractMethod;
+
+/**
+ * @public
+ * @return {fiahfy.mod.event.EventListener}
+ */
+fiahfy.mod.scene.Node.prototype.getOnMouseClicked = function() {
+    return this.onMouseClicked;
+};
 
 /**
  * @public
@@ -109,9 +84,27 @@ fiahfy.mod.scene.Node.prototype.setLayoutY = goog.abstractMethod;
 
 /**
  * @public
+ * @param {fiahfy.mod.event.EventListener} listener
+ */
+fiahfy.mod.scene.Node.prototype.setOnMouseClicked = function(listener) {
+    this.onMouseClicked_ = listener;
+};
+
+/**
+ * @public
  * @param {CanvasRenderingContext2D} context Canvas DOM element.
  */
 fiahfy.mod.scene.Node.prototype.draw = goog.abstractMethod;
+
+/**
+ * @public
+ * @param {fiahfy.mod.event.Event} event
+ */
+fiahfy.mod.scene.Node.prototype.handleEvent = function(event) {
+    if (this.contains(event.getX(), event.getY()) && this.onMouseClicked_) {
+        this.onMouseClicked_.handle(event);
+    }
+};
 
 
 /**
@@ -130,6 +123,19 @@ fiahfy.mod.scene.Group = function(var_args) {
     this.children_ = Array.prototype.slice.call(arguments);
 };
 goog.inherits(fiahfy.mod.scene.Group, fiahfy.mod.scene.Node);
+
+/**
+ * @public
+ * @param {CanvasRenderingContext2D} context Canvas DOM element.
+ * @override
+ */
+fiahfy.mod.scene.Group.prototype.draw = function(context) {
+    for (var i = 0; i < this.children_.length; i++)
+    {
+        var child = this.children_[i];
+        child.draw(context);
+    }
+};
 
 /**
  * @public
@@ -167,13 +173,27 @@ fiahfy.mod.scene.Group.prototype.setLayoutY = function(y) {
 
 /**
  * @public
- * @param {CanvasRenderingContext2D} context Canvas DOM element.
- * @override
+ * @param {fiahfy.mod.event.Event} event
  */
-fiahfy.mod.scene.Node.prototype.draw = function(context) {
+fiahfy.mod.scene.Group.prototype.handleEvent = function(event) {
+    var result = false;
     for (var i = 0; i < this.children_.length; i++)
     {
         var child = this.children_[i];
-        child.draw(context);
+        if (child.contains(event.getX(), event.getY())) {
+            result = true;
+            break;
+        }
+    }
+    if (!result) return;
+
+    for (var i = 0; i < this.children_.length; i++)
+    {
+        var child = this.children_[i];
+        child.handleEvent(event);
+    }
+    
+    if (this.onMouseClicked_) {
+        this.onMouseClicked_.handle(event);
     }
 };

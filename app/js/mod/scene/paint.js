@@ -73,10 +73,10 @@ goog.inherits(fiahfy.mod.scene.paint.Color, fiahfy.mod.Object);
 
 /**
  * @public
- * @return {number} The red component of the Color.
+ * @return {number} The blue component of the Color.
  */
-fiahfy.mod.scene.paint.Color.prototype.getRed = function() {
-    return this.red_;
+fiahfy.mod.scene.paint.Color.prototype.getBlue = function() {
+    return this.blue_;
 };
 
 /**
@@ -86,12 +86,13 @@ fiahfy.mod.scene.paint.Color.prototype.getRed = function() {
 fiahfy.mod.scene.paint.Color.prototype.getGreen = function() {
     return this.green_;
 };
+
 /**
  * @public
- * @return {number} The blue component of the Color.
+ * @return {number} The red component of the Color.
  */
-fiahfy.mod.scene.paint.Color.prototype.getBlue = function() {
-    return this.blue_;
+fiahfy.mod.scene.paint.Color.prototype.getRed = function() {
+    return this.red_;
 };
 
 /**

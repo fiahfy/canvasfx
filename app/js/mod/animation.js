@@ -88,7 +88,7 @@ fiahfy.mod.animation.AnimationTimer.prototype.start = function() {
  * @public
  */
 fiahfy.mod.animation.AnimationTimer.prototype.stop = function() {
-    fiahfy.mod.animation.AnimationTimer.cancelRequestlAnimationFrame_()(
+    fiahfy.mod.animation.AnimationTimer.cancelAnimationFrame_()(
         this.id_
     );
     this.id_ = null;
@@ -114,10 +114,11 @@ fiahfy.mod.animation.AnimationTimer.requestAnimationFrame_ = function() {
 /**
  * @const
  * @private
- * @return {Function} Enable cancel request animation frame func.
+ * @return {Function} Enable cancel animation frame func.
  */
-fiahfy.mod.animation.AnimationTimer.cancelRequestlAnimationFrame_ = function() {
-    return window.cancelRequestAnimationFrame ||
+fiahfy.mod.animation.AnimationTimer.cancelAnimationFrame_ = function() {
+    return window.cancelAnimationFrame ||
+        window.cancelRequestAnimationFrame ||
         window.webkitCancelRequestAnimationFrame ||
         window.mozCancelRequestAnimationFrame ||
         window.oCancelRequestAnimationFrame ||

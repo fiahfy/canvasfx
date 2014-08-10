@@ -84,18 +84,18 @@ fiahfy.mod.scene.shape.Shape.prototype.setStroke = function(color) {
 
 /**
  * @public
- * @param {number} width Stroke width.
- */
-fiahfy.mod.scene.shape.Shape.prototype.setStrokeWidth = function(width) {
-    this.strokeWidth = width;
-};
-
-/**
- * @public
  * @param {fiahfy.mod.scene.shape.StrokeType} type Stroke type.
  */
 fiahfy.mod.scene.shape.Shape.prototype.setStrokeType = function(type) {
     this.strokeType = type;
+};
+
+/**
+ * @public
+ * @param {number} width Stroke width.
+ */
+fiahfy.mod.scene.shape.Shape.prototype.setStrokeWidth = function(width) {
+    this.strokeWidth = width;
 };
 
 
@@ -134,20 +134,16 @@ goog.inherits(fiahfy.mod.scene.shape.Rectangle, fiahfy.mod.scene.shape.Shape);
 
 /**
  * @public
- * @param {number} x
- * @override
+ * @param {number|fiahfy.mod.geometory.Point} x
+ * @param {number=} y
  */
-fiahfy.mod.scene.shape.Rectangle.prototype.setLayoutX = function(x) {
-    this.position = this.position.add(x, 0);
-};
-
-/**
- * @public
- * @param {number} y
- * @override
- */
-fiahfy.mod.scene.shape.Rectangle.prototype.setLayoutY = function(y) {
-    this.position = this.position.add(0, y);
+fiahfy.mod.scene.shape.Rectangle.prototype.contains = function(x, y) {
+    if (x instanceof fiahfy.mod.geometry.Dimension) {
+        y = x.getY();
+        x = x.getX();
+    }
+    return this.position.getX() <= x && x <= this.position.getX() &&
+        this.position.getY() <= y && y <= this.position.getY();
 };
 
 /**
@@ -195,6 +191,24 @@ fiahfy.mod.scene.shape.Rectangle.prototype.draw = function(context) {
     }
 };
 
+/**
+ * @public
+ * @param {number} x
+ * @override
+ */
+fiahfy.mod.scene.shape.Rectangle.prototype.setLayoutX = function(x) {
+    this.position = this.position.add(x, 0);
+};
+
+/**
+ * @public
+ * @param {number} y
+ * @override
+ */
+fiahfy.mod.scene.shape.Rectangle.prototype.setLayoutY = function(y) {
+    this.position = this.position.add(0, y);
+};
+
 
 /**
  * @param {number=} x Position x.
@@ -229,20 +243,15 @@ goog.inherits(fiahfy.mod.scene.shape.Circle, fiahfy.mod.scene.shape.Shape);
 
 /**
  * @public
- * @param {number} x
- * @override
+ * @param {number|fiahfy.mod.geometory.Point} x
+ * @param {number=} y
  */
-fiahfy.mod.scene.shape.Circle.prototype.setLayoutX = function(x) {
-    this.position = this.position.add(x, 0);
-};
-
-/**
- * @public
- * @param {number} y
- * @override
- */
-fiahfy.mod.scene.shape.Circle.prototype.setLayoutY = function(y) {
-    this.position = this.position.add(0, y);
+fiahfy.mod.scene.shape.Circle.prototype.contains = function(x, y) {
+    if (x instanceof fiahfy.mod.geometry.Dimension) {
+        y = x.getY();
+        x = x.getX();
+    }
+    return (this.position.distance(x, y) <= this.radius);
 };
 
 /**
@@ -291,6 +300,40 @@ fiahfy.mod.scene.shape.Circle.prototype.draw = function(context) {
     }
 };
 
+/**
+ * @public
+ * @param {number} x
+ */
+fiahfy.mod.scene.shape.Circle.prototype.setCenterX = function(x) {
+    this.position = new fiahfy.mod.geometry.Point(x, this.position.getY());
+};
+
+/**
+ * @public
+ * @param {number} y
+ */
+fiahfy.mod.scene.shape.Circle.prototype.setCenterY = function(y) {
+    this.position = new fiahfy.mod.geometry.Point(this.position.getX(), y);
+};
+
+/**
+ * @public
+ * @param {number} x
+ * @override
+ */
+fiahfy.mod.scene.shape.Circle.prototype.setLayoutX = function(x) {
+    this.position = this.position.add(x, 0);
+};
+
+/**
+ * @public
+ * @param {number} y
+ * @override
+ */
+fiahfy.mod.scene.shape.Circle.prototype.setLayoutY = function(y) {
+    this.position = this.position.add(0, y);
+};
+
 
 /**
  * @param {number=} startX Start position x.
@@ -327,22 +370,11 @@ goog.inherits(fiahfy.mod.scene.shape.Line, fiahfy.mod.scene.shape.Shape);
 
 /**
  * @public
- * @param {number} x
- * @override
+ * @param {number|fiahfy.mod.geometory.Point} x
+ * @param {number=} y
  */
-fiahfy.mod.scene.shape.Line.prototype.setLayoutX = function(x) {
-    this.start = this.start.add(x, 0);
-    this.end = this.end.add(x, 0);
-};
-
-/**
- * @public
- * @param {number} y
- * @override
- */
-fiahfy.mod.scene.shape.Line.prototype.setLayoutY = function(y) {
-    this.start = this.start.add(0, y);
-    this.end = this.end.add(0, y);
+fiahfy.mod.scene.shape.Line.prototype.contains = function(x, y) {
+    return false;
 };
 
 /**
@@ -367,4 +399,24 @@ fiahfy.mod.scene.shape.Line.prototype.draw = function(context) {
         parseInt(this.end.getY()) + offset
     );
     context.stroke();
+};
+
+/**
+ * @public
+ * @param {number} x
+ * @override
+ */
+fiahfy.mod.scene.shape.Line.prototype.setLayoutX = function(x) {
+    this.start = this.start.add(x, 0);
+    this.end = this.end.add(x, 0);
+};
+
+/**
+ * @public
+ * @param {number} y
+ * @override
+ */
+fiahfy.mod.scene.shape.Line.prototype.setLayoutY = function(y) {
+    this.start = this.start.add(0, y);
+    this.end = this.end.add(0, y);
 };

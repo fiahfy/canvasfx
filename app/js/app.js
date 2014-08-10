@@ -10,6 +10,7 @@ goog.provide('fiahfy.sample.App');
 
 goog.require('fiahfy.mod.animation.AnimationTimer');
 goog.require('fiahfy.mod.application.Application');
+goog.require('fiahfy.mod.event.EventListener');
 goog.require('fiahfy.mod.math.Math');
 goog.require('fiahfy.mod.scene.Scene');
 goog.require('fiahfy.mod.scene.paint.Color');
@@ -40,11 +41,19 @@ fiahfy.sample.App.prototype.start = function() {
     var c = new fiahfy.mod.scene.shape.Circle(10, 10, 5);
     var r = new fiahfy.mod.scene.shape.Rectangle(5, 20, 10, 10);
     var g = new fiahfy.mod.scene.Group(c, r);
-    var s = new fiahfy.mod.scene.Scene();
+    var s = new fiahfy.mod.scene.Scene(g);
     this.stage.setScene(s);
-    s.add(g);
 
     var me = this;
+    g.setOnMouseClicked((function() {
+        var e = new fiahfy.mod.event.EventListener();
+        e.handle = function(event) {
+            console.log('c');
+            c.setCenterX(event.getX());
+            c.setCenterY(event.getY());
+        };
+        return e;
+    })());
     (function() {
         var start = 0;
         var before = 0;
@@ -94,7 +103,7 @@ fiahfy.sample.App.prototype.start = function() {
                 );
                 y.setStroke(fiahfy.mod.scene.paint.Color.GRAY);
                 if (i % 100 == 0) y.setStrokeWidth(2.0);
-                scene.add(y);
+         //       scene.add(y);
             }
             for (var j = 0; j <= me.stage.getSize().getHeight(); j += 10)
             {
@@ -104,7 +113,7 @@ fiahfy.sample.App.prototype.start = function() {
                 );
                 x.setStroke(fiahfy.mod.scene.paint.Color.GRAY);
                 if (j % 100 == 0) x.setStrokeWidth(2.0);
-                scene.add(x);
+          //      scene.add(x);
             }
 
             // draw rectangle

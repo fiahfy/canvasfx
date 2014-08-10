@@ -6,6 +6,7 @@
  */
 
 
+goog.provide('fiahfy.mod.geometry.Bounds');
 goog.provide('fiahfy.mod.geometry.Dimension');
 goog.provide('fiahfy.mod.geometry.Point');
 
@@ -42,6 +43,30 @@ goog.inherits(fiahfy.mod.geometry.Point, fiahfy.mod.Object);
 
 /**
  * @public
+ * @param {number} x X.
+ * @param {number} y Y.
+ * @return {fiahfy.mod.geometry.Point} Point added the coordinates.
+ */
+fiahfy.mod.geometry.Point.prototype.add = function(x, y) {
+    return new fiahfy.mod.geometry.Point(this.x_ + x, this.y_ + y);
+}
+
+/**
+ * @public
+ * @param {number|fiahfy.mod.geometry.Point} x X.
+ * @param {number=} y Y.
+ * @return {number}
+ */
+fiahfy.mod.geometry.Point.prototype.distance = function(x, y) {
+    if (x instanceof fiahfy.mod.geometry.Point) {
+        y = x.getY();
+        x = x.getX();
+    }
+    return Math.sqrt(Math.pow(this.x_ - x, 2) + Math.pow(this.y_ - y, 2));
+}
+
+/**
+ * @public
  * @return {number} X.
  */
 fiahfy.mod.geometry.Point.prototype.getX = function() {
@@ -56,15 +81,6 @@ fiahfy.mod.geometry.Point.prototype.getY = function() {
     return this.y_;
 }
 
-/**
- * @public
- * @param {number} x X.
- * @param {number} y Y.
- * @return {fiahfy.mod.geometry.Point} Point added the coordinates.
- */
-fiahfy.mod.geometry.Point.prototype.add = function(x, y) {
-    return new fiahfy.mod.geometry.Point(this.x_ + x, this.y_ + y);
-}
 
 /**
  * @param {number=} width Width.
@@ -96,16 +112,58 @@ goog.inherits(fiahfy.mod.geometry.Dimension, fiahfy.mod.Object);
 
 /**
  * @public
+ * @return {number} Height.
+ */
+fiahfy.mod.geometry.Dimension.prototype.getHeight = function() {
+    return this.height_;
+}
+
+/**
+ * @public
  * @return {number} Width.
  */
 fiahfy.mod.geometry.Dimension.prototype.getWidth = function() {
     return this.width_;
 }
 
+
 /**
- * @public
- * @return {number} Height.
+ * @param {number} minX The X coordinate of the upper-left corner.
+ * @param {number} minY The Y coordinate of the upper-left corner.
+ * @param {number} width The width of the Bounds.
+ * @param {number} height The height of the Bounds.
+ * @constructor
+ * @extends {fiahfy.mod.Object}
  */
-fiahfy.mod.geometry.Dimension.prototype.getHeight = function() {
-    return this.height_;
-}
+fiahfy.mod.geometry.Bounds = function(minX, minY, width, height) {
+    fiahfy.mod.Object.call(this);
+
+    /**
+     * The X coordinate of the upper-left corner.
+     * @type {number}
+     * @private
+     */
+    this.minX_ = minX;
+
+    /**
+     * The Y coordinate of the upper-left corner.
+     * @type {number}
+     * @private
+     */
+    this.minY_ = minY;
+
+    /**
+     * The width of the Bounds.
+     * @type {number}
+     * @private
+     */
+    this.width_ = width;
+
+    /**
+     * The height of the Bounds.
+     * @type {number}
+     * @private
+     */
+    this.height_ = height;
+};
+goog.inherits(fiahfy.mod.geometry.Bounds, fiahfy.mod.Object);
