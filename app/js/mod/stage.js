@@ -39,53 +39,44 @@ fiahfy.mod.stage.Stage = function(element) {
     this.context_ = this.canvas_.getContext('2d');
 
     /**
-     * Current Scene.
+     * Specify the scene to be used on this stage.
      * @private
      * @type {fiahfy.mod.scene.Scene}
      */
     this.scene_ = null;
 
     /**
-     * Size
+     * The width of this Stage.
+     * @type {number}
      * @private
-     * @type {fiahfy.mod.geometry.Dimension}
      */
-    this.size_ = new fiahfy.mod.geometry.Dimension();
+    this.width_ = element.offsetWidth;
 
-    this.setSize(element.offsetWidth, element.offsetHeight);
+    /**
+     * The height of this Stage.
+     * @type {number}
+     * @private
+     */
+    this.height_ = element.offsetHeight;
+
+
     this.addEventLinstener_();
 };
 goog.inherits(fiahfy.mod.stage.Stage, fiahfy.mod.Object);
 
 /**
  * @public
- * @return {fiahfy.mod.geometry.Dimension} Size
- */
-fiahfy.mod.stage.Stage.prototype.getSize = function() {
-    return this.size_;
-};
-
-/**
- * @public
- * @param {fiahfy.mod.scene.Scene} scene
+ * @param {fiahfy.mod.scene.Scene} scene Specify the scene
+ *     to be used on this stage.
  */
 fiahfy.mod.stage.Stage.prototype.setScene = function(scene) {
     this.scene_ = scene;
-};
-
-/**
- * @public
- * @param {number|fiahfy.mod.geometry.Dimension} width Width or dimension.
- * @param {number=} height Height.
- */
-fiahfy.mod.stage.Stage.prototype.setSize = function(width, height) {
-    if (width instanceof fiahfy.mod.geometry.Dimension) {
-        this.size_ = width.clone();
-    } else {
-        this.size_ = new fiahfy.mod.geometry.Dimension(width, height);
+    if (this.scene_.getWidth() && this.scene_.getHeight()) {
+        this.width_ = this.scene_.getWidth();
+        this.height_ = this.scene_.getHeight();
     }
-    this.canvas_.width = this.size_.getWidth();
-    this.canvas_.height = this.size_.getHeight();
+    this.canvas_.width = this.width_;
+    this.canvas_.height = this.height_;
 };
 
 /**
@@ -102,7 +93,7 @@ fiahfy.mod.stage.Stage.prototype.show = function() {
 fiahfy.mod.stage.Stage.prototype.clear = function() {
     var rect = new fiahfy.mod.scene.shape.Rectangle(
         0, 0,
-        this.size_.getWidth(), this.size_.getHeight()
+        this.width_, this.height_
     );
     rect.setFill(fiahfy.mod.scene.paint.Color.WHITE);
     rect.draw(this.context_);

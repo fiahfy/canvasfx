@@ -56,6 +56,22 @@ fiahfy.mod.scene.Scene.prototype.getRoot = function() {
     return this.root_;
 };
 
+/**
+ * @public
+ * @return {number} The width of this Scene.
+ */
+fiahfy.mod.scene.Scene.prototype.getWidth = function() {
+    return this.width_;
+};
+
+/**
+ * @public
+ * @return {number} The height of this Scene.
+ */
+fiahfy.mod.scene.Scene.prototype.getHeight = function() {
+    return this.height_;
+};
+
 
 /**
  * @constructor
