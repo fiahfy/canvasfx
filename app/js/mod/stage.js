@@ -2,7 +2,7 @@
 
 
 /**
- * @fileoverview xxx
+ * @fileoverview Provides the top-level container classes.
  */
 
 
@@ -11,11 +11,12 @@ goog.provide('fiahfy.mod.stage.Stage');
 goog.require('fiahfy.mod.Object');
 goog.require('fiahfy.mod.geometry.Dimension');
 goog.require('fiahfy.mod.scene.Scene');
-goog.require('fiahfy.mod.scene.input.mouseEvent');
+goog.require('fiahfy.mod.scene.input.MouseEvent');
 
 
 /**
- * @param {HTMLElement} element DOM node.
+ * The top level container.
+ * @param {HTMLElement} element Target DOM node.
  * @constructor
  * @extends {fiahfy.mod.Object}
  */
@@ -23,7 +24,7 @@ fiahfy.mod.stage.Stage = function(element) {
     fiahfy.mod.Object.call(this);
 
     /**
-     * Canvas DOM element
+     * Canvas DOM element.
      * @private
      * @type {HTMLElement}
      */
@@ -31,14 +32,14 @@ fiahfy.mod.stage.Stage = function(element) {
     element.appendChild(this.canvas_);
 
     /**
-     * Canvas context
+     * Canvas context.
      * @private
      * @type {CanvasRenderingContext2D}
      */
     this.context_ = this.canvas_.getContext('2d');
 
     /**
-     * Current Scene
+     * Current Scene.
      * @private
      * @type {fiahfy.mod.scene.Scene}
      */
@@ -113,14 +114,14 @@ fiahfy.mod.stage.Stage.prototype.clear = function() {
 fiahfy.mod.stage.Stage.prototype.addEventLinstener_ = function() {
     //
     var me = this;
-    this.canvas_.onclick = (function(e){
+    this.canvas_.onclick = (function(e) {
         //console.log(e);
         //console.log(e.target.getBoundingClientRect());
         var rect = e.target.getBoundingClientRect();
         var x = e.clientX - rect.left;
         var y = e.clientY - rect.top;
         //console.log(x, y);
-        var event = new fiahfy.mod.scene.input.mouseEvent(x, y);
+        var event = new fiahfy.mod.scene.input.MouseEvent(x, y);
         var root = me.scene_.getRoot();
         //if (root.contains(x, y)) {
             root.handleEvent(event);

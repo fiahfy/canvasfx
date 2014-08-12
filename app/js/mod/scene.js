@@ -2,7 +2,7 @@
 
 
 /**
- * @fileoverview xxx
+ * @fileoverview Provides the core set of base classes for Scene Graph API.
  */
 
 
@@ -15,25 +15,42 @@ goog.require('fiahfy.mod.scene.shape.Shape');
 
 
 /**
- * @param {fiahfy.mod.scene.Node} root
+ * The Scene class is the container for all content in a scene graph.
+ * @param {fiahfy.mod.scene.Node} root The root node of the scene graph.
+ * @param {number=} width The width of the scene.
+ * @param {number=} height The height of the scene.
  * @constructor
  * @extends {fiahfy.mod.Object}
  */
-fiahfy.mod.scene.Scene = function(root) {
+fiahfy.mod.scene.Scene = function(root, width, height) {
     fiahfy.mod.Object.call(this);
 
     /**
-     * Root node on this scene
+     * The root node of the scene graph.
      * @private
-     * @type {Array}
+     * @type {fiahfy.mod.scene.Node}
      */
     this.root_ = root;
+
+    /**
+     * The width of the scene.
+     * @type {number}
+     * @private
+     */
+    this.width_ = width;
+
+    /**
+     * The height of the scene.
+     * @type {number}
+     * @private
+     */
+    this.height_ = height;
 };
 goog.inherits(fiahfy.mod.scene.Scene, fiahfy.mod.Object);
 
 /**
  * @public
- * @return {fiahfy.mod.scene.Node} Root node.
+ * @return {fiahfy.mod.scene.Node} The root node of the scene graph.
  */
 fiahfy.mod.scene.Scene.prototype.getRoot = function() {
     return this.root_;

@@ -2,7 +2,9 @@
 
 
 /**
- * @fileoverview xxx
+ * @fileoverview Provides the set of classes for colors
+ * and gradients used to fill shapes
+ * and backgrounds when rendering the scene graph.
  */
 
 
@@ -12,10 +14,14 @@ goog.require('fiahfy.mod.Object');
 
 
 /**
- * @param {number|string=} red The red component of the color or color string.
- * @param {number=} green The green component of the color.
- * @param {number=} blue The blue component of the color.
- * @param {number=} opacity The opacity component of the color.
+ * The Color class is used to encapsulate colors
+ * in the default sRGB color space.
+ * @param {number|string=} red Red component ranging from 0 to 1
+ *     or the name or numeric representation of the color
+ *     in one of the supported formats
+ * @param {number=} green Green component ranging from 0 to 1.
+ * @param {number=} blue Blue component ranging from 0 to 1.
+ * @param {number=} opacity Opacity ranging from 0 to 1.
  * @constructor
  * @extends {fiahfy.mod.Object}
  */
@@ -42,28 +48,28 @@ fiahfy.mod.scene.paint.Color = function(red, green, blue, opacity) {
     }
 
     /**
-     * Red
+     * Red component ranging from 0 to 1.
      * @private
      * @type {number}
      */
     this.red_ = (red <= 1) ? red : red / 255;
 
     /**
-     * Green
+     * Green component ranging from 0 to 1.
      * @private
      * @type {number}
      */
     this.green_ = (green <= 1) ? green : green / 255;
 
     /**
-     * Blue
+     * Blue component ranging from 0 to 1.
      * @private
      * @type {number}
      */
     this.blue_ = (blue <= 1) ? blue : blue / 255;
 
     /**
-     * Opacity
+     * Opacity ranging from 0 to 1.
      * @private
      * @type {number}
      */
@@ -73,7 +79,7 @@ goog.inherits(fiahfy.mod.scene.paint.Color, fiahfy.mod.Object);
 
 /**
  * @public
- * @return {number} The blue component of the Color.
+ * @return {number} The blue component of the Color, in the range 0.0-1.0.
  */
 fiahfy.mod.scene.paint.Color.prototype.getBlue = function() {
     return this.blue_;
@@ -81,7 +87,7 @@ fiahfy.mod.scene.paint.Color.prototype.getBlue = function() {
 
 /**
  * @public
- * @return {number} The green component of the Color.
+ * @return {number} The green component of the Color, in the range 0.0-1.0.
  */
 fiahfy.mod.scene.paint.Color.prototype.getGreen = function() {
     return this.green_;
@@ -89,7 +95,7 @@ fiahfy.mod.scene.paint.Color.prototype.getGreen = function() {
 
 /**
  * @public
- * @return {number} The red component of the Color.
+ * @return {number} The red component of the Color, in the range 0.0-1.0.
  */
 fiahfy.mod.scene.paint.Color.prototype.getRed = function() {
     return this.red_;
@@ -98,7 +104,8 @@ fiahfy.mod.scene.paint.Color.prototype.getRed = function() {
 /**
  * @const
  * @public
- * @return {string} Color string.
+ * @return {string} The numeric representation of the color
+ *     in one of the supported formats
  */
 fiahfy.mod.scene.paint.Color.prototype.getWeb = function() {
     return '#' +
@@ -110,11 +117,11 @@ fiahfy.mod.scene.paint.Color.prototype.getWeb = function() {
 /**
  * @const
  * @public
- * @param {number} red The red component of the Color.
- * @param {number} green The green component of the Color.
- * @param {number} blue The blue component of the Color.
- * @param {number=} opacity The opacity component of the Color.
- * @return {fiahfy.mod.scene.paint.Color} Color object.
+ * @param {number} red Red component ranging from 0 to 1.
+ * @param {number} green Green component ranging from 0 to 1.
+ * @param {number} blue Blue component ranging from 0 to 1.
+ * @param {number=} opacity Opacity ranging from 0 to 1.
+ * @return {fiahfy.mod.scene.paint.Color} The Color.
  */
 fiahfy.mod.scene.paint.Color.color = function(red, green, blue, opacity) {
     return new fiahfy.mod.scene.paint.Color(red, green, blue, opacity);
@@ -123,11 +130,11 @@ fiahfy.mod.scene.paint.Color.color = function(red, green, blue, opacity) {
 /**
  * @const
  * @public
- * @param {number} red The red component of the Color.
- * @param {number} green The green component of the Color.
- * @param {number} blue The blue component of the Color.
- * @param {number=} opacity The opacity component of the Color.
- * @return {fiahfy.mod.scene.paint.Color} Color object.
+ * @param {number} red The red component, in the range 0-255.
+ * @param {number} green The green component, in the range 0-255.
+ * @param {number} blue The blue component, in the range 0-255.
+ * @param {number=} opacity The opacity component, in the range 0.0-1.0.
+ * @return {fiahfy.mod.scene.paint.Color} The Color.
  */
 fiahfy.mod.scene.paint.Color.rgb = function(red, green, blue, opacity) {
     return new fiahfy.mod.scene.paint.Color(red, green, blue, opacity);
@@ -136,8 +143,9 @@ fiahfy.mod.scene.paint.Color.rgb = function(red, green, blue, opacity) {
 /**
  * @const
  * @public
- * @param {string} colorString Color string.
- * @return {fiahfy.mod.scene.paint.Color} Color object.
+ * @param {string} colorString The name or numeric representation of the color
+ *     in one of the supported formats.
+ * @return {fiahfy.mod.scene.paint.Color} The Color.
  */
 fiahfy.mod.scene.paint.Color.web = function(colorString) {
     return new fiahfy.mod.scene.paint.Color(colorString);

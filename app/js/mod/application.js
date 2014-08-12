@@ -2,7 +2,7 @@
 
 
 /**
- * @fileoverview xxx
+ * @fileoverview Application class from which applications extend.
  */
 
 
@@ -13,7 +13,7 @@ goog.require('fiahfy.mod.stage.Stage');
 
 
 /**
- * @param {HTMLElement} element DOM node
+ * @param {HTMLElement} element Target DOM node.
  * @constructor
  * @extends {fiahfy.mod.Object}
  */
@@ -26,6 +26,7 @@ goog.inherits(fiahfy.mod.application.Application, fiahfy.mod.Object);
 
 /**
  * @public
- * @param {fiahfy.mod.stage.Stage} stage
+ * @param {fiahfy.mod.stage.Stage} stage The primary stage for this application,
+ *     onto which the application scene can be set.
  */
 fiahfy.mod.application.Application.prototype.start = goog.abstractMethod;

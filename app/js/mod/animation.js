@@ -2,7 +2,8 @@
 
 
 /**
- * @fileoverview xxx
+ * @fileoverview Provides the set of classes
+ * for ease of use transition based animations.
  */
 
 
@@ -15,7 +16,8 @@ goog.require('fiahfy.mod.time.Duration');
 
 
 /**
- * @param {number=} targetFramerate Frame rate for this animation.
+ * @param {number=} targetFramerate The custom target frame rate
+ *     for this Animation.
  * @constructor
  * @extends {fiahfy.mod.Object}
  */
@@ -26,7 +28,8 @@ goog.inherits(fiahfy.mod.animation.Animation, fiahfy.mod.Object);
 
 
 /**
- * @param {...fiahfy.mod.animation.KeyFrame} var_args Key frame for timeline.
+ * @param {...fiahfy.mod.animation.KeyFrame} var_args The keyframes
+ *     of this Timeline.
  * @constructor
  * @extends {fiahfy.mod.animation.Animation}
  */
@@ -37,7 +40,7 @@ goog.inherits(fiahfy.mod.animation.Timeline, fiahfy.mod.animation.Animation);
 
 
 /**
- * @param {fiahfy.mod.time.Duration} duration Key frame offset.
+ * @param {fiahfy.mod.time.Duration} duration The time.
  * @constructor
  * @extends {fiahfy.mod.Object}
  */
@@ -48,6 +51,8 @@ goog.inherits(fiahfy.mod.animation.KeyFrame, fiahfy.mod.Object);
 
 
 /**
+ * The class AnimationTimer allows to create a timer,
+ * that is called in each frame while it is active.
  * @constructor
  * @extends {fiahfy.mod.Object}
  */
@@ -65,7 +70,7 @@ goog.inherits(fiahfy.mod.animation.AnimationTimer, fiahfy.mod.Object);
 
 /**
  * @public
- * @param {number} now The timestamp of the current frame.
+ * @param {number} now The timestamp of the current frame given in milliseconds.
  */
 fiahfy.mod.animation.AnimationTimer.prototype.handle = goog.abstractMethod;
 

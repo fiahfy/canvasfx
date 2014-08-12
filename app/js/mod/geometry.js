@@ -2,7 +2,8 @@
 
 
 /**
- * @fileoverview xxx
+ * @fileoverview Provides the set of 2D classes for defining
+ * and performing operations on objects related to two-dimensional geometry.
  */
 
 
@@ -14,8 +15,9 @@ goog.require('fiahfy.mod.Object');
 
 
 /**
- * @param {number=} x X.
- * @param {number=} y Y.
+ * A 2D geometric point that usually represents the x, y coordinates.
+ * @param {number=} x The x coordinate of the point.
+ * @param {number=} y The y coordinate of the point.
  * @constructor
  * @extends {fiahfy.mod.Object}
  */
@@ -26,14 +28,14 @@ fiahfy.mod.geometry.Point = function(x, y) {
     y = this.supplement(y, 0.0);
 
     /**
-     * X
+     * The x coordinate of the point.
      * @private
      * @type {number}
      */
     this.x_ = x;
 
     /**
-     * Y
+     * The y coordinate of the point.
      * @private
      * @type {number}
      */
@@ -43,19 +45,25 @@ goog.inherits(fiahfy.mod.geometry.Point, fiahfy.mod.Object);
 
 /**
  * @public
- * @param {number} x X.
- * @param {number} y Y.
- * @return {fiahfy.mod.geometry.Point} Point added the coordinates.
+ * @param {number|fiahfy.mod.geometry.Point} x The X coordinate addition
+ *     or the point whose coordinates are to be added.
+ * @param {number=} y The Y coordinate addition.
+ * @return {fiahfy.mod.geometry.Point} The point with added coordinates
  */
 fiahfy.mod.geometry.Point.prototype.add = function(x, y) {
+    if (x instanceof fiahfy.mod.geometry.Point) {
+        y = x.getY();
+        x = x.getX();
+    }
     return new fiahfy.mod.geometry.Point(this.x_ + x, this.y_ + y);
-}
+};
 
 /**
  * @public
- * @param {number|fiahfy.mod.geometry.Point} x X.
- * @param {number=} y Y.
- * @return {number}
+ * @param {number|fiahfy.mod.geometry.Point} x The x coordinate of other point
+ *     or the other point.
+ * @param {number=} y The y coordinate of other point.
+ * @return {number} The distance between this point and the specified point.
  */
 fiahfy.mod.geometry.Point.prototype.distance = function(x, y) {
     if (x instanceof fiahfy.mod.geometry.Point) {
@@ -63,28 +71,29 @@ fiahfy.mod.geometry.Point.prototype.distance = function(x, y) {
         x = x.getX();
     }
     return Math.sqrt(Math.pow(this.x_ - x, 2) + Math.pow(this.y_ - y, 2));
-}
+};
 
 /**
  * @public
- * @return {number} X.
+ * @return {number} The x coordinate.
  */
 fiahfy.mod.geometry.Point.prototype.getX = function() {
     return this.x_;
-}
+};
 
 /**
  * @public
- * @return {number} Y.
+ * @return {number} The y coordinate.
  */
 fiahfy.mod.geometry.Point.prototype.getY = function() {
     return this.y_;
-}
+};
 
 
 /**
- * @param {number=} width Width.
- * @param {number=} height Height.
+ * A 2D dimension object that contains a width and a height.
+ * @param {number=} width The width.
+ * @param {number=} height The height.
  * @constructor
  * @extends {fiahfy.mod.Object}
  */
@@ -95,16 +104,16 @@ fiahfy.mod.geometry.Dimension = function(width, height) {
     height = this.supplement(height, 0.0);
 
     /**
-     * Width
-     * @type {number}
+     * The width.
      * @private
+     * @type {number}
      */
     this.width_ = width;
 
     /**
-     * Height
-     * @type {number}
+     * The height.
      * @private
+     * @type {number}
      */
     this.height_ = height;
 };
@@ -112,23 +121,25 @@ goog.inherits(fiahfy.mod.geometry.Dimension, fiahfy.mod.Object);
 
 /**
  * @public
- * @return {number} Height.
+ * @return {number} The height of the dimension.
  */
 fiahfy.mod.geometry.Dimension.prototype.getHeight = function() {
     return this.height_;
-}
+};
 
 /**
  * @public
- * @return {number} Width.
+ * @return {number} The width of the dimension.
  */
 fiahfy.mod.geometry.Dimension.prototype.getWidth = function() {
     return this.width_;
-}
+};
 
 
 /**
- * @param {number} minX The X coordinate of the upper-left corner.
+ * The base class for objects that are used to describe the bounds of a node
+ * or other scene graph object.
+ * @param {number} minX The X coordinate of the upper-left corner
  * @param {number} minY The Y coordinate of the upper-left corner.
  * @param {number} width The width of the Bounds.
  * @param {number} height The height of the Bounds.
