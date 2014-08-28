@@ -38,19 +38,51 @@ fiahfy.sample.App.prototype.start = function() {
     // set stage size
     //this.stage.setSize(1000, 1000);
 
-    var c = new fiahfy.mod.scene.shape.Circle(10, 10, 5);
-    var r = new fiahfy.mod.scene.shape.Rectangle(5, 20, 10, 10);
-    var g = new fiahfy.mod.scene.Group(c, r);
-    var s = new fiahfy.mod.scene.Scene(g);
+    var r = new fiahfy.mod.scene.Group();
+    var s = new fiahfy.mod.scene.Scene(r);
     this.stage.setScene(s);
 
+    var c = r.getChildren();
+    // scene
+    var scene = new fiahfy.mod.scene.Scene();
+    //me.stage.setScene(scene);
+
+    // draw grid
+    for (var i = 0; i <= this.stage.getWidth(); i += 10)
+    {
+        var y = new fiahfy.mod.scene.shape.Line(
+            i, 0,
+            i, this.stage.getHeight()
+        );
+        y.setStroke(fiahfy.mod.scene.paint.Color.GRAY);
+        if (i % 100 == 0) y.setStrokeWidth(2.0);
+        //scene.add(y);
+        c.push(y);
+    }
+    for (var j = 0; j <= this.stage.getHeight(); j += 10)
+    {
+        var x = new fiahfy.mod.scene.shape.Line(
+            0, j,
+            this.stage.getWidth(), j
+        );
+        x.setStroke(fiahfy.mod.scene.paint.Color.GRAY);
+        if (j % 100 == 0) x.setStrokeWidth(2.0);
+        //scene.add(x);
+        c.push(x);
+    }
+
+    var ci = new fiahfy.mod.scene.shape.Circle(10, 10, 5);
+    var r = new fiahfy.mod.scene.shape.Rectangle(5, 20, 10, 10);
+    var g = new fiahfy.mod.scene.Group(ci, r);
+    c.push(g);
+    
     var me = this;
     g.setOnMouseClicked((function() {
         var e = new fiahfy.mod.event.EventListener();
         e.handle = function(event) {
             console.log('c');
-            c.setCenterX(event.getX());
-            c.setCenterY(event.getY());
+            ci.setCenterX(event.getX());
+            ci.setCenterY(event.getY());
         };
         return e;
     })());
@@ -89,32 +121,6 @@ fiahfy.sample.App.prototype.start = function() {
             this.update();
         };
         t.update = function() {
-
-            // scene
-            var scene = new fiahfy.mod.scene.Scene();
-            //me.stage.setScene(scene);
-
-            // draw grid
-            for (var i = 0; i <= me.stage.getSize().getWidth(); i += 10)
-            {
-                var y = new fiahfy.mod.scene.shape.Line(
-                    i, 0,
-                    i, me.stage.getSize().getHeight()
-                );
-                y.setStroke(fiahfy.mod.scene.paint.Color.GRAY);
-                if (i % 100 == 0) y.setStrokeWidth(2.0);
-         //       scene.add(y);
-            }
-            for (var j = 0; j <= me.stage.getSize().getHeight(); j += 10)
-            {
-                var x = new fiahfy.mod.scene.shape.Line(
-                    0, j,
-                    me.stage.getSize().getWidth(), j
-                );
-                x.setStroke(fiahfy.mod.scene.paint.Color.GRAY);
-                if (j % 100 == 0) x.setStrokeWidth(2.0);
-          //      scene.add(x);
-            }
 
             // draw rectangle
             /*

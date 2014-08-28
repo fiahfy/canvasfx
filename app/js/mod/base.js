@@ -9,6 +9,8 @@
 goog.provide('fiahfy.mod');
 goog.provide('fiahfy.mod.Object');
 
+goog.require('fiahfy.mod.application.Application');
+
 
 /**
  * @const

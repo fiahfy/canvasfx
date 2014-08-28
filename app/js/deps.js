@@ -3,7 +3,7 @@
 goog.addDependency('../../../../js/app.js', ['fiahfy.sample.App'], ['fiahfy.mod.animation.AnimationTimer', 'fiahfy.mod.application.Application', 'fiahfy.mod.event.EventListener', 'fiahfy.mod.math.Math', 'fiahfy.mod.scene.Scene', 'fiahfy.mod.scene.paint.Color', 'fiahfy.mod.scene.shape.Circle', 'fiahfy.mod.scene.shape.Line', 'fiahfy.mod.scene.shape.Rectangle', 'fiahfy.mod.stage.Stage']);
 goog.addDependency('../../../../js/mod/animation.js', ['fiahfy.mod.animation.Animation', 'fiahfy.mod.animation.AnimationTimer', 'fiahfy.mod.animation.Timeline'], ['fiahfy.mod.Object', 'fiahfy.mod.time.Duration']);
 goog.addDependency('../../../../js/mod/application.js', ['fiahfy.mod.application.Application'], ['fiahfy.mod.Object', 'fiahfy.mod.stage.Stage']);
-goog.addDependency('../../../../js/mod/base.js', ['fiahfy.mod', 'fiahfy.mod.Object'], []);
+goog.addDependency('../../../../js/mod/base.js', ['fiahfy.mod', 'fiahfy.mod.Object'], ['fiahfy.mod.application.Application']);
 goog.addDependency('../../../../js/mod/event.js', ['fiahfy.mod.event.Event', 'fiahfy.mod.event.EventHandler', 'fiahfy.mod.event.EventListener'], ['fiahfy.mod.Object']);
 goog.addDependency('../../../../js/mod/geometry.js', ['fiahfy.mod.geometry.Bounds', 'fiahfy.mod.geometry.Dimension', 'fiahfy.mod.geometry.Point'], ['fiahfy.mod.Object']);
 goog.addDependency('../../../../js/mod/math.js', ['fiahfy.mod.math.Math'], ['fiahfy.mod.Object']);

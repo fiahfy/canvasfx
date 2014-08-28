@@ -66,6 +66,22 @@ goog.inherits(fiahfy.mod.stage.Stage, fiahfy.mod.Object);
 
 /**
  * @public
+ * @return {number} The width of this Scene.
+ */
+fiahfy.mod.stage.Stage.prototype.getWidth = function() {
+    return this.width_;
+};
+
+/**
+ * @public
+ * @return {number} The height of this Scene.
+ */
+fiahfy.mod.stage.Stage.prototype.getHeight = function() {
+    return this.height_;
+};
+
+/**
+ * @public
  * @param {fiahfy.mod.scene.Scene} scene Specify the scene
  *     to be used on this stage.
  */
