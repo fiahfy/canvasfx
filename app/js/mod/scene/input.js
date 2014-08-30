@@ -7,21 +7,17 @@
  */
 
 
-goog.provide('fiahfy.mod.scene.input.InputEvent');
-goog.provide('fiahfy.mod.scene.input.MouseEvent');
-
-goog.require('fiahfy.mod.event.Event');
-goog.require('fiahfy.mod.geometry.Point');
+fmod.scene.input = {};
 
 
 /**
  * @constructor
- * @extends {fiahfy.mod.event.Event}
+ * @extends {fmod.event.Event}
  */
-fiahfy.mod.scene.input.InputEvent = function() {
-    fiahfy.mod.event.Event.call(this);
+fmod.scene.input.InputEvent = function() {
+    fmod.event.Event.call(this);
 };
-goog.inherits(fiahfy.mod.scene.input.InputEvent, fiahfy.mod.event.Event);
+fmod.inherit(fmod.scene.input.InputEvent, fmod.event.Event);
 
 
 /**
@@ -30,27 +26,27 @@ goog.inherits(fiahfy.mod.scene.input.InputEvent, fiahfy.mod.event.Event);
  * @param {number} y Vertical position of the event relative
  *     to the origin of the MouseEvent's source.
  * @constructor
- * @extends {fiahfy.mod.scene.input.InputEvent}
+ * @extends {fmod.scene.input.InputEvent}
  */
-fiahfy.mod.scene.input.MouseEvent = function(x, y) {
-    fiahfy.mod.scene.input.InputEvent.call(this);
+fmod.scene.input.MouseEvent = function(x, y) {
+    fmod.scene.input.InputEvent.call(this);
 
     /**
      * Position of the event relative to the origin of the MouseEvent's source.
      * @private
-     * @type {fiahfy.mod.geometry.Point}
+     * @type {fmod.geometry.Point}
      */
-    this.position_ = new fiahfy.mod.geometry.Point(x, y);
+    this.position_ = new fmod.geometry.Point(x, y);
 };
-goog.inherits(fiahfy.mod.scene.input.MouseEvent,
-    fiahfy.mod.scene.input.InputEvent);
+fmod.inherit(fmod.scene.input.MouseEvent,
+    fmod.scene.input.InputEvent);
 
 /**
  * @public
  * @return {number} Horizontal position of the event relative
  *     to the origin of the MouseEvent's source.
  */
-fiahfy.mod.scene.input.MouseEvent.prototype.getX = function() {
+fmod.scene.input.MouseEvent.prototype.getX = function() {
     return this.position_.getX();
 };
 
@@ -59,6 +55,6 @@ fiahfy.mod.scene.input.MouseEvent.prototype.getX = function() {
  * @return {number} Vertical position of the event relative
  *     to the origin of the MouseEvent's source.
  */
-fiahfy.mod.scene.input.MouseEvent.prototype.getY = function() {
+fmod.scene.input.MouseEvent.prototype.getY = function() {
     return this.position_.getY();
 };

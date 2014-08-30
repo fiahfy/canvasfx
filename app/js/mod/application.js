@@ -6,27 +6,24 @@
  */
 
 
-goog.provide('fiahfy.mod.application.Application');
-
-goog.require('fiahfy.mod.Object');
-goog.require('fiahfy.mod.stage.Stage');
+fmod.application = {};
 
 
 /**
  * @param {HTMLElement} element Target DOM node.
  * @constructor
- * @extends {fiahfy.mod.Object}
+ * @extends {fmod.Object}
  */
-fiahfy.mod.application.Application = function(element) {
-    fiahfy.mod.Object.call(this);
+fmod.application.Application = function(element) {
+    fmod.Object.call(this);
 
-    this.stage = new fiahfy.mod.stage.Stage(element);
+    this.stage = new fmod.stage.Stage(element);
 };
-goog.inherits(fiahfy.mod.application.Application, fiahfy.mod.Object);
+fmod.inherit(fmod.application.Application, fmod.Object);
 
 /**
  * @public
- * @param {fiahfy.mod.stage.Stage} stage The primary stage for this application,
+ * @param {fmod.stage.Stage} stage The primary stage for this application,
  *     onto which the application scene can be set.
  */
-fiahfy.mod.application.Application.prototype.start = goog.abstractMethod;
+fmod.application.Application.prototype.start = fmod.abstractMethod;

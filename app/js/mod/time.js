@@ -6,18 +6,16 @@
  */
 
 
-goog.provide('fiahfy.mod.time.Duration');
-
-goog.require('fiahfy.mod.Object');
+fmod.time = {};
 
 
 /**
  * @param {number} millis Create a new instance with milliseconds.
  * @constructor
- * @extends {fiahfy.mod.Object}
+ * @extends {fmod.Object}
  */
-fiahfy.mod.time.Duration = function(millis) {
-    fiahfy.mod.Object.call(this);
+fmod.time.Duration = function(millis) {
+    fmod.Object.call(this);
 
     /**
      * milliseconds
@@ -26,4 +24,4 @@ fiahfy.mod.time.Duration = function(millis) {
      */
     this.millis_ = millis;
 };
-goog.inherits(fiahfy.mod.time.Duration, fiahfy.mod.Object);
+fmod.inherit(fmod.time.Duration, fmod.Object);

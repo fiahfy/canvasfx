@@ -6,23 +6,20 @@
  */
 
 
-goog.provide('fiahfy.mod.math.Math');
-
-goog.require('fiahfy.mod.Object');
-
+fmod.math = {};
 
 /**
  * @constructor
- * @extends {fiahfy.mod.Object}
+ * @extends {fmod.Object}
  */
-fiahfy.mod.math.Math = function() {
-    fiahfy.mod.Object.call(this);
+fmod.math.Math = function() {
+    fmod.Object.call(this);
 };
-goog.inherits(fiahfy.mod.math.Math, fiahfy.mod.Object);
+fmod.inherit(fmod.math.Math, fmod.Object);
 
 /**
  * @const
  * @public
  * @type {number}
  */
-fiahfy.mod.math.Math.PI = Math.PI;
+fmod.math.Math.PI = Math.PI;

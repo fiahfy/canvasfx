@@ -6,22 +6,17 @@
  */
 
 
-goog.provide('fiahfy.mod.stage.Stage');
-
-goog.require('fiahfy.mod.Object');
-goog.require('fiahfy.mod.geometry.Dimension');
-goog.require('fiahfy.mod.scene.Scene');
-goog.require('fiahfy.mod.scene.input.MouseEvent');
+fmod.stage = {};
 
 
 /**
  * The top level container.
  * @param {HTMLElement} element Target DOM node.
  * @constructor
- * @extends {fiahfy.mod.Object}
+ * @extends {fmod.Object}
  */
-fiahfy.mod.stage.Stage = function(element) {
-    fiahfy.mod.Object.call(this);
+fmod.stage.Stage = function(element) {
+    fmod.Object.call(this);
 
     /**
      * Canvas DOM element.
@@ -41,7 +36,7 @@ fiahfy.mod.stage.Stage = function(element) {
     /**
      * Specify the scene to be used on this stage.
      * @private
-     * @type {fiahfy.mod.scene.Scene}
+     * @type {fmod.scene.Scene}
      */
     this.scene_ = null;
 
@@ -62,13 +57,13 @@ fiahfy.mod.stage.Stage = function(element) {
 
     this.addEventLinstener_();
 };
-goog.inherits(fiahfy.mod.stage.Stage, fiahfy.mod.Object);
+fmod.inherit(fmod.stage.Stage, fmod.Object);
 
 /**
  * @public
  * @return {number} The width of this Scene.
  */
-fiahfy.mod.stage.Stage.prototype.getWidth = function() {
+fmod.stage.Stage.prototype.getWidth = function() {
     return this.width_;
 };
 
@@ -76,16 +71,16 @@ fiahfy.mod.stage.Stage.prototype.getWidth = function() {
  * @public
  * @return {number} The height of this Scene.
  */
-fiahfy.mod.stage.Stage.prototype.getHeight = function() {
+fmod.stage.Stage.prototype.getHeight = function() {
     return this.height_;
 };
 
 /**
  * @public
- * @param {fiahfy.mod.scene.Scene} scene Specify the scene
+ * @param {fmod.scene.Scene} scene Specify the scene
  *     to be used on this stage.
  */
-fiahfy.mod.stage.Stage.prototype.setScene = function(scene) {
+fmod.stage.Stage.prototype.setScene = function(scene) {
     this.scene_ = scene;
     if (this.scene_.getWidth() && this.scene_.getHeight()) {
         this.width_ = this.scene_.getWidth();
@@ -98,7 +93,7 @@ fiahfy.mod.stage.Stage.prototype.setScene = function(scene) {
 /**
  * @public
  */
-fiahfy.mod.stage.Stage.prototype.show = function() {
+fmod.stage.Stage.prototype.show = function() {
     this.clear();
     this.scene_.getRoot().draw(this.context_);
 };
@@ -106,19 +101,19 @@ fiahfy.mod.stage.Stage.prototype.show = function() {
 /**
  * @public
  */
-fiahfy.mod.stage.Stage.prototype.clear = function() {
-    var rect = new fiahfy.mod.scene.shape.Rectangle(
+fmod.stage.Stage.prototype.clear = function() {
+    var rect = new fmod.scene.shape.Rectangle(
         0, 0,
         this.width_, this.height_
     );
-    rect.setFill(fiahfy.mod.scene.paint.Color.WHITE);
+    rect.setFill(fmod.scene.paint.Color.WHITE);
     rect.draw(this.context_);
 };
 
 /**
  * @private
  */
-fiahfy.mod.stage.Stage.prototype.addEventLinstener_ = function() {
+fmod.stage.Stage.prototype.addEventLinstener_ = function() {
     //
     var me = this;
     this.canvas_.onclick = (function(e) {
@@ -128,7 +123,7 @@ fiahfy.mod.stage.Stage.prototype.addEventLinstener_ = function() {
         var x = e.clientX - rect.left;
         var y = e.clientY - rect.top;
         //console.log(x, y);
-        var event = new fiahfy.mod.scene.input.MouseEvent(x, y);
+        var event = new fmod.scene.input.MouseEvent(x, y);
         var root = me.scene_.getRoot();
         //if (root.contains(x, y)) {
             root.handleEvent(event);

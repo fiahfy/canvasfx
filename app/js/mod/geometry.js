@@ -7,11 +7,7 @@
  */
 
 
-goog.provide('fiahfy.mod.geometry.Bounds');
-goog.provide('fiahfy.mod.geometry.Dimension');
-goog.provide('fiahfy.mod.geometry.Point');
-
-goog.require('fiahfy.mod.Object');
+fmod.geometry = {};
 
 
 /**
@@ -19,10 +15,10 @@ goog.require('fiahfy.mod.Object');
  * @param {number=} x The x coordinate of the point.
  * @param {number=} y The y coordinate of the point.
  * @constructor
- * @extends {fiahfy.mod.Object}
+ * @extends {fmod.Object}
  */
-fiahfy.mod.geometry.Point = function(x, y) {
-    fiahfy.mod.Object.call(this);
+fmod.geometry.Point = function(x, y) {
+    fmod.Object.call(this);
 
     x = this.supplement(x, 0.0);
     y = this.supplement(y, 0.0);
@@ -41,32 +37,32 @@ fiahfy.mod.geometry.Point = function(x, y) {
      */
     this.y_ = y;
 };
-goog.inherits(fiahfy.mod.geometry.Point, fiahfy.mod.Object);
+fmod.inherit(fmod.geometry.Point, fmod.Object);
 
 /**
  * @public
- * @param {number|fiahfy.mod.geometry.Point} x The X coordinate addition
+ * @param {number|fmod.geometry.Point} x The X coordinate addition
  *     or the point whose coordinates are to be added.
  * @param {number=} y The Y coordinate addition.
- * @return {fiahfy.mod.geometry.Point} The point with added coordinates
+ * @return {fmod.geometry.Point} The point with added coordinates
  */
-fiahfy.mod.geometry.Point.prototype.add = function(x, y) {
-    if (x instanceof fiahfy.mod.geometry.Point) {
+fmod.geometry.Point.prototype.add = function(x, y) {
+    if (x instanceof fmod.geometry.Point) {
         y = x.getY();
         x = x.getX();
     }
-    return new fiahfy.mod.geometry.Point(this.x_ + x, this.y_ + y);
+    return new fmod.geometry.Point(this.x_ + x, this.y_ + y);
 };
 
 /**
  * @public
- * @param {number|fiahfy.mod.geometry.Point} x The x coordinate of other point
+ * @param {number|fmod.geometry.Point} x The x coordinate of other point
  *     or the other point.
  * @param {number=} y The y coordinate of other point.
  * @return {number} The distance between this point and the specified point.
  */
-fiahfy.mod.geometry.Point.prototype.distance = function(x, y) {
-    if (x instanceof fiahfy.mod.geometry.Point) {
+fmod.geometry.Point.prototype.distance = function(x, y) {
+    if (x instanceof fmod.geometry.Point) {
         y = x.getY();
         x = x.getX();
     }
@@ -77,7 +73,7 @@ fiahfy.mod.geometry.Point.prototype.distance = function(x, y) {
  * @public
  * @return {number} The x coordinate.
  */
-fiahfy.mod.geometry.Point.prototype.getX = function() {
+fmod.geometry.Point.prototype.getX = function() {
     return this.x_;
 };
 
@@ -85,7 +81,7 @@ fiahfy.mod.geometry.Point.prototype.getX = function() {
  * @public
  * @return {number} The y coordinate.
  */
-fiahfy.mod.geometry.Point.prototype.getY = function() {
+fmod.geometry.Point.prototype.getY = function() {
     return this.y_;
 };
 
@@ -95,10 +91,10 @@ fiahfy.mod.geometry.Point.prototype.getY = function() {
  * @param {number=} width The width.
  * @param {number=} height The height.
  * @constructor
- * @extends {fiahfy.mod.Object}
+ * @extends {fmod.Object}
  */
-fiahfy.mod.geometry.Dimension = function(width, height) {
-    fiahfy.mod.Object.call(this);
+fmod.geometry.Dimension = function(width, height) {
+    fmod.Object.call(this);
 
     width = this.supplement(width, 0.0);
     height = this.supplement(height, 0.0);
@@ -117,13 +113,13 @@ fiahfy.mod.geometry.Dimension = function(width, height) {
      */
     this.height_ = height;
 };
-goog.inherits(fiahfy.mod.geometry.Dimension, fiahfy.mod.Object);
+fmod.inherit(fmod.geometry.Dimension, fmod.Object);
 
 /**
  * @public
  * @return {number} The height of the dimension.
  */
-fiahfy.mod.geometry.Dimension.prototype.getHeight = function() {
+fmod.geometry.Dimension.prototype.getHeight = function() {
     return this.height_;
 };
 
@@ -131,7 +127,7 @@ fiahfy.mod.geometry.Dimension.prototype.getHeight = function() {
  * @public
  * @return {number} The width of the dimension.
  */
-fiahfy.mod.geometry.Dimension.prototype.getWidth = function() {
+fmod.geometry.Dimension.prototype.getWidth = function() {
     return this.width_;
 };
 
@@ -144,10 +140,10 @@ fiahfy.mod.geometry.Dimension.prototype.getWidth = function() {
  * @param {number} width The width of the Bounds.
  * @param {number} height The height of the Bounds.
  * @constructor
- * @extends {fiahfy.mod.Object}
+ * @extends {fmod.Object}
  */
-fiahfy.mod.geometry.Bounds = function(minX, minY, width, height) {
-    fiahfy.mod.Object.call(this);
+fmod.geometry.Bounds = function(minX, minY, width, height) {
+    fmod.Object.call(this);
 
     /**
      * The X coordinate of the upper-left corner.
@@ -177,4 +173,4 @@ fiahfy.mod.geometry.Bounds = function(minX, minY, width, height) {
      */
     this.height_ = height;
 };
-goog.inherits(fiahfy.mod.geometry.Bounds, fiahfy.mod.Object);
+fmod.inherit(fmod.geometry.Bounds, fmod.Object);

@@ -2,13 +2,6 @@
   "name": "chrome-extension-angular-skeleton",
   "version": "0.0.0",
   "license": "MIT",
-  "dependencies": {
-    "jquery": "~2.1.0",
-    "angular": "~1.2.15",
-    "bootstrap": "~3.1.1",
-    "closurelibrary": "*"
-  },
-  "devDependencies": {
-    "angular-mocks": "~1.2.16"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }

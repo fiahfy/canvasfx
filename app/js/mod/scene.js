@@ -6,29 +6,24 @@
  */
 
 
-goog.provide('fiahfy.mod.scene.Node');
-goog.provide('fiahfy.mod.scene.Scene');
-
-goog.require('fiahfy.mod.Object');
-goog.require('fiahfy.mod.geometry.Dimension');
-goog.require('fiahfy.mod.scene.shape.Shape');
+fmod.scene = {};
 
 
 /**
  * The Scene class is the container for all content in a scene graph.
- * @param {fiahfy.mod.scene.Node} root The root node of the scene graph.
+ * @param {fmod.scene.Node} root The root node of the scene graph.
  * @param {number=} width The width of the scene.
  * @param {number=} height The height of the scene.
  * @constructor
- * @extends {fiahfy.mod.Object}
+ * @extends {fmod.Object}
  */
-fiahfy.mod.scene.Scene = function(root, width, height) {
-    fiahfy.mod.Object.call(this);
+fmod.scene.Scene = function(root, width, height) {
+    fmod.Object.call(this);
 
     /**
      * The root node of the scene graph.
      * @private
-     * @type {fiahfy.mod.scene.Node}
+     * @type {fmod.scene.Node}
      */
     this.root_ = root;
 
@@ -46,13 +41,13 @@ fiahfy.mod.scene.Scene = function(root, width, height) {
      */
     this.height_ = height;
 };
-goog.inherits(fiahfy.mod.scene.Scene, fiahfy.mod.Object);
+fmod.inherit(fmod.scene.Scene, fmod.Object);
 
 /**
  * @public
- * @return {fiahfy.mod.scene.Node} The root node of the scene graph.
+ * @return {fmod.scene.Node} The root node of the scene graph.
  */
-fiahfy.mod.scene.Scene.prototype.getRoot = function() {
+fmod.scene.Scene.prototype.getRoot = function() {
     return this.root_;
 };
 
@@ -60,7 +55,7 @@ fiahfy.mod.scene.Scene.prototype.getRoot = function() {
  * @public
  * @return {number} The width of this Scene.
  */
-fiahfy.mod.scene.Scene.prototype.getWidth = function() {
+fmod.scene.Scene.prototype.getWidth = function() {
     return this.width_;
 };
 
@@ -68,38 +63,38 @@ fiahfy.mod.scene.Scene.prototype.getWidth = function() {
  * @public
  * @return {number} The height of this Scene.
  */
-fiahfy.mod.scene.Scene.prototype.getHeight = function() {
+fmod.scene.Scene.prototype.getHeight = function() {
     return this.height_;
 };
 
 
 /**
  * @constructor
- * @extends {fiahfy.mod.Object}
+ * @extends {fmod.Object}
  */
-fiahfy.mod.scene.Node = function() {
-    fiahfy.mod.Object.call(this);
+fmod.scene.Node = function() {
+    fmod.Object.call(this);
 
     /**
      * @private
-     * @type {fiahfy.mod.event.EventListener}
+     * @type {fmod.event.EventListener}
      */
      this.onMouseClicked = null;
 };
-goog.inherits(fiahfy.mod.scene.Node, fiahfy.mod.Object);
+fmod.inherit(fmod.scene.Node, fmod.Object);
 
 /**
  * @public
- * @param {number|fiahfy.mod.geometory.Point} x
+ * @param {number|fmod.geometory.Point} x
  * @param {number} y
  */
-fiahfy.mod.scene.Node.prototype.contains = goog.abstractMethod;
+fmod.scene.Node.prototype.contains = fmod.abstractMethod;
 
 /**
  * @public
- * @return {fiahfy.mod.event.EventListener}
+ * @return {fmod.event.EventListener}
  */
-fiahfy.mod.scene.Node.prototype.getOnMouseClicked = function() {
+fmod.scene.Node.prototype.getOnMouseClicked = function() {
     return this.onMouseClicked;
 };
 
@@ -107,19 +102,19 @@ fiahfy.mod.scene.Node.prototype.getOnMouseClicked = function() {
  * @public
  * @param {number} x
  */
-fiahfy.mod.scene.Node.prototype.setLayoutX = goog.abstractMethod;
+fmod.scene.Node.prototype.setLayoutX = fmod.abstractMethod;
 
 /**
  * @public
  * @param {number} y
  */
-fiahfy.mod.scene.Node.prototype.setLayoutY = goog.abstractMethod;
+fmod.scene.Node.prototype.setLayoutY = fmod.abstractMethod;
 
 /**
  * @public
- * @param {fiahfy.mod.event.EventListener} listener
+ * @param {fmod.event.EventListener} listener
  */
-fiahfy.mod.scene.Node.prototype.setOnMouseClicked = function(listener) {
+fmod.scene.Node.prototype.setOnMouseClicked = function(listener) {
     this.onMouseClicked_ = listener;
 };
 
@@ -127,13 +122,13 @@ fiahfy.mod.scene.Node.prototype.setOnMouseClicked = function(listener) {
  * @public
  * @param {CanvasRenderingContext2D} context Canvas DOM element.
  */
-fiahfy.mod.scene.Node.prototype.draw = goog.abstractMethod;
+fmod.scene.Node.prototype.draw = fmod.abstractMethod;
 
 /**
  * @public
- * @param {fiahfy.mod.event.Event} event
+ * @param {fmod.event.Event} event
  */
-fiahfy.mod.scene.Node.prototype.handleEvent = function(event) {
+fmod.scene.Node.prototype.handleEvent = function(event) {
     if (this.contains(event.getX(), event.getY()) && this.onMouseClicked_) {
         this.onMouseClicked_.handle(event);
     }
@@ -141,12 +136,12 @@ fiahfy.mod.scene.Node.prototype.handleEvent = function(event) {
 
 
 /**
- * @param {...fiahfy.mod.scene.Node} var_args Child nodes
+ * @param {...fmod.scene.Node} var_args Child nodes
  * @constructor
- * @extends {fiahfy.mod.scene.Node}
+ * @extends {fmod.scene.Node}
  */
-fiahfy.mod.scene.Group = function(var_args) {
-    fiahfy.mod.scene.Node.call(this);
+fmod.scene.Group = function(var_args) {
+    fmod.scene.Node.call(this);
 
     /**
      * Child nodes
@@ -155,14 +150,14 @@ fiahfy.mod.scene.Group = function(var_args) {
      */
     this.children_ = Array.prototype.slice.call(arguments);
 };
-goog.inherits(fiahfy.mod.scene.Group, fiahfy.mod.scene.Node);
+fmod.inherit(fmod.scene.Group, fmod.scene.Node);
 
 /**
  * @public
  * @param {CanvasRenderingContext2D} context Canvas DOM element.
  * @override
  */
-fiahfy.mod.scene.Group.prototype.draw = function(context) {
+fmod.scene.Group.prototype.draw = function(context) {
     for (var i = 0; i < this.children_.length; i++)
     {
         var child = this.children_[i];
@@ -174,7 +169,7 @@ fiahfy.mod.scene.Group.prototype.draw = function(context) {
  * @public
  * @return {Array} Child nodes.
  */
-fiahfy.mod.scene.Group.prototype.getChildren = function() {
+fmod.scene.Group.prototype.getChildren = function() {
     return this.children_;
 };
 
@@ -183,7 +178,7 @@ fiahfy.mod.scene.Group.prototype.getChildren = function() {
  * @param {number} x
  * @override
  */
-fiahfy.mod.scene.Group.prototype.setLayoutX = function(x) {
+fmod.scene.Group.prototype.setLayoutX = function(x) {
     for (var i = 0; i < this.children_.length; i++)
     {
         var child = this.children_[i];
@@ -196,7 +191,7 @@ fiahfy.mod.scene.Group.prototype.setLayoutX = function(x) {
  * @param {number} y
  * @override
  */
-fiahfy.mod.scene.Group.prototype.setLayoutY = function(y) {
+fmod.scene.Group.prototype.setLayoutY = function(y) {
     for (var i = 0; i < this.children_.length; i++)
     {
         var child = this.children_[i];
@@ -206,9 +201,9 @@ fiahfy.mod.scene.Group.prototype.setLayoutY = function(y) {
 
 /**
  * @public
- * @param {fiahfy.mod.event.Event} event
+ * @param {fmod.event.Event} event
  */
-fiahfy.mod.scene.Group.prototype.handleEvent = function(event) {
+fmod.scene.Group.prototype.handleEvent = function(event) {
     var result = false;
     for (var i = 0; i < this.children_.length; i++)
     {

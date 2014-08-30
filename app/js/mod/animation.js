@@ -7,57 +7,52 @@
  */
 
 
-goog.provide('fiahfy.mod.animation.Animation');
-goog.provide('fiahfy.mod.animation.AnimationTimer');
-goog.provide('fiahfy.mod.animation.Timeline');
-
-goog.require('fiahfy.mod.Object');
-goog.require('fiahfy.mod.time.Duration');
+fmod.animation = {};
 
 
 /**
  * @param {number=} targetFramerate The custom target frame rate
  *     for this Animation.
  * @constructor
- * @extends {fiahfy.mod.Object}
+ * @extends {fmod.Object}
  */
-fiahfy.mod.animation.Animation = function(targetFramerate) {
-    fiahfy.mod.Object.call(this);
+fmod.animation.Animation = function(targetFramerate) {
+    fmod.Object.call(this);
 };
-goog.inherits(fiahfy.mod.animation.Animation, fiahfy.mod.Object);
+fmod.inherit(fmod.animation.Animation, fmod.Object);
 
 
 /**
- * @param {...fiahfy.mod.animation.KeyFrame} var_args The keyframes
+ * @param {...fmod.animation.KeyFrame} var_args The keyframes
  *     of this Timeline.
  * @constructor
- * @extends {fiahfy.mod.animation.Animation}
+ * @extends {fmod.animation.Animation}
  */
-fiahfy.mod.animation.Timeline = function(var_args) {
-    fiahfy.mod.animation.Animation.call(this);
+fmod.animation.Timeline = function(var_args) {
+    fmod.animation.Animation.call(this);
 };
-goog.inherits(fiahfy.mod.animation.Timeline, fiahfy.mod.animation.Animation);
+fmod.inherit(fmod.animation.Timeline, fmod.animation.Animation);
 
 
 /**
- * @param {fiahfy.mod.time.Duration} duration The time.
+ * @param {fmod.time.Duration} duration The time.
  * @constructor
- * @extends {fiahfy.mod.Object}
+ * @extends {fmod.Object}
  */
-fiahfy.mod.animation.KeyFrame = function(duration) {
-    fiahfy.mod.Object.call(this);
+fmod.animation.KeyFrame = function(duration) {
+    fmod.Object.call(this);
 };
-goog.inherits(fiahfy.mod.animation.KeyFrame, fiahfy.mod.Object);
+fmod.inherit(fmod.animation.KeyFrame, fmod.Object);
 
 
 /**
  * The class AnimationTimer allows to create a timer,
  * that is called in each frame while it is active.
  * @constructor
- * @extends {fiahfy.mod.Object}
+ * @extends {fmod.Object}
  */
-fiahfy.mod.animation.AnimationTimer = function() {
-    fiahfy.mod.Object.call(this);
+fmod.animation.AnimationTimer = function() {
+    fmod.Object.call(this);
 
     /**
      * Timer id
@@ -66,23 +61,23 @@ fiahfy.mod.animation.AnimationTimer = function() {
      */
     this.id_ = null;
 };
-goog.inherits(fiahfy.mod.animation.AnimationTimer, fiahfy.mod.Object);
+fmod.inherit(fmod.animation.AnimationTimer, fmod.Object);
 
 /**
  * @public
  * @param {number} now The timestamp of the current frame given in milliseconds.
  */
-fiahfy.mod.animation.AnimationTimer.prototype.handle = goog.abstractMethod;
+fmod.animation.AnimationTimer.prototype.handle = fmod.abstractMethod;
 
 /**
  * @public
  */
-fiahfy.mod.animation.AnimationTimer.prototype.start = function() {
+fmod.animation.AnimationTimer.prototype.start = function() {
     this.stop();
 
     var me = this;
     (function animationLoop() {
-        me.id_ = fiahfy.mod.animation.AnimationTimer.requestAnimationFrame_()(
+        me.id_ = fmod.animation.AnimationTimer.requestAnimationFrame_()(
             animationLoop
         );
         me.handle(Date.now());
@@ -92,8 +87,8 @@ fiahfy.mod.animation.AnimationTimer.prototype.start = function() {
 /**
  * @public
  */
-fiahfy.mod.animation.AnimationTimer.prototype.stop = function() {
-    fiahfy.mod.animation.AnimationTimer.cancelAnimationFrame_()(
+fmod.animation.AnimationTimer.prototype.stop = function() {
+    fmod.animation.AnimationTimer.cancelAnimationFrame_()(
         this.id_
     );
     this.id_ = null;
@@ -104,7 +99,7 @@ fiahfy.mod.animation.AnimationTimer.prototype.stop = function() {
  * @private
  * @return {Function} Enable request animation frame func.
  */
-fiahfy.mod.animation.AnimationTimer.requestAnimationFrame_ = function() {
+fmod.animation.AnimationTimer.requestAnimationFrame_ = function() {
     return window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame ||
@@ -121,7 +116,7 @@ fiahfy.mod.animation.AnimationTimer.requestAnimationFrame_ = function() {
  * @private
  * @return {Function} Enable cancel animation frame func.
  */
-fiahfy.mod.animation.AnimationTimer.cancelAnimationFrame_ = function() {
+fmod.animation.AnimationTimer.cancelAnimationFrame_ = function() {
     return window.cancelAnimationFrame ||
         window.cancelRequestAnimationFrame ||
         window.webkitCancelRequestAnimationFrame ||
