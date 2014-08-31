@@ -29,19 +29,27 @@ fmod.scene.Scene = function(root, width, height) {
 
     /**
      * The width of the scene.
-     * @type {number}
      * @private
+     * @type {number}
      */
     this.width_ = width;
 
     /**
      * The height of the scene.
-     * @type {number}
      * @private
+     * @type {number}
      */
     this.height_ = height;
 };
 fmod.inherit(fmod.scene.Scene, fmod.Object);
+
+/**
+ * @public
+ * @return {number} The height of this Scene.
+ */
+fmod.scene.Scene.prototype.getHeight = function() {
+    return this.height_;
+};
 
 /**
  * @public
@@ -59,14 +67,6 @@ fmod.scene.Scene.prototype.getWidth = function() {
     return this.width_;
 };
 
-/**
- * @public
- * @return {number} The height of this Scene.
- */
-fmod.scene.Scene.prototype.getHeight = function() {
-    return this.height_;
-};
-
 
 /**
  * @constructor
@@ -76,8 +76,8 @@ fmod.scene.Node = function() {
     fmod.Object.call(this);
 
     /**
-     * @private
-     * @type {fmod.event.EventListener}
+     * @protected
+     * @type {fmod.event.EventHandler}
      */
      this.onMouseClicked = null;
 };
@@ -89,6 +89,22 @@ fmod.inherit(fmod.scene.Node, fmod.Object);
  * @param {number} y
  */
 fmod.scene.Node.prototype.contains = fmod.abstractMethod;
+
+/**
+ * @public
+ * @param {CanvasRenderingContext2D} context Canvas DOM element.
+ */
+fmod.scene.Node.prototype.draw = fmod.abstractMethod;
+
+/**
+ * @public
+ * @param {fmod.scene.input.MouseEvent} event
+ */
+fmod.scene.Node.prototype.handleEvent = function(event) {
+    if (this.contains(event.getX(), event.getY()) && this.onMouseClicked_) {
+        this.onMouseClicked_.handle(event);
+    }
+};
 
 /**
  * @public
@@ -112,26 +128,10 @@ fmod.scene.Node.prototype.setLayoutY = fmod.abstractMethod;
 
 /**
  * @public
- * @param {fmod.event.EventListener} listener
+ * @param {fmod.event.EventHandler} listener
  */
 fmod.scene.Node.prototype.setOnMouseClicked = function(listener) {
     this.onMouseClicked_ = listener;
-};
-
-/**
- * @public
- * @param {CanvasRenderingContext2D} context Canvas DOM element.
- */
-fmod.scene.Node.prototype.draw = fmod.abstractMethod;
-
-/**
- * @public
- * @param {fmod.event.Event} event
- */
-fmod.scene.Node.prototype.handleEvent = function(event) {
-    if (this.contains(event.getX(), event.getY()) && this.onMouseClicked_) {
-        this.onMouseClicked_.handle(event);
-    }
 };
 
 
@@ -145,8 +145,8 @@ fmod.scene.Group = function(var_args) {
 
     /**
      * Child nodes
-     * @type {Array}
      * @private
+     * @type {Array}
      */
     this.children_ = Array.prototype.slice.call(arguments);
 };
@@ -154,15 +154,25 @@ fmod.inherit(fmod.scene.Group, fmod.scene.Node);
 
 /**
  * @public
+ * @param {number} x
+ * @param {number} y
+ * @return {boolean}
+ */
+fmod.scene.Group.prototype.contains = function(x, y) {
+    return this.children_.some(function(element) {
+        return element.contains(x, y);
+    });
+};
+
+/**
+ * @public
  * @param {CanvasRenderingContext2D} context Canvas DOM element.
  * @override
  */
 fmod.scene.Group.prototype.draw = function(context) {
-    for (var i = 0; i < this.children_.length; i++)
-    {
-        var child = this.children_[i];
-        child.draw(context);
-    }
+    this.children_.forEach(function(element) {
+        element.draw(context);
+    });
 };
 
 /**
@@ -179,11 +189,9 @@ fmod.scene.Group.prototype.getChildren = function() {
  * @override
  */
 fmod.scene.Group.prototype.setLayoutX = function(x) {
-    for (var i = 0; i < this.children_.length; i++)
-    {
-        var child = this.children_[i];
-        child.setLayoutX(x);
-    }
+    this.children_.forEach(function(element) {
+        element.setLayoutX(x);
+    });
 };
 
 /**
@@ -192,36 +200,19 @@ fmod.scene.Group.prototype.setLayoutX = function(x) {
  * @override
  */
 fmod.scene.Group.prototype.setLayoutY = function(y) {
-    for (var i = 0; i < this.children_.length; i++)
-    {
-        var child = this.children_[i];
-        child.setLayoutY(x);
-    }
+    this.children_.forEach(function(element) {
+        element.setLayoutY(y);
+    });
 };
 
 /**
  * @public
- * @param {fmod.event.Event} event
+ * @param {fmod.scene.input.MouseEvent} event
  */
 fmod.scene.Group.prototype.handleEvent = function(event) {
-    var result = false;
-    for (var i = 0; i < this.children_.length; i++)
-    {
-        var child = this.children_[i];
-        if (child.contains(event.getX(), event.getY())) {
-            result = true;
-            break;
-        }
-    }
-    if (!result) return;
+    this.children_.forEach(function(element) {
+        element.handleEvent(event);
+    });
 
-    for (var i = 0; i < this.children_.length; i++)
-    {
-        var child = this.children_[i];
-        child.handleEvent(event);
-    }
-    
-    if (this.onMouseClicked_) {
-        this.onMouseClicked_.handle(event);
-    }
+    fmod.scene.Node.prototype.handleEvent.call(this, event);
 };

@@ -54,11 +54,11 @@ fmod.inArray = function(value, array) {
 };
 
 /**
+ * @public
  * @param {string} namespace
  */
-fmod.load_ = function(namespace) {
+fmod.importNameSpace = function(namespace) {
     var array = namespace.split('.');
-    array.pop();
     array.shift();
 
     if (!array.length) {
@@ -77,6 +77,14 @@ fmod.load_ = function(namespace) {
 
     fmod.loadFiles_.push(path);
     document.write('<script src="' + path + '"></script>');
+};
+
+/**
+ *
+ * @param application
+ */
+fmod.loadApplication = function(application) {
+    new application();
 };
 
 fmod.abstractMethod = function() {};
@@ -101,6 +109,7 @@ fmod.basePath_ = function() {
 
     return path.slice(0, path.length - ('/' + fmod.BASE_FILE_NAME).length);
 };
+
 
 /**
  * @constructor
@@ -135,14 +144,14 @@ fmod.Object.prototype.supplement = function(value, defaultValue) {
     return value;
 };
 
-fmod.load_('fmod.animation.Animation');
-fmod.load_('fmod.application.Application');
-fmod.load_('fmod.event.Event');
-fmod.load_('fmod.geometry.Point');
-fmod.load_('fmod.math.Math');
-fmod.load_('fmod.scene.Scene');
-fmod.load_('fmod.scene.input.Input');
-fmod.load_('fmod.scene.paint.Paint');
-fmod.load_('fmod.scene.shape.Shape');
-fmod.load_('fmod.stage.Stage');
-fmod.load_('fmod.time.Time');
+fmod.importNameSpace('fmod.animation');
+fmod.importNameSpace('fmod.application');
+fmod.importNameSpace('fmod.event');
+fmod.importNameSpace('fmod.geometry');
+fmod.importNameSpace('fmod.math');
+fmod.importNameSpace('fmod.scene');
+fmod.importNameSpace('fmod.scene.input');
+fmod.importNameSpace('fmod.scene.paint');
+fmod.importNameSpace('fmod.scene.shape');
+fmod.importNameSpace('fmod.stage');
+fmod.importNameSpace('fmod.time');

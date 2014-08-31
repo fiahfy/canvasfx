@@ -11,26 +11,26 @@ fiahfy.sample = {};
 
 
 /**
- * @param {Element} element DOM node
  * @constructor
  * @extends {fmod.application.Application}
  */
-fiahfy.sample.App = function(element) {
-    fmod.application.Application.call(this, element);
+fiahfy.sample.App = function() {
+    fmod.application.Application.call(this);
 };
 fmod.inherit(fiahfy.sample.App, fmod.application.Application);
 
 /**
  * @public
+ * @param {fmod.stage.Stage} stage
  * @override
  */
-fiahfy.sample.App.prototype.start = function() {
+fiahfy.sample.App.prototype.start = function(stage) {
     // set stage size
     //this.stage.setSize(1000, 1000);
 
     var r = new fmod.scene.Group();
     var s = new fmod.scene.Scene(r);
-    this.stage.setScene(s);
+    stage.setScene(s);
 
     var c = r.getChildren();
     // scene
@@ -38,22 +38,22 @@ fiahfy.sample.App.prototype.start = function() {
     //me.stage.setScene(scene);
 
     // draw grid
-    for (var i = 0; i <= this.stage.getWidth(); i += 10)
+    for (var i = 0; i <= stage.getWidth(); i += 10)
     {
         var y = new fmod.scene.shape.Line(
             i, 0,
-            i, this.stage.getHeight()
+            i, stage.getHeight()
         );
         y.setStroke(fmod.scene.paint.Color.GRAY);
         if (i % 100 == 0) y.setStrokeWidth(2.0);
         //scene.add(y);
         c.push(y);
     }
-    for (var j = 0; j <= this.stage.getHeight(); j += 10)
+    for (var j = 0; j <= stage.getHeight(); j += 10)
     {
         var x = new fmod.scene.shape.Line(
             0, j,
-            this.stage.getWidth(), j
+            stage.getWidth(), j
         );
         x.setStroke(fmod.scene.paint.Color.GRAY);
         if (j % 100 == 0) x.setStrokeWidth(2.0);
@@ -62,15 +62,14 @@ fiahfy.sample.App.prototype.start = function() {
     }
 
     var ci = new fmod.scene.shape.Circle(10, 10, 5);
-    var r = new fmod.scene.shape.Rectangle(5, 20, 10, 10);
-    var g = new fmod.scene.Group(ci, r);
+    var re = new fmod.scene.shape.Rectangle(5, 20, 10, 10);
+    var g = new fmod.scene.Group(ci, re);
     c.push(g);
     
     var me = this;
-    g.setOnMouseClicked((function() {
+    r.setOnMouseClicked((function() {
         var e = new fmod.event.EventListener();
         e.handle = function(event) {
-            console.log('c');
             ci.setCenterX(event.getX());
             ci.setCenterY(event.getY());
         };
@@ -151,7 +150,7 @@ fiahfy.sample.App.prototype.start = function() {
 
             g.setLayoutX(0.1);
             // show
-            me.stage.show();
+            stage.show();
         };
         return t;
     })().start();

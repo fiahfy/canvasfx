@@ -11,12 +11,18 @@ fmod.stage = {};
 
 /**
  * The top level container.
- * @param {HTMLElement} element Target DOM node.
+ * @param {string} id Target DOM id.
  * @constructor
  * @extends {fmod.Object}
  */
-fmod.stage.Stage = function(element) {
+fmod.stage.Stage = function(id) {
     fmod.Object.call(this);
+
+    /**
+     * @private
+     * @type {HTMLElement}
+     */
+    this.element_ = window.document.getElementById(id);
 
     /**
      * Canvas DOM element.
@@ -24,7 +30,6 @@ fmod.stage.Stage = function(element) {
      * @type {HTMLElement}
      */
     this.canvas_ = document.createElement('canvas');
-    element.appendChild(this.canvas_);
 
     /**
      * Canvas context.
@@ -45,17 +50,17 @@ fmod.stage.Stage = function(element) {
      * @type {number}
      * @private
      */
-    this.width_ = element.offsetWidth;
+    this.width_ = this.element_.offsetWidth;
 
     /**
      * The height of this Stage.
      * @type {number}
      * @private
      */
-    this.height_ = element.offsetHeight;
+    this.height_ = this.element_.offsetHeight;
 
-
-    this.addEventLinstener_();
+    this.element_.appendChild(this.canvas_);
+    this.addEventListener_();
 };
 fmod.inherit(fmod.stage.Stage, fmod.Object);
 
@@ -113,10 +118,10 @@ fmod.stage.Stage.prototype.clear = function() {
 /**
  * @private
  */
-fmod.stage.Stage.prototype.addEventLinstener_ = function() {
+fmod.stage.Stage.prototype.addEventListener_ = function() {
     //
     var me = this;
-    this.canvas_.onclick = (function(e) {
+    this.canvas_.onclick = function(e) {
         //console.log(e);
         //console.log(e.target.getBoundingClientRect());
         var rect = e.target.getBoundingClientRect();
@@ -128,5 +133,5 @@ fmod.stage.Stage.prototype.addEventLinstener_ = function() {
         //if (root.contains(x, y)) {
             root.handleEvent(event);
        // }
-    });
+    };
 };

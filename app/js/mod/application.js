@@ -10,14 +10,25 @@ fmod.application = {};
 
 
 /**
- * @param {HTMLElement} element Target DOM node.
  * @constructor
  * @extends {fmod.Object}
  */
-fmod.application.Application = function(element) {
+fmod.application.Application = function() {
     fmod.Object.call(this);
 
-    this.stage = new fmod.stage.Stage(element);
+    /**
+     * @protected
+     * @type {string}
+     */
+    this.id = 'app';
+
+    /**
+     * @private
+     * @type {fmod.stage.Stage}
+     */
+    this.stage_ = new fmod.stage.Stage(this.id);
+
+    this.start(this.stage_);
 };
 fmod.inherit(fmod.application.Application, fmod.Object);
 
