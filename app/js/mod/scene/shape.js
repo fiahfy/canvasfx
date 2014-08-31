@@ -111,6 +111,7 @@ fmod.scene.shape.Rectangle = function(x, y, width, height) {
      * @type {fmod.geometry.Point}
      */
     this.position = new fmod.geometry.Point(x, y);
+
     /**
      * Size
      * @protected
@@ -124,8 +125,9 @@ fmod.inherit(fmod.scene.shape.Rectangle, fmod.scene.shape.Shape);
 
 /**
  * @public
- * @param {number|fmod.geometory.Point} x
+ * @param {number|fmod.geometry.Point} x
  * @param {number=} y
+ * @return {boolean}
  */
 fmod.scene.shape.Rectangle.prototype.contains = function(x, y) {
     if (x instanceof fmod.geometry.Dimension) {
@@ -181,24 +183,6 @@ fmod.scene.shape.Rectangle.prototype.draw = function(context) {
     }
 };
 
-/**
- * @public
- * @param {number} x
- * @override
- */
-fmod.scene.shape.Rectangle.prototype.setLayoutX = function(x) {
-    this.position = this.position.add(x, 0);
-};
-
-/**
- * @public
- * @param {number} y
- * @override
- */
-fmod.scene.shape.Rectangle.prototype.setLayoutY = function(y) {
-    this.position = this.position.add(0, y);
-};
-
 
 /**
  * @param {number=} x Position x.
@@ -220,6 +204,7 @@ fmod.scene.shape.Circle = function(x, y, radius) {
      * @type {fmod.geometry.Point}
      */
     this.position = new fmod.geometry.Point(x, y);
+
     /**
      * Radius
      * @protected
@@ -233,8 +218,9 @@ fmod.inherit(fmod.scene.shape.Circle, fmod.scene.shape.Shape);
 
 /**
  * @public
- * @param {number|fmod.geometory.Point} x
+ * @param {number|fmod.geometry.Point} x
  * @param {number=} y
+ * @return {boolean}
  */
 fmod.scene.shape.Circle.prototype.contains = function(x, y) {
     if (x instanceof fmod.geometry.Dimension) {
@@ -306,24 +292,6 @@ fmod.scene.shape.Circle.prototype.setCenterY = function(y) {
     this.position = new fmod.geometry.Point(this.position.getX(), y);
 };
 
-/**
- * @public
- * @param {number} x
- * @override
- */
-fmod.scene.shape.Circle.prototype.setLayoutX = function(x) {
-    this.position = this.position.add(x, 0);
-};
-
-/**
- * @public
- * @param {number} y
- * @override
- */
-fmod.scene.shape.Circle.prototype.setLayoutY = function(y) {
-    this.position = this.position.add(0, y);
-};
-
 
 /**
  * @param {number=} startX Start position x.
@@ -347,6 +315,7 @@ fmod.scene.shape.Line = function(startX, startY, endX, endY) {
      * @type {fmod.geometry.Point}
      */
     this.start = new fmod.geometry.Point(startX, startY);
+
     /**
      * End position
      * @protected
@@ -360,8 +329,9 @@ fmod.inherit(fmod.scene.shape.Line, fmod.scene.shape.Shape);
 
 /**
  * @public
- * @param {number|fmod.geometory.Point} x
+ * @param {number|fmod.geometry.Point} x
  * @param {number=} y
+ * @return {boolean}
  */
 fmod.scene.shape.Line.prototype.contains = function(x, y) {
     return false;
@@ -389,24 +359,4 @@ fmod.scene.shape.Line.prototype.draw = function(context) {
         parseInt(this.end.getY()) + offset
     );
     context.stroke();
-};
-
-/**
- * @public
- * @param {number} x
- * @override
- */
-fmod.scene.shape.Line.prototype.setLayoutX = function(x) {
-    this.start = this.start.add(x, 0);
-    this.end = this.end.add(x, 0);
-};
-
-/**
- * @public
- * @param {number} y
- * @override
- */
-fmod.scene.shape.Line.prototype.setLayoutY = function(y) {
-    this.start = this.start.add(0, y);
-    this.end = this.end.add(0, y);
 };

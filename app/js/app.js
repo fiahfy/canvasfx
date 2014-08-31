@@ -65,6 +65,8 @@ fiahfy.sample.App.prototype.start = function(stage) {
     var re = new fmod.scene.shape.Rectangle(5, 20, 10, 10);
     var g = new fmod.scene.Group(ci, re);
     c.push(g);
+
+    var m = 0;
     
     var me = this;
     r.setOnMouseClicked((function() {
@@ -148,7 +150,8 @@ fiahfy.sample.App.prototype.start = function(stage) {
             //scene.add(circle);
 
 
-            g.setLayoutX(0.1);
+            m += 0.1;
+            g.setLayoutX(m);
             // show
             stage.show();
         };

@@ -77,6 +77,18 @@ fmod.scene.Node = function() {
 
     /**
      * @protected
+     * @type {number}
+     */
+    this.layoutX = 0.0;
+
+    /**
+     * @protected
+     * @type {number}
+     */
+    this.layoutY = 0.0;
+
+    /**
+     * @protected
      * @type {fmod.event.EventHandler}
      */
      this.onMouseClicked = null;
