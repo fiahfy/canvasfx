@@ -26,10 +26,10 @@ fmod.scene.paint = {};
 fmod.scene.paint.Color = function(red, green, blue, opacity) {
     fmod.Object.call(this);
 
-    red = this.supplement(red, 0.0);
-    green = this.supplement(green, 0.0);
-    blue = this.supplement(blue, 0.0);
-    opacity = this.supplement(opacity, 0.0);
+    red = fmod.supplement(red, 0.0);
+    green = fmod.supplement(green, 0.0);
+    blue = fmod.supplement(blue, 0.0);
+    opacity = fmod.supplement(opacity, 0.0);
 
     // TODO: parse web color string
     if (typeof red === 'string' && red.charAt(0) == '#') {

@@ -20,8 +20,8 @@ fmod.geometry = {};
 fmod.geometry.Point = function(x, y) {
     fmod.Object.call(this);
 
-    x = this.supplement(x, 0.0);
-    y = this.supplement(y, 0.0);
+    x = fmod.supplement(x, 0.0);
+    y = fmod.supplement(y, 0.0);
 
     /**
      * The x coordinate of the point.
@@ -96,8 +96,8 @@ fmod.geometry.Point.prototype.getY = function() {
 fmod.geometry.Dimension = function(width, height) {
     fmod.Object.call(this);
 
-    width = this.supplement(width, 0.0);
-    height = this.supplement(height, 0.0);
+    width = fmod.supplement(width, 0.0);
+    height = fmod.supplement(height, 0.0);
 
     /**
      * The width.

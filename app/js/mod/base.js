@@ -42,6 +42,19 @@ fmod.inherit = function(child, parent) {
 };
 
 /**
+ * @protected
+ * @param {*} value Argument value.
+ * @param {*=} defaultValue Default value if argument value is undefined.
+ * @return {*}
+ */
+fmod.supplement = function(value, defaultValue) {
+    if (typeof value === 'undefined' && typeof defaultValue !== 'undefined') {
+        return defaultValue;
+    }
+    return value;
+};
+
+/**
  * @public
  * @param {*} value
  * @param {Array} array
@@ -131,18 +144,6 @@ fmod.Object.prototype.clone = function() {
     return clone;
 };
 
-/**
- * @protected
- * @param {*} value Argument value.
- * @param {*=} defaultValue Default value if argument value is undefined.
- * @return {*}
- */
-fmod.Object.prototype.supplement = function(value, defaultValue) {
-    if (typeof value === 'undefined' && typeof defaultValue !== 'undefined') {
-        return defaultValue;
-    }
-    return value;
-};
 
 fmod.importNameSpace('fmod.animation');
 fmod.importNameSpace('fmod.application');

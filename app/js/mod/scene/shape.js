@@ -90,120 +90,32 @@ fmod.scene.shape.Shape.prototype.setStrokeWidth = function(width) {
 
 
 /**
- * @param {number=} x Position x.
- * @param {number=} y Position y.
- * @param {number=} width Size width.
- * @param {number=} height Size height.
- * @constructor
- * @extends {fmod.scene.Shape}
- */
-fmod.scene.shape.Rectangle = function(x, y, width, height) {
-    fmod.scene.shape.Shape.call(this);
-
-    x = this.supplement(x, 0.0);
-    y = this.supplement(y, 0.0);
-    width = this.supplement(width, 0.0);
-    height = this.supplement(height, 0.0);
-
-    /**
-     * Position
-     * @protected
-     * @type {fmod.geometry.Point}
-     */
-    this.position = new fmod.geometry.Point(x, y);
-
-    /**
-     * Size
-     * @protected
-     * @type {fmod.geometry.Dimension}
-     */
-    this.size = new fmod.geometry.Dimension(width, height);
-
-    this.fill = fmod.scene.paint.Color.BLACK;
-};
-fmod.inherit(fmod.scene.shape.Rectangle, fmod.scene.shape.Shape);
-
-/**
- * @public
- * @param {number|fmod.geometry.Point} x
- * @param {number=} y
- * @return {boolean}
- */
-fmod.scene.shape.Rectangle.prototype.contains = function(x, y) {
-    if (x instanceof fmod.geometry.Dimension) {
-        y = x.getY();
-        x = x.getX();
-    }
-    return this.position.getX() <= x && x <= this.position.getX() &&
-        this.position.getY() <= y && y <= this.position.getY();
-};
-
-/**
- * @public
- * @param {CanvasRenderingContext2D} context Canvas DOM element.
- * @override
- */
-fmod.scene.shape.Rectangle.prototype.draw = function(context) {
-    if (this.fill) {
-        context.fillStyle = this.fill.getWeb();
-        context.fillRect(
-            parseInt(this.position.getX()),
-            parseInt(this.position.getY()),
-            parseInt(this.size.getWidth()),
-            parseInt(this.size.getHeight())
-        );
-    }
-
-    if (this.stroke) {
-        context.strokeStyle = this.stroke.getWeb();
-        context.lineWidth = this.strokeWidth;
-
-        var offsetPosition = offsetSize = 0;
-        switch (this.strokeType) {
-            case fmod.scene.shape.StrokeType.OUTSIDE:
-                offsetPosition = - 0.5 * this.strokeWidth;
-                offsetSize = this.strokeWidth;
-                break;
-            case fmod.scene.shape.StrokeType.INSIDE:
-                offsetPosition = 0.5 * this.strokeWidth;
-                offsetSize = - this.strokeWidth;
-                break;
-            case fmod.scene.shape.StrokeType.CENTERED:
-            default:
-                offsetPosition = 0.5 * (this.strokeWidth % 2);
-                offsetSize = 0;
-                break;
-        }
-        context.strokeRect(
-            parseInt(this.position.getX()) + offsetPosition,
-            parseInt(this.position.getY()) + offsetPosition,
-            parseInt(this.size.getWidth()) + offsetSize,
-            parseInt(this.size.getHeight()) + offsetSize
-        );
-    }
-};
-
-
-/**
- * @param {number=} x Position x.
- * @param {number=} y Position y.
+ * @param {number=} centerX Center position x.
+ * @param {number=} centerY Center position y.
  * @param {number=} radius Radius.
  * @constructor
  * @extends {fmod.scene.Shape}
  */
-fmod.scene.shape.Circle = function(x, y, radius) {
+fmod.scene.shape.Circle = function(centerX, centerY, radius) {
     fmod.scene.shape.Shape.call(this);
 
-    x = this.supplement(x, 0.0);
-    y = this.supplement(y, 0.0);
-    radius = this.supplement(radius, 0.0);
+    centerX = fmod.supplement(centerX, 0.0);
+    centerY = fmod.supplement(centerY, 0.0);
+    radius = fmod.supplement(radius, 0.0);
 
     /**
-     * Position
+     * Center x
      * @protected
-     * @type {fmod.geometry.Point}
+     * @type {number}
      */
-    this.position = new fmod.geometry.Point(x, y);
+    this.centerX = centerX;
+
+    /**
+     * Center y
+     * @protected
+     * @type {number}
+     */
+    this.centerY = centerY;
 
     /**
      * Radius
@@ -223,11 +135,8 @@ fmod.inherit(fmod.scene.shape.Circle, fmod.scene.shape.Shape);
  * @return {boolean}
  */
 fmod.scene.shape.Circle.prototype.contains = function(x, y) {
-    if (x instanceof fmod.geometry.Dimension) {
-        y = x.getY();
-        x = x.getX();
-    }
-    return (this.position.distance(x, y) <= this.radius);
+    var point = new fmod.geometry.Point(this.centerX, this.centerY);
+    return (point.distance(x, y) <= this.radius);
 };
 
 /**
@@ -240,8 +149,8 @@ fmod.scene.shape.Circle.prototype.draw = function(context) {
         context.beginPath();
         context.fillStyle = this.fill.getWeb();
         context.arc(
-            parseInt(this.position.getX()),
-            parseInt(this.position.getY()),
+            parseInt(this.centerX),
+            parseInt(this.centerY),
             this.radius,
             0, Math.PI * 2, false
         );
@@ -267,8 +176,8 @@ fmod.scene.shape.Circle.prototype.draw = function(context) {
                 break;
         }
         context.arc(
-            parseInt(this.position.getX()),
-            parseInt(this.position.getY()),
+            parseInt(this.centerX),
+            parseInt(this.centerY),
             this.radius + offset,
             0, Math.PI * 2, false
         );
@@ -278,18 +187,222 @@ fmod.scene.shape.Circle.prototype.draw = function(context) {
 
 /**
  * @public
+ * @return {number}
+ */
+fmod.scene.shape.Circle.prototype.getCenterX = function() {
+    return this.centerX;
+};
+
+/**
+ * @public
+ * @return {number}
+ */
+fmod.scene.shape.Circle.prototype.getCenterY = function() {
+    return this.centerY;
+};
+
+/**
+ * @public
+ * @return {number}
+ */
+fmod.scene.shape.Circle.prototype.getRadius = function() {
+    return this.radius;
+};
+
+/**
+ * @public
+ * @param {number} centerX
+ */
+fmod.scene.shape.Circle.prototype.setCenterX = function(centerX) {
+    this.centerX = centerX;
+};
+
+/**
+ * @public
+ * @param {number} centerY
+ */
+fmod.scene.shape.Circle.prototype.setCenterY = function(centerY) {
+    this.centerY = centerY;
+};
+
+/**
+ * @public
+ * @param {number} radius
+ */
+fmod.scene.shape.Circle.prototype.setRadius = function(radius) {
+    this.radius = radius;
+};
+
+
+/**
+ * @param {number=} x Position x.
+ * @param {number=} y Position y.
+ * @param {number=} width Size width.
+ * @param {number=} height Size height.
+ * @constructor
+ * @extends {fmod.scene.Shape}
+ */
+fmod.scene.shape.Rectangle = function(x, y, width, height) {
+    fmod.scene.shape.Shape.call(this);
+
+    x = fmod.supplement(x, 0.0);
+    y = fmod.supplement(y, 0.0);
+    width = fmod.supplement(width, 0.0);
+    height = fmod.supplement(height, 0.0);
+
+    /**
+     * Position x
+     * @protected
+     * @type {number}
+     */
+    this.x = x;
+
+    /**
+     * Position y
+     * @protected
+     * @type {number}
+     */
+    this.y = y;
+
+    /**
+     * Width
+     * @protected
+     * @type {number}
+     */
+    this.width = width;
+
+    /**
+     * Height
+     * @protected
+     * @type {number}
+     */
+    this.height = height;
+
+    this.fill = fmod.scene.paint.Color.BLACK;
+};
+fmod.inherit(fmod.scene.shape.Rectangle, fmod.scene.shape.Shape);
+
+/**
+ * @public
+ * @param {number|fmod.geometry.Point} x
+ * @param {number=} y
+ * @return {boolean}
+ */
+fmod.scene.shape.Rectangle.prototype.contains = function(x, y) {
+    if (x instanceof fmod.geometry.Dimension) {
+        y = x.getY();
+        x = x.getX();
+    }
+    return this.x <= x && x <= this.x && this.y <= y && y <= this.y;
+};
+
+/**
+ * @public
+ * @param {CanvasRenderingContext2D} context Canvas DOM element.
+ * @override
+ */
+fmod.scene.shape.Rectangle.prototype.draw = function(context) {
+    if (this.fill) {
+        context.fillStyle = this.fill.getWeb();
+        context.fillRect(
+            parseInt(this.x),
+            parseInt(this.y),
+            parseInt(this.width),
+            parseInt(this.height)
+        );
+    }
+
+    if (this.stroke) {
+        context.strokeStyle = this.stroke.getWeb();
+        context.lineWidth = this.strokeWidth;
+
+        var offsetPosition = offsetSize = 0;
+        switch (this.strokeType) {
+            case fmod.scene.shape.StrokeType.OUTSIDE:
+                offsetPosition = - 0.5 * this.strokeWidth;
+                offsetSize = this.strokeWidth;
+                break;
+            case fmod.scene.shape.StrokeType.INSIDE:
+                offsetPosition = 0.5 * this.strokeWidth;
+                offsetSize = - this.strokeWidth;
+                break;
+            case fmod.scene.shape.StrokeType.CENTERED:
+            default:
+                offsetPosition = 0.5 * (this.strokeWidth % 2);
+                offsetSize = 0;
+                break;
+        }
+        context.strokeRect(
+            parseInt(this.x) + offsetPosition,
+            parseInt(this.y) + offsetPosition,
+            parseInt(this.width) + offsetSize,
+            parseInt(this.height) + offsetSize
+        );
+    }
+};
+
+/**
+ * @public
+ * @return {number}
+ */
+fmod.scene.shape.Rectangle.prototype.getHeight = function() {
+    return this.height;
+};
+
+/**
+ * @public
+ * @return {number}
+ */
+fmod.scene.shape.Rectangle.prototype.getWitdh = function() {
+    return this.width;
+};
+
+/**
+ * @public
+ * @return {number}
+ */
+fmod.scene.shape.Rectangle.prototype.getX = function() {
+    return this.x;
+};
+
+/**
+ * @public
+ * @return {number}
+ */
+fmod.scene.shape.Rectangle.prototype.getY = function() {
+    return this.y;
+};
+
+/**
+ * @public
+ * @param {number} height
+ */
+fmod.scene.shape.Rectangle.prototype.setHeight = function(height) {
+    this.height = height;
+};
+
+/**
+ * @public
+ * @param {number} width
+ */
+fmod.scene.shape.Rectangle.prototype.setWidth = function(width) {
+    this.width = width;
+};
+
+/**
+ * @public
  * @param {number} x
  */
-fmod.scene.shape.Circle.prototype.setCenterX = function(x) {
-    this.position = new fmod.geometry.Point(x, this.position.getY());
+fmod.scene.shape.Rectangle.prototype.setX = function(x) {
+    this.x = x;
 };
 
 /**
  * @public
  * @param {number} y
  */
-fmod.scene.shape.Circle.prototype.setCenterY = function(y) {
-    this.position = new fmod.geometry.Point(this.position.getX(), y);
+fmod.scene.shape.Rectangle.prototype.setY = function(y) {
+    this.y = y;
 };
 
 
@@ -304,24 +417,38 @@ fmod.scene.shape.Circle.prototype.setCenterY = function(y) {
 fmod.scene.shape.Line = function(startX, startY, endX, endY) {
     fmod.scene.shape.Shape.call(this);
 
-    startX = this.supplement(startX, 0.0);
-    startY = this.supplement(startY, 0.0);
-    endX = this.supplement(endX, 0.0);
-    endY = this.supplement(endY, 0.0);
+    startX = fmod.supplement(startX, 0.0);
+    startY = fmod.supplement(startY, 0.0);
+    endX = fmod.supplement(endX, 0.0);
+    endY = fmod.supplement(endY, 0.0);
 
     /**
-     * Start position
+     * Start position x
      * @protected
-     * @type {fmod.geometry.Point}
+     * @type {number}
      */
-    this.start = new fmod.geometry.Point(startX, startY);
+    this.startX = startX;
 
     /**
-     * End position
+     * Start position y
      * @protected
-     * @type {fmod.geometry.Point}
+     * @type {number}
      */
-    this.end = new fmod.geometry.Point(endX, endY);
+    this.startY = startY;
+
+    /**
+     * End position x
+     * @protected
+     * @type {number}
+     */
+    this.endX = endX;
+
+    /**
+     * End position y
+     * @protected
+     * @type {number}
+     */
+    this.endY = endY;
 
     this.stroke = fmod.scene.paint.Color.BLACK;
 };
@@ -351,12 +478,76 @@ fmod.scene.shape.Line.prototype.draw = function(context) {
 
     var offset = 0.5 * (this.strokeWidth % 2);
     context.moveTo(
-        parseInt(this.start.getX()) + offset,
-        parseInt(this.start.getY()) + offset
+        parseInt(this.startX) + offset,
+        parseInt(this.startY) + offset
     );
     context.lineTo(
-        parseInt(this.end.getX()) + offset,
-        parseInt(this.end.getY()) + offset
+        parseInt(this.endX) + offset,
+        parseInt(this.endY) + offset
     );
     context.stroke();
+};
+
+/**
+ * @public
+ * @return {number}
+ */
+fmod.scene.shape.Line.prototype.getStartX = function() {
+    return this.startX;
+};
+
+/**
+ * @public
+ * @return {number}
+ */
+fmod.scene.shape.Line.prototype.getStartY = function() {
+    return this.startY;
+};
+
+/**
+ * @public
+ * @return {number}
+ */
+fmod.scene.shape.Line.prototype.getEndX = function() {
+    return this.endX;
+};
+
+/**
+ * @public
+ * @return {number}
+ */
+fmod.scene.shape.Line.prototype.getEndY = function() {
+    return this.endY;
+};
+
+/**
+ * @public
+ * @param {number} startX
+ */
+fmod.scene.shape.Line.prototype.seStartX = function(startX) {
+    this.startX = startX;
+};
+
+/**
+ * @public
+ * @param {number} startY
+ */
+fmod.scene.shape.Line.prototype.seStartY = function(startY) {
+    this.startY = startY;
+};
+
+/**
+ * @public
+ * @param {number} endX
+ */
+fmod.scene.shape.Line.prototype.setEndX = function(endX) {
+    this.endX = endX;
+};
+
+/**
+ * @public
+ * @param {number} endY
+ */
+fmod.scene.shape.Line.prototype.setEndY = function(endY) {
+    this.endY = endY;
 };

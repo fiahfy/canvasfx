@@ -99,14 +99,14 @@ fmod.stage.Stage.prototype.setScene = function(scene) {
  * @public
  */
 fmod.stage.Stage.prototype.show = function() {
-    this.clear();
+    this.clear_();
     this.scene_.getRoot().draw(this.context_);
 };
 
 /**
- * @public
+ * @private
  */
-fmod.stage.Stage.prototype.clear = function() {
+fmod.stage.Stage.prototype.clear_ = function() {
     var rect = new fmod.scene.shape.Rectangle(
         0, 0,
         this.width_, this.height_
