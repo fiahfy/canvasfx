@@ -40,6 +40,12 @@ fmod.scene.Scene = function(root, width, height) {
      * @type {number}
      */
     this.height_ = height;
+
+    /**
+     * @private
+     * @type {fmod.event.EventHandler}
+     */
+    this.onMouseClicked_ = null;
 };
 fmod.inherit(fmod.scene.Scene, fmod.Object);
 
@@ -49,6 +55,14 @@ fmod.inherit(fmod.scene.Scene, fmod.Object);
  */
 fmod.scene.Scene.prototype.getHeight = function() {
     return this.height_;
+};
+
+/**
+ * @public
+ * @return {fmod.event.EventListener}
+ */
+fmod.scene.Scene.prototype.getOnMouseClicked = function() {
+    return this.onMouseClicked_;
 };
 
 /**
@@ -65,6 +79,44 @@ fmod.scene.Scene.prototype.getRoot = function() {
  */
 fmod.scene.Scene.prototype.getWidth = function() {
     return this.width_;
+};
+
+/**
+ * @public
+ * @param {fmod.scene.input.MouseEvent} event
+ */
+fmod.scene.Scene.prototype.handleEvent = function(event) {
+    this.root_.handleEvent(event);
+
+    if (0 <= event.getX() && event.getX() <= this.width_ &&
+        0 <= event.getY() && event.getY() <= this.height_ &&
+        this.onMouseClicked_) {
+        this.onMouseClicked_.handle(event);
+    }
+};
+
+/**
+ * @public
+ * @param {fmod.event.EventHandler} handler
+ */
+fmod.scene.Scene.prototype.setOnMouseClicked = function(handler) {
+    this.onMouseClicked_ = handler;
+};
+
+/**
+ * @public
+ * @param {number} width
+ */
+fmod.scene.Scene.prototype.setWidth = function(width) {
+    this.width_ = width;
+};
+
+/**
+ * @public
+ * @param {number} height
+ */
+fmod.scene.Scene.prototype.setHeight = function(height) {
+    this.height_ = height;
 };
 
 
@@ -110,12 +162,18 @@ fmod.scene.Node.prototype.draw = fmod.abstractMethod;
 
 /**
  * @public
- * @param {fmod.scene.input.MouseEvent} event
+ * @return {number}
  */
-fmod.scene.Node.prototype.handleEvent = function(event) {
-    if (this.contains(event.getX(), event.getY()) && this.onMouseClicked_) {
-        this.onMouseClicked_.handle(event);
-    }
+fmod.scene.Node.prototype.getLayoutX = function() {
+    return this.layoutX;
+};
+
+/**
+ * @public
+ * @return {number}
+ */
+fmod.scene.Node.prototype.getLayoutY = function() {
+    return this.layoutY;
 };
 
 /**
@@ -128,22 +186,36 @@ fmod.scene.Node.prototype.getOnMouseClicked = function() {
 
 /**
  * @public
- * @param {number} x
+ * @param {fmod.scene.input.MouseEvent} event
  */
-fmod.scene.Node.prototype.setLayoutX = fmod.abstractMethod;
+fmod.scene.Node.prototype.handleEvent = function(event) {
+    if (this.contains(event.getX(), event.getY()) && this.onMouseClicked) {
+        this.onMouseClicked.handle(event);
+    }
+};
 
 /**
  * @public
- * @param {number} y
+ * @param {number} layoutX
  */
-fmod.scene.Node.prototype.setLayoutY = fmod.abstractMethod;
+fmod.scene.Node.prototype.setLayoutX = function(layoutX) {
+    this.layoutX = layoutX;
+};
 
 /**
  * @public
- * @param {fmod.event.EventHandler} listener
+ * @param {number} layoutY
  */
-fmod.scene.Node.prototype.setOnMouseClicked = function(listener) {
-    this.onMouseClicked_ = listener;
+fmod.scene.Node.prototype.setLayoutY = function(layoutY) {
+    this.layoutY = layoutY;
+};
+
+/**
+ * @public
+ * @param {fmod.event.EventHandler} handler
+ */
+fmod.scene.Node.prototype.setOnMouseClicked = function(handler) {
+    this.onMouseClicked = handler;
 };
 
 
@@ -197,23 +269,25 @@ fmod.scene.Group.prototype.getChildren = function() {
 
 /**
  * @public
- * @param {number} x
+ * @param {number} layoutX
  * @override
  */
-fmod.scene.Group.prototype.setLayoutX = function(x) {
+fmod.scene.Group.prototype.setLayoutX = function(layoutX) {
+    this.layoutX = layoutX;
     this.children_.forEach(function(element) {
-        element.setLayoutX(x);
+        element.setLayoutX(layoutX);
     });
 };
 
 /**
  * @public
- * @param {number} y
+ * @param {number} layoutY
  * @override
  */
-fmod.scene.Group.prototype.setLayoutY = function(y) {
+fmod.scene.Group.prototype.setLayoutY = function(layoutY) {
+    this.layoutY = layoutY;
     this.children_.forEach(function(element) {
-        element.setLayoutY(y);
+        element.setLayoutY(layoutY);
     });
 };
 

@@ -90,9 +90,12 @@ fmod.stage.Stage.prototype.setScene = function(scene) {
     if (this.scene_.getWidth() && this.scene_.getHeight()) {
         this.width_ = this.scene_.getWidth();
         this.height_ = this.scene_.getHeight();
+    } else {
+        this.canvas_.width = this.width_;
+        this.canvas_.height = this.height_;
+        this.scene_.setWidth(this.width_);
+        this.scene_.setHeight(this.height_);
     }
-    this.canvas_.width = this.width_;
-    this.canvas_.height = this.height_;
 };
 
 /**
@@ -129,9 +132,7 @@ fmod.stage.Stage.prototype.addEventListener_ = function() {
         var y = e.clientY - rect.top;
         //console.log(x, y);
         var event = new fmod.scene.input.MouseEvent(x, y);
-        var root = me.scene_.getRoot();
-        //if (root.contains(x, y)) {
-            root.handleEvent(event);
-       // }
+        me.scene_.handleEvent(event);
+        //me.scene_.getRoot().handleEvent(event);
     };
 };

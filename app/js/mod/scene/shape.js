@@ -135,7 +135,9 @@ fmod.inherit(fmod.scene.shape.Circle, fmod.scene.shape.Shape);
  * @return {boolean}
  */
 fmod.scene.shape.Circle.prototype.contains = function(x, y) {
-    var point = new fmod.geometry.Point(this.centerX, this.centerY);
+    var point = new fmod.geometry.Point(
+        this.getCurrentCenterX(), this.getCurrentCenterY()
+    );
     return (point.distance(x, y) <= this.radius);
 };
 
@@ -149,8 +151,8 @@ fmod.scene.shape.Circle.prototype.draw = function(context) {
         context.beginPath();
         context.fillStyle = this.fill.getWeb();
         context.arc(
-            parseInt(this.centerX),
-            parseInt(this.centerY),
+            parseInt(this.getCurrentCenterX()),
+            parseInt(this.getCurrentCenterY()),
             this.radius,
             0, Math.PI * 2, false
         );
@@ -176,8 +178,8 @@ fmod.scene.shape.Circle.prototype.draw = function(context) {
                 break;
         }
         context.arc(
-            parseInt(this.centerX),
-            parseInt(this.centerY),
+            parseInt(this.getCurrentCenterX()),
+            parseInt(this.getCurrentCenterY()),
             this.radius + offset,
             0, Math.PI * 2, false
         );
@@ -199,6 +201,22 @@ fmod.scene.shape.Circle.prototype.getCenterX = function() {
  */
 fmod.scene.shape.Circle.prototype.getCenterY = function() {
     return this.centerY;
+};
+
+/**
+ * @protected
+ * @return {number}
+ */
+fmod.scene.shape.Circle.prototype.getCurrentCenterX = function() {
+    return this.centerX + this.layoutX;
+};
+
+/**
+ * @protected
+ * @return {number}
+ */
+fmod.scene.shape.Circle.prototype.getCurrentCenterY = function() {
+    return this.centerY + this.layoutY;
 };
 
 /**
@@ -293,7 +311,8 @@ fmod.scene.shape.Rectangle.prototype.contains = function(x, y) {
         y = x.getY();
         x = x.getX();
     }
-    return this.x <= x && x <= this.x && this.y <= y && y <= this.y;
+    return this.getCurrentX() <= x && x <= this.getCurrentX() &&
+        this.getCurrentY() <= y && y <= this.getCurrentY();
 };
 
 /**
@@ -305,8 +324,8 @@ fmod.scene.shape.Rectangle.prototype.draw = function(context) {
     if (this.fill) {
         context.fillStyle = this.fill.getWeb();
         context.fillRect(
-            parseInt(this.x),
-            parseInt(this.y),
+            parseInt(this.getCurrentX()),
+            parseInt(this.getCurrentY()),
             parseInt(this.width),
             parseInt(this.height)
         );
@@ -316,7 +335,8 @@ fmod.scene.shape.Rectangle.prototype.draw = function(context) {
         context.strokeStyle = this.stroke.getWeb();
         context.lineWidth = this.strokeWidth;
 
-        var offsetPosition = offsetSize = 0;
+        var offsetPosition = 0;
+        var offsetSize = 0;
         switch (this.strokeType) {
             case fmod.scene.shape.StrokeType.OUTSIDE:
                 offsetPosition = - 0.5 * this.strokeWidth;
@@ -333,12 +353,28 @@ fmod.scene.shape.Rectangle.prototype.draw = function(context) {
                 break;
         }
         context.strokeRect(
-            parseInt(this.x) + offsetPosition,
-            parseInt(this.y) + offsetPosition,
+            parseInt(this.getCurrentX()) + offsetPosition,
+            parseInt(this.getCurrentY()) + offsetPosition,
             parseInt(this.width) + offsetSize,
             parseInt(this.height) + offsetSize
         );
     }
+};
+
+/**
+ * @protected
+ * @return {number}
+ */
+fmod.scene.shape.Rectangle.prototype.getCurrentX = function() {
+    return this.x + this.layoutX;
+};
+
+/**
+ * @protected
+ * @return {number}
+ */
+fmod.scene.shape.Rectangle.prototype.getCurrentY = function() {
+    return this.y + this.layoutY;
 };
 
 /**
@@ -478,30 +514,46 @@ fmod.scene.shape.Line.prototype.draw = function(context) {
 
     var offset = 0.5 * (this.strokeWidth % 2);
     context.moveTo(
-        parseInt(this.startX) + offset,
-        parseInt(this.startY) + offset
+        parseInt(this.getCurrentStartX()) + offset,
+        parseInt(this.getCurrentStartY()) + offset
     );
     context.lineTo(
-        parseInt(this.endX) + offset,
-        parseInt(this.endY) + offset
+        parseInt(this.getCurrentEndX()) + offset,
+        parseInt(this.getCurrentEndY()) + offset
     );
     context.stroke();
 };
 
 /**
- * @public
+ * @protected
  * @return {number}
  */
-fmod.scene.shape.Line.prototype.getStartX = function() {
-    return this.startX;
+fmod.scene.shape.Line.prototype.getCurrentEndX = function() {
+    return this.endX + this.layoutX;
 };
 
 /**
- * @public
+ * @protected
  * @return {number}
  */
-fmod.scene.shape.Line.prototype.getStartY = function() {
-    return this.startY;
+fmod.scene.shape.Line.prototype.getCurrentEndY = function() {
+    return this.endY + this.layoutY;
+};
+
+/**
+ * @protected
+ * @return {number}
+ */
+fmod.scene.shape.Line.prototype.getCurrentStartX = function() {
+    return this.startX + this.layoutX;
+};
+
+/**
+ * @protected
+ * @return {number}
+ */
+fmod.scene.shape.Line.prototype.getCurrentStartY = function() {
+    return this.startY + this.layoutY;
 };
 
 /**
@@ -522,18 +574,18 @@ fmod.scene.shape.Line.prototype.getEndY = function() {
 
 /**
  * @public
- * @param {number} startX
+ * @return {number}
  */
-fmod.scene.shape.Line.prototype.seStartX = function(startX) {
-    this.startX = startX;
+fmod.scene.shape.Line.prototype.getStartX = function() {
+    return this.startX;
 };
 
 /**
  * @public
- * @param {number} startY
+ * @return {number}
  */
-fmod.scene.shape.Line.prototype.seStartY = function(startY) {
-    this.startY = startY;
+fmod.scene.shape.Line.prototype.getStartY = function() {
+    return this.startY;
 };
 
 /**
@@ -550,4 +602,20 @@ fmod.scene.shape.Line.prototype.setEndX = function(endX) {
  */
 fmod.scene.shape.Line.prototype.setEndY = function(endY) {
     this.endY = endY;
+};
+
+/**
+ * @public
+ * @param {number} startX
+ */
+fmod.scene.shape.Line.prototype.seStartX = function(startX) {
+    this.startX = startX;
+};
+
+/**
+ * @public
+ * @param {number} startY
+ */
+fmod.scene.shape.Line.prototype.seStartY = function(startY) {
+    this.startY = startY;
 };

@@ -61,19 +61,21 @@ fiahfy.sample.App.prototype.start = function(stage) {
         c.push(x);
     }
 
-    var ci = new fmod.scene.shape.Circle(10, 10, 5);
-    var re = new fmod.scene.shape.Rectangle(5, 20, 10, 10);
+    var ci = new fmod.scene.shape.Circle(0, 0, 100);
+    var re = new fmod.scene.shape.Rectangle(0, 0, 10, 10);
     var g = new fmod.scene.Group(ci, re);
     c.push(g);
 
     var m = 0;
     
     var me = this;
-    r.setOnMouseClicked((function() {
+    s.setOnMouseClicked((function() {
         var e = new fmod.event.EventListener();
         e.handle = function(event) {
-            ci.setCenterX(event.getX());
-            ci.setCenterY(event.getY());
+           // console.log(event.getX(), event.getY());
+            //console.log(ci.getCenterX(), ci.getCenterY());
+            ci.setLayoutX(event.getX() - ci.getCenterX());
+            ci.setLayoutY(event.getY() - ci.getCenterX());
         };
         return e;
     })());
@@ -149,9 +151,11 @@ fiahfy.sample.App.prototype.start = function(stage) {
             //circle.setStrokeType(fmod.scene.shape.StrokeType.CENTERED);
             //scene.add(circle);
 
-
-            m += 0.1;
-            g.setLayoutX(m);
+            m = ci.getLayoutX();
+            //console.log(m);
+            m += 1;
+            ci.setLayoutX(m);
+            //console.log(g.getLayoutX());
             // show
             stage.show();
         };
