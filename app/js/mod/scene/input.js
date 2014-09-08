@@ -32,14 +32,33 @@ fmod.scene.input.MouseEvent = function(x, y) {
     fmod.scene.input.InputEvent.call(this);
 
     /**
-     * Position of the event relative to the origin of the MouseEvent's source.
      * @private
-     * @type {fmod.geometry.Point}
+     * @type {number}
      */
-    this.position_ = new fmod.geometry.Point(x, y);
+    this.x_ = x;
+
+    /**
+     * @private
+     * @type {number}
+     */
+    this.y_ = y;
+
+    /**
+     * @private
+     * @type {fmod.event.EventType}
+     */
+    this.eventType_ = null;
 };
 fmod.inherit(fmod.scene.input.MouseEvent,
     fmod.scene.input.InputEvent);
+
+/**
+ * @public
+ * @return {fmod.event.EventType} eventType
+ */
+fmod.scene.input.MouseEvent.prototype.getEventType = function() {
+    return this.eventType_;
+};
 
 /**
  * @public
@@ -47,7 +66,7 @@ fmod.inherit(fmod.scene.input.MouseEvent,
  *     to the origin of the MouseEvent's source.
  */
 fmod.scene.input.MouseEvent.prototype.getX = function() {
-    return this.position_.getX();
+    return this.x_;
 };
 
 /**
@@ -56,5 +75,29 @@ fmod.scene.input.MouseEvent.prototype.getX = function() {
  *     to the origin of the MouseEvent's source.
  */
 fmod.scene.input.MouseEvent.prototype.getY = function() {
-    return this.position_.getY();
+    return this.y_;
 };
+
+/**
+ * @public
+ * @param {fmod.event.EventType} eventType
+ */
+fmod.scene.input.MouseEvent.prototype.setEventType = function(eventType) {
+    this.eventType_ = eventType;
+};
+
+/**
+ * @const
+ * @public
+ * @type {fmod.event.EventType}
+ */
+fmod.scene.input.MouseEvent.MOUSE_CLICKED =
+    new fmod.event.EventType('MOUSE_CLICKED');
+
+/**
+ * @const
+ * @public
+ * @type {fmod.event.EventType}
+ */
+fmod.scene.input.MouseEvent.MOUSE_DRAGGED =
+    new fmod.event.EventType('MOUSE_DRAGGED');

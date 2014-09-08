@@ -67,9 +67,26 @@ fiahfy.sample.App.prototype.start = function(stage) {
     c.push(g);
 
     var m = 0;
-    
+
+    /*
+    ci.setOnMouseClicked((function() {
+        var e = new fmod.event.EventListener();
+        e.handle = function(event) {
+            console.log('cl');
+        };
+        return e;
+    })());
+    ci.setOnMouseDragged((function() {
+        var e = new fmod.event.EventListener();
+        e.handle = function(event) {
+            console.log('dr');
+        };
+        return e;
+    })());*/
+
     var me = this;
-    s.setOnMouseClicked((function() {
+
+    s.setOnMouseDragged((function() {
         var e = new fmod.event.EventListener();
         e.handle = function(event) {
            // console.log(event.getX(), event.getY());
@@ -79,6 +96,7 @@ fiahfy.sample.App.prototype.start = function(stage) {
         };
         return e;
     })());
+
     (function() {
         var start = 0;
         var before = 0;

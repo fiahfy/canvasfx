@@ -124,15 +124,37 @@ fmod.stage.Stage.prototype.clear_ = function() {
 fmod.stage.Stage.prototype.addEventListener_ = function() {
     //
     var me = this;
-    this.canvas_.onclick = function(e) {
-        //console.log(e);
-        //console.log(e.target.getBoundingClientRect());
-        var rect = e.target.getBoundingClientRect();
-        var x = e.clientX - rect.left;
-        var y = e.clientY - rect.top;
-        //console.log(x, y);
-        var event = new fmod.scene.input.MouseEvent(x, y);
-        me.scene_.handleEvent(event);
-        //me.scene_.getRoot().handleEvent(event);
+    var callback = function(eventType) {
+        return function(e) {
+            var rect = e.target.getBoundingClientRect();
+            var x = e.clientX - rect.left;
+            var y = e.clientY - rect.top;
+
+            var event = new fmod.scene.input.MouseEvent(x, y);
+            event.setEventType(fmod.scene.input.MouseEvent[eventType]);
+
+            me.scene_.handleEvent(event);
+        };
     };
+
+    // basic events
+    var events = {
+        'click': 'MOUSE_CLICKED'
+    };
+    Object.keys(events).forEach(function(key) {
+        var value = this[key];
+        me.canvas_.addEventListener(key, callback(value));
+    }, events);
+
+    // drag
+    this.canvas_.addEventListener('mousedown', function(e) {
+        callback('MOUSE_DRAGGED')(e);
+        var mousemove = callback('MOUSE_DRAGGED');
+        var mouseup = function() {
+            me.canvas_.removeEventListener('mousemove', mousemove);
+            me.canvas_.removeEventListener('mouseup', mouseup);
+        };
+        me.canvas_.addEventListener('mousemove', mousemove);
+        me.canvas_.addEventListener('mouseup', mouseup);
+    });
 };

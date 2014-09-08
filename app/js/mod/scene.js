@@ -46,6 +46,12 @@ fmod.scene.Scene = function(root, width, height) {
      * @type {fmod.event.EventHandler}
      */
     this.onMouseClicked_ = null;
+
+    /**
+     * @private
+     * @type {fmod.event.EventHandler}
+     */
+    this.onMouseDragged_ = null;
 };
 fmod.inherit(fmod.scene.Scene, fmod.Object);
 
@@ -63,6 +69,14 @@ fmod.scene.Scene.prototype.getHeight = function() {
  */
 fmod.scene.Scene.prototype.getOnMouseClicked = function() {
     return this.onMouseClicked_;
+};
+
+/**
+ * @public
+ * @return {fmod.event.EventListener}
+ */
+fmod.scene.Scene.prototype.getOnMouseDragged = function() {
+    return this.onMouseDragged_;
 };
 
 /**
@@ -89,9 +103,15 @@ fmod.scene.Scene.prototype.handleEvent = function(event) {
     this.root_.handleEvent(event);
 
     if (0 <= event.getX() && event.getX() <= this.width_ &&
-        0 <= event.getY() && event.getY() <= this.height_ &&
-        this.onMouseClicked_) {
-        this.onMouseClicked_.handle(event);
+        0 <= event.getY() && event.getY() <= this.height_) {
+        if (this.onMouseClicked_ &&
+            event.getEventType() == fmod.scene.input.MouseEvent.MOUSE_CLICKED) {
+            this.onMouseClicked_.handle(event);
+        }
+        if (this.onMouseDragged_ &&
+            event.getEventType() == fmod.scene.input.MouseEvent.MOUSE_DRAGGED) {
+            this.onMouseDragged_.handle(event);
+        }
     }
 };
 
@@ -101,6 +121,14 @@ fmod.scene.Scene.prototype.handleEvent = function(event) {
  */
 fmod.scene.Scene.prototype.setOnMouseClicked = function(handler) {
     this.onMouseClicked_ = handler;
+};
+
+/**
+ * @public
+ * @param {fmod.event.EventHandler} handler
+ */
+fmod.scene.Scene.prototype.setOnMouseDragged = function(handler) {
+    this.onMouseDragged_ = handler;
 };
 
 /**
@@ -143,7 +171,13 @@ fmod.scene.Node = function() {
      * @protected
      * @type {fmod.event.EventHandler}
      */
-     this.onMouseClicked = null;
+    this.onMouseClicked = null;
+
+    /**
+     * @protected
+     * @type {fmod.event.EventHandler}
+     */
+    this.onMouseDragged = null;
 };
 fmod.inherit(fmod.scene.Node, fmod.Object);
 
@@ -186,11 +220,26 @@ fmod.scene.Node.prototype.getOnMouseClicked = function() {
 
 /**
  * @public
+ * @return {fmod.event.EventListener}
+ */
+fmod.scene.Node.prototype.getOnMouseDragged = function() {
+    return this.onMouseDragged;
+};
+
+/**
+ * @public
  * @param {fmod.scene.input.MouseEvent} event
  */
 fmod.scene.Node.prototype.handleEvent = function(event) {
-    if (this.contains(event.getX(), event.getY()) && this.onMouseClicked) {
-        this.onMouseClicked.handle(event);
+    if (this.contains(event.getX(), event.getY())) {
+        if (this.onMouseClicked &&
+            event.getEventType() == fmod.scene.input.MouseEvent.MOUSE_CLICKED) {
+            this.onMouseClicked.handle(event);
+        }
+        if (this.onMouseDragged &&
+            event.getEventType() == fmod.scene.input.MouseEvent.MOUSE_DRAGGED) {
+            this.onMouseDragged.handle(event);
+        }
     }
 };
 
@@ -216,6 +265,14 @@ fmod.scene.Node.prototype.setLayoutY = function(layoutY) {
  */
 fmod.scene.Node.prototype.setOnMouseClicked = function(handler) {
     this.onMouseClicked = handler;
+};
+
+/**
+ * @public
+ * @param {fmod.event.EventHandler} handler
+ */
+fmod.scene.Node.prototype.setOnMouseDragged = function(handler) {
+    this.onMouseDragged = handler;
 };
 
 
