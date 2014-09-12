@@ -39,7 +39,6 @@ fmod.event.EventHandler = function() {
 fmod.inherit(fmod.event.EventHandler, fmod.event.EventListener);
 
 /**
- * @public
  * @param {fmod.event.Event} event The event which occurred.
  */
 fmod.event.EventHandler.prototype.handle = fmod.abstractMethod;

@@ -40,7 +40,6 @@ fmod.geometry.Point = function(x, y) {
 fmod.inherit(fmod.geometry.Point, fmod.Object);
 
 /**
- * @public
  * @param {number|fmod.geometry.Point} x The X coordinate addition
  *     or the point whose coordinates are to be added.
  * @param {number=} y The Y coordinate addition.
@@ -55,7 +54,6 @@ fmod.geometry.Point.prototype.add = function(x, y) {
 };
 
 /**
- * @public
  * @param {number|fmod.geometry.Point} x The x coordinate of other point
  *     or the other point.
  * @param {number=} y The y coordinate of other point.
@@ -70,7 +68,6 @@ fmod.geometry.Point.prototype.distance = function(x, y) {
 };
 
 /**
- * @public
  * @return {number} The x coordinate.
  */
 fmod.geometry.Point.prototype.getX = function() {
@@ -78,7 +75,6 @@ fmod.geometry.Point.prototype.getX = function() {
 };
 
 /**
- * @public
  * @return {number} The y coordinate.
  */
 fmod.geometry.Point.prototype.getY = function() {
@@ -116,7 +112,6 @@ fmod.geometry.Dimension = function(width, height) {
 fmod.inherit(fmod.geometry.Dimension, fmod.Object);
 
 /**
- * @public
  * @return {number} The height of the dimension.
  */
 fmod.geometry.Dimension.prototype.getHeight = function() {
@@ -124,7 +119,6 @@ fmod.geometry.Dimension.prototype.getHeight = function() {
 };
 
 /**
- * @public
  * @return {number} The width of the dimension.
  */
 fmod.geometry.Dimension.prototype.getWidth = function() {

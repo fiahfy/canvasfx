@@ -65,7 +65,6 @@ fmod.stage.Stage = function(id) {
 fmod.inherit(fmod.stage.Stage, fmod.Object);
 
 /**
- * @public
  * @return {number} The width of this Scene.
  */
 fmod.stage.Stage.prototype.getWidth = function() {
@@ -73,7 +72,6 @@ fmod.stage.Stage.prototype.getWidth = function() {
 };
 
 /**
- * @public
  * @return {number} The height of this Scene.
  */
 fmod.stage.Stage.prototype.getHeight = function() {
@@ -81,7 +79,6 @@ fmod.stage.Stage.prototype.getHeight = function() {
 };
 
 /**
- * @public
  * @param {fmod.scene.Scene} scene Specify the scene
  *     to be used on this stage.
  */
@@ -99,7 +96,6 @@ fmod.stage.Stage.prototype.setScene = function(scene) {
 };
 
 /**
- * @public
  */
 fmod.stage.Stage.prototype.show = function() {
     this.clear_();

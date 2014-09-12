@@ -33,7 +33,6 @@ fmod.application.Application = function() {
 fmod.inherit(fmod.application.Application, fmod.Object);
 
 /**
- * @public
  * @param {fmod.stage.Stage} stage The primary stage for this application,
  *     onto which the application scene can be set.
  */

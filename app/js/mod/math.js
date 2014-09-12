@@ -19,7 +19,6 @@ fmod.inherit(fmod.math.Math, fmod.Object);
 
 /**
  * @const
- * @public
  * @type {number}
  */
 fmod.math.Math.PI = Math.PI;

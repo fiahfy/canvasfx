@@ -11,7 +11,6 @@ var fmod = fmod || {};
 
 /**
  * @const
- * @public
  * @type {string}
  */
 fmod.VERSION = '1.0.0';
@@ -42,7 +41,6 @@ fmod.inherit = function(child, parent) {
 };
 
 /**
- * @protected
  * @param {*} value Argument value.
  * @param {*=} defaultValue Default value if argument value is undefined.
  * @return {*}
@@ -55,7 +53,6 @@ fmod.supplement = function(value, defaultValue) {
 };
 
 /**
- * @public
  * @param {*} value
  * @param {Array} array
  * @return {boolean}
@@ -67,7 +64,6 @@ fmod.inArray = function(value, array) {
 };
 
 /**
- * @public
  * @param {string} namespace
  */
 fmod.importNameSpace = function(namespace) {
@@ -93,13 +89,15 @@ fmod.importNameSpace = function(namespace) {
 };
 
 /**
- *
- * @param application
+ * @param {fmod.Application} application
  */
 fmod.loadApplication = function(application) {
     new application();
 };
 
+/**
+ * For abstract method
+ */
 fmod.abstractMethod = function() {};
 
 /**
@@ -128,11 +126,9 @@ fmod.basePath_ = function() {
  * @constructor
  */
 fmod.Object = function() {
-    //
 };
 
 /**
- * @public
  * @return {Object} Cloned object.
  */
 fmod.Object.prototype.clone = function() {

@@ -20,7 +20,6 @@ fiahfy.sample.App = function() {
 fmod.inherit(fiahfy.sample.App, fmod.application.Application);
 
 /**
- * @public
  * @param {fmod.stage.Stage} stage
  * @override
  */

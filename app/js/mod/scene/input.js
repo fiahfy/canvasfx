@@ -53,7 +53,6 @@ fmod.inherit(fmod.scene.input.MouseEvent,
     fmod.scene.input.InputEvent);
 
 /**
- * @public
  * @return {fmod.event.EventType} eventType
  */
 fmod.scene.input.MouseEvent.prototype.getEventType = function() {
@@ -61,7 +60,6 @@ fmod.scene.input.MouseEvent.prototype.getEventType = function() {
 };
 
 /**
- * @public
  * @return {number} Horizontal position of the event relative
  *     to the origin of the MouseEvent's source.
  */
@@ -70,7 +68,6 @@ fmod.scene.input.MouseEvent.prototype.getX = function() {
 };
 
 /**
- * @public
  * @return {number} Vertical position of the event relative
  *     to the origin of the MouseEvent's source.
  */
@@ -79,7 +76,6 @@ fmod.scene.input.MouseEvent.prototype.getY = function() {
 };
 
 /**
- * @public
  * @param {fmod.event.EventType} eventType
  */
 fmod.scene.input.MouseEvent.prototype.setEventType = function(eventType) {
@@ -88,7 +84,6 @@ fmod.scene.input.MouseEvent.prototype.setEventType = function(eventType) {
 
 /**
  * @const
- * @public
  * @type {fmod.event.EventType}
  */
 fmod.scene.input.MouseEvent.MOUSE_CLICKED =
@@ -96,7 +91,6 @@ fmod.scene.input.MouseEvent.MOUSE_CLICKED =
 
 /**
  * @const
- * @public
  * @type {fmod.event.EventType}
  */
 fmod.scene.input.MouseEvent.MOUSE_DRAGGED =

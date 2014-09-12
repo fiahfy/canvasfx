@@ -57,7 +57,6 @@ fmod.scene.shape.Shape = function() {
 fmod.inherit(fmod.scene.shape.Shape, fmod.scene.Node);
 
 /**
- * @public
  * @param {?fmod.scene.paint.Color} color Fill color.
  */
 fmod.scene.shape.Shape.prototype.setFill = function(color) {
@@ -65,7 +64,6 @@ fmod.scene.shape.Shape.prototype.setFill = function(color) {
 };
 
 /**
- * @public
  * @param {?fmod.scene.paint.Color} color Stroke color.
  */
 fmod.scene.shape.Shape.prototype.setStroke = function(color) {
@@ -73,7 +71,6 @@ fmod.scene.shape.Shape.prototype.setStroke = function(color) {
 };
 
 /**
- * @public
  * @param {fmod.scene.shape.StrokeType} type Stroke type.
  */
 fmod.scene.shape.Shape.prototype.setStrokeType = function(type) {
@@ -81,7 +78,6 @@ fmod.scene.shape.Shape.prototype.setStrokeType = function(type) {
 };
 
 /**
- * @public
  * @param {number} width Stroke width.
  */
 fmod.scene.shape.Shape.prototype.setStrokeWidth = function(width) {
@@ -129,7 +125,6 @@ fmod.scene.shape.Circle = function(centerX, centerY, radius) {
 fmod.inherit(fmod.scene.shape.Circle, fmod.scene.shape.Shape);
 
 /**
- * @public
  * @param {number|fmod.geometry.Point} x
  * @param {number=} y
  * @return {boolean}
@@ -142,7 +137,6 @@ fmod.scene.shape.Circle.prototype.contains = function(x, y) {
 };
 
 /**
- * @public
  * @param {CanvasRenderingContext2D} context Canvas DOM element.
  * @override
  */
@@ -188,7 +182,6 @@ fmod.scene.shape.Circle.prototype.draw = function(context) {
 };
 
 /**
- * @public
  * @return {number}
  */
 fmod.scene.shape.Circle.prototype.getCenterX = function() {
@@ -196,7 +189,6 @@ fmod.scene.shape.Circle.prototype.getCenterX = function() {
 };
 
 /**
- * @public
  * @return {number}
  */
 fmod.scene.shape.Circle.prototype.getCenterY = function() {
@@ -220,7 +212,6 @@ fmod.scene.shape.Circle.prototype.getCurrentCenterY = function() {
 };
 
 /**
- * @public
  * @return {number}
  */
 fmod.scene.shape.Circle.prototype.getRadius = function() {
@@ -228,7 +219,6 @@ fmod.scene.shape.Circle.prototype.getRadius = function() {
 };
 
 /**
- * @public
  * @param {number} centerX
  */
 fmod.scene.shape.Circle.prototype.setCenterX = function(centerX) {
@@ -236,7 +226,6 @@ fmod.scene.shape.Circle.prototype.setCenterX = function(centerX) {
 };
 
 /**
- * @public
  * @param {number} centerY
  */
 fmod.scene.shape.Circle.prototype.setCenterY = function(centerY) {
@@ -244,7 +233,6 @@ fmod.scene.shape.Circle.prototype.setCenterY = function(centerY) {
 };
 
 /**
- * @public
  * @param {number} radius
  */
 fmod.scene.shape.Circle.prototype.setRadius = function(radius) {
@@ -301,7 +289,6 @@ fmod.scene.shape.Rectangle = function(x, y, width, height) {
 fmod.inherit(fmod.scene.shape.Rectangle, fmod.scene.shape.Shape);
 
 /**
- * @public
  * @param {number|fmod.geometry.Point} x
  * @param {number=} y
  * @return {boolean}
@@ -316,7 +303,6 @@ fmod.scene.shape.Rectangle.prototype.contains = function(x, y) {
 };
 
 /**
- * @public
  * @param {CanvasRenderingContext2D} context Canvas DOM element.
  * @override
  */
@@ -378,7 +364,6 @@ fmod.scene.shape.Rectangle.prototype.getCurrentY = function() {
 };
 
 /**
- * @public
  * @return {number}
  */
 fmod.scene.shape.Rectangle.prototype.getHeight = function() {
@@ -386,7 +371,6 @@ fmod.scene.shape.Rectangle.prototype.getHeight = function() {
 };
 
 /**
- * @public
  * @return {number}
  */
 fmod.scene.shape.Rectangle.prototype.getWitdh = function() {
@@ -394,7 +378,6 @@ fmod.scene.shape.Rectangle.prototype.getWitdh = function() {
 };
 
 /**
- * @public
  * @return {number}
  */
 fmod.scene.shape.Rectangle.prototype.getX = function() {
@@ -402,7 +385,6 @@ fmod.scene.shape.Rectangle.prototype.getX = function() {
 };
 
 /**
- * @public
  * @return {number}
  */
 fmod.scene.shape.Rectangle.prototype.getY = function() {
@@ -410,7 +392,6 @@ fmod.scene.shape.Rectangle.prototype.getY = function() {
 };
 
 /**
- * @public
  * @param {number} height
  */
 fmod.scene.shape.Rectangle.prototype.setHeight = function(height) {
@@ -418,7 +399,6 @@ fmod.scene.shape.Rectangle.prototype.setHeight = function(height) {
 };
 
 /**
- * @public
  * @param {number} width
  */
 fmod.scene.shape.Rectangle.prototype.setWidth = function(width) {
@@ -426,7 +406,6 @@ fmod.scene.shape.Rectangle.prototype.setWidth = function(width) {
 };
 
 /**
- * @public
  * @param {number} x
  */
 fmod.scene.shape.Rectangle.prototype.setX = function(x) {
@@ -434,7 +413,6 @@ fmod.scene.shape.Rectangle.prototype.setX = function(x) {
 };
 
 /**
- * @public
  * @param {number} y
  */
 fmod.scene.shape.Rectangle.prototype.setY = function(y) {
@@ -491,7 +469,6 @@ fmod.scene.shape.Line = function(startX, startY, endX, endY) {
 fmod.inherit(fmod.scene.shape.Line, fmod.scene.shape.Shape);
 
 /**
- * @public
  * @param {number|fmod.geometry.Point} x
  * @param {number=} y
  * @return {boolean}
@@ -501,7 +478,6 @@ fmod.scene.shape.Line.prototype.contains = function(x, y) {
 };
 
 /**
- * @public
  * @param {CanvasRenderingContext2D} context Canvas DOM element.
  * @override
  */
@@ -557,7 +533,6 @@ fmod.scene.shape.Line.prototype.getCurrentStartY = function() {
 };
 
 /**
- * @public
  * @return {number}
  */
 fmod.scene.shape.Line.prototype.getEndX = function() {
@@ -565,7 +540,6 @@ fmod.scene.shape.Line.prototype.getEndX = function() {
 };
 
 /**
- * @public
  * @return {number}
  */
 fmod.scene.shape.Line.prototype.getEndY = function() {
@@ -573,7 +547,6 @@ fmod.scene.shape.Line.prototype.getEndY = function() {
 };
 
 /**
- * @public
  * @return {number}
  */
 fmod.scene.shape.Line.prototype.getStartX = function() {
@@ -581,7 +554,6 @@ fmod.scene.shape.Line.prototype.getStartX = function() {
 };
 
 /**
- * @public
  * @return {number}
  */
 fmod.scene.shape.Line.prototype.getStartY = function() {
@@ -589,7 +561,6 @@ fmod.scene.shape.Line.prototype.getStartY = function() {
 };
 
 /**
- * @public
  * @param {number} endX
  */
 fmod.scene.shape.Line.prototype.setEndX = function(endX) {
@@ -597,7 +568,6 @@ fmod.scene.shape.Line.prototype.setEndX = function(endX) {
 };
 
 /**
- * @public
  * @param {number} endY
  */
 fmod.scene.shape.Line.prototype.setEndY = function(endY) {
@@ -605,7 +575,6 @@ fmod.scene.shape.Line.prototype.setEndY = function(endY) {
 };
 
 /**
- * @public
  * @param {number} startX
  */
 fmod.scene.shape.Line.prototype.seStartX = function(startX) {
@@ -613,7 +582,6 @@ fmod.scene.shape.Line.prototype.seStartX = function(startX) {
 };
 
 /**
- * @public
  * @param {number} startY
  */
 fmod.scene.shape.Line.prototype.seStartY = function(startY) {

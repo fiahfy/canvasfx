@@ -64,13 +64,11 @@ fmod.animation.AnimationTimer = function() {
 fmod.inherit(fmod.animation.AnimationTimer, fmod.Object);
 
 /**
- * @public
  * @param {number} now The timestamp of the current frame given in milliseconds.
  */
 fmod.animation.AnimationTimer.prototype.handle = fmod.abstractMethod;
 
 /**
- * @public
  */
 fmod.animation.AnimationTimer.prototype.start = function() {
     this.stop();
@@ -85,7 +83,6 @@ fmod.animation.AnimationTimer.prototype.start = function() {
 };
 
 /**
- * @public
  */
 fmod.animation.AnimationTimer.prototype.stop = function() {
     fmod.animation.AnimationTimer.cancelAnimationFrame_()(
