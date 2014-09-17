@@ -118,7 +118,6 @@ fmod.stage.Stage.prototype.clear_ = function() {
  * @private
  */
 fmod.stage.Stage.prototype.addEventListener_ = function() {
-    //
     var me = this;
     var callback = function(eventType) {
         return function(e) {
@@ -144,11 +143,28 @@ fmod.stage.Stage.prototype.addEventListener_ = function() {
 
     // drag
     this.canvas_.addEventListener('mousedown', function(e) {
+        var event = e;
         callback('MOUSE_DRAGGED')(e);
-        var mousemove = callback('MOUSE_DRAGGED');
+
+        var mousemove = function(e) {
+            event = e;
+            callback('MOUSE_DRAGGED')(e);
+        };
+
+        var timer = null;
+        (function animationLoop() {
+            timer = fmod.animation.AnimationTimer.requestAnimationFrame_()(
+                animationLoop
+            );
+            mousemove(event);
+        })();
+
         var mouseup = function() {
             me.canvas_.removeEventListener('mousemove', mousemove);
             me.canvas_.removeEventListener('mouseup', mouseup);
+            fmod.animation.AnimationTimer.cancelAnimationFrame_()(
+                timer
+            );
         };
         me.canvas_.addEventListener('mousemove', mousemove);
         me.canvas_.addEventListener('mouseup', mouseup);

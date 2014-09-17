@@ -172,7 +172,7 @@ fmod.scene.Node = function() {
 fmod.inherit(fmod.scene.Node, fmod.Object);
 
 /**
- * @param {number|fmod.geometory.Point} x
+ * @param {number|fmod.geometry.Point} x
  * @param {number} y
  */
 fmod.scene.Node.prototype.contains = fmod.abstractMethod;

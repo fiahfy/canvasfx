@@ -144,6 +144,7 @@ fmod.scene.shape.Circle.prototype.draw = function(context) {
     if (this.fill) {
         context.beginPath();
         context.fillStyle = this.fill.getWeb();
+        context.globalAlpha = this.fill.getOpacity();
         context.arc(
             parseInt(this.getCurrentCenterX()),
             parseInt(this.getCurrentCenterY()),
@@ -156,6 +157,7 @@ fmod.scene.shape.Circle.prototype.draw = function(context) {
     if (this.stroke) {
         context.beginPath();
         context.strokeStyle = this.stroke.getWeb();
+        context.globalAlpha = this.stroke.getOpacity();
         context.lineWidth = this.strokeWidth;
 
         var offset = 0;
@@ -309,6 +311,7 @@ fmod.scene.shape.Rectangle.prototype.contains = function(x, y) {
 fmod.scene.shape.Rectangle.prototype.draw = function(context) {
     if (this.fill) {
         context.fillStyle = this.fill.getWeb();
+        context.globalAlpha = this.fill.getOpacity();
         context.fillRect(
             parseInt(this.getCurrentX()),
             parseInt(this.getCurrentY()),
@@ -319,6 +322,7 @@ fmod.scene.shape.Rectangle.prototype.draw = function(context) {
 
     if (this.stroke) {
         context.strokeStyle = this.stroke.getWeb();
+        context.globalAlpha = this.stroke.getOpacity();
         context.lineWidth = this.strokeWidth;
 
         var offsetPosition = 0;
@@ -486,6 +490,7 @@ fmod.scene.shape.Line.prototype.draw = function(context) {
 
     context.beginPath();
     context.strokeStyle = this.stroke.getWeb();
+    context.globalAlpha = this.stroke.getOpacity();
     context.lineWidth = this.strokeWidth;
 
     var offset = 0.5 * (this.strokeWidth % 2);

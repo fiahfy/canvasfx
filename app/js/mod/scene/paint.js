@@ -29,7 +29,7 @@ fmod.scene.paint.Color = function(red, green, blue, opacity) {
     red = fmod.supplement(red, 0.0);
     green = fmod.supplement(green, 0.0);
     blue = fmod.supplement(blue, 0.0);
-    opacity = fmod.supplement(opacity, 0.0);
+    opacity = fmod.supplement(opacity, 1.0);
 
     // TODO: parse web color string
     if (typeof red === 'string' && red.charAt(0) == '#') {
@@ -87,6 +87,13 @@ fmod.scene.paint.Color.prototype.getBlue = function() {
  */
 fmod.scene.paint.Color.prototype.getGreen = function() {
     return this.green_;
+};
+
+/**
+ * @return {number} The opacity of the Color, in the range 0.0-1.0.
+ */
+fmod.scene.paint.Color.prototype.getOpacity = function() {
+    return this.opacity_;
 };
 
 /**

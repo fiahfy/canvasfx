@@ -89,7 +89,7 @@ fmod.importNameSpace = function(namespace) {
 };
 
 /**
- * @param {fmod.Application} application
+ * @param {Function} application
  */
 fmod.loadApplication = function(application) {
     new application();
@@ -133,10 +133,9 @@ fmod.Object = function() {
  */
 fmod.Object.prototype.clone = function() {
     var clone = {};
-    for (var key in this)
-    {
+    Object.keys(this).forEach(function(key) {
         clone[key] = this[key];
-    }
+    }, this);
     return clone;
 };
 
