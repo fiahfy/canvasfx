@@ -8,9 +8,14 @@
     "js"
   ],
   "main": [
-    "src/*"
+  ],
+  "ignore": [
+    ".*"
   ],
   "license": "MIT",
+  "authors": [
+    "fiahfy <d.fiahfy@gmail.com>"
+  ],
   "dependencies": {
   },
   "devDependencies": {
