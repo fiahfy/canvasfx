@@ -1,15 +1,15 @@
 {
-  "name": "chrome-extension-angular-skeleton",
+  "name": "canvasfx",
+  "description": "Canvas API wrapper like javafx",
   "version": "0.0.0",
-  "author": {
-    "name": "fiahfy"
-  },
-  "homepage": "https://github.com/fiahfy/chrome-extension-angular-skeleton",
-  "licenses": [
-    {
-      "type": "MIT"
-    }
+  "keywords": [
+    "canvas",
+    "javafx",
+    "js"
   ],
+  "license": "MIT",
+  "author": "fiahfy <d.fiahfy@gmail.com>",
+  "homepage": "https://github.com/fiahfy/canvasfx",
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-autoprefixer": "^0.8.2",

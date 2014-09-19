@@ -6,19 +6,19 @@
  */
 
 
-fmod.math = {};
+canvasfx.math = {};
 
 /**
  * @constructor
- * @extends {fmod.Object}
+ * @extends {canvasfx.Object}
  */
-fmod.math.Math = function() {
-    fmod.Object.call(this);
+canvasfx.math.Math = function() {
+    canvasfx.Object.call(this);
 };
-fmod.inherit(fmod.math.Math, fmod.Object);
+canvasfx.inherit(canvasfx.math.Math, canvasfx.Object);
 
 /**
  * @const
  * @type {number}
  */
-fmod.math.Math.PI = Math.PI;
+canvasfx.math.Math.PI = Math.PI;

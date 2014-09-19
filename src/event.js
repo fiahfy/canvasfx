@@ -6,53 +6,53 @@
  */
 
 
-fmod.event = {};
+canvasfx.event = {};
 
 
 /**
  * @constructor
- * @extends {fmod.Object}
+ * @extends {canvasfx.Object}
  */
-fmod.event.Event = function() {
-    fmod.Object.call(this);
+canvasfx.event.Event = function() {
+    canvasfx.Object.call(this);
 };
-fmod.inherit(fmod.event.Event, fmod.Object);
+canvasfx.inherit(canvasfx.event.Event, canvasfx.Object);
 
 
 /**
  * @constructor
- * @extends {fmod.Object}
+ * @extends {canvasfx.Object}
  */
-fmod.event.EventListener = function() {
-    fmod.Object.call(this);
+canvasfx.event.EventListener = function() {
+    canvasfx.Object.call(this);
 };
-fmod.inherit(fmod.event.EventListener, fmod.Object);
+canvasfx.inherit(canvasfx.event.EventListener, canvasfx.Object);
 
 
 /**
  * @constructor
- * @extends {fmod.event.EventListener}
+ * @extends {canvasfx.event.EventListener}
  */
-fmod.event.EventHandler = function() {
-    fmod.event.EventListener.call(this);
+canvasfx.event.EventHandler = function() {
+    canvasfx.event.EventListener.call(this);
 };
-fmod.inherit(fmod.event.EventHandler, fmod.event.EventListener);
+canvasfx.inherit(canvasfx.event.EventHandler, canvasfx.event.EventListener);
 
 /**
- * @param {fmod.event.Event} event The event which occurred.
+ * @param {canvasfx.event.Event} event The event which occurred.
  */
-fmod.event.EventHandler.prototype.handle = fmod.abstractMethod;
+canvasfx.event.EventHandler.prototype.handle = canvasfx.abstractMethod;
 
 
 /**
  * @constructor
  * @param {string=} name
- * @extends {fmod.Object}
+ * @extends {canvasfx.Object}
  */
-fmod.event.EventType = function(name) {
-    fmod.Object.call(this);
+canvasfx.event.EventType = function(name) {
+    canvasfx.Object.call(this);
 
-    name = fmod.supplement(name, 'ROOT');
+    name = canvasfx.supplement(name, 'ROOT');
 
     /**
      * @private
@@ -60,18 +60,18 @@ fmod.event.EventType = function(name) {
      */
     this.name_ = name;
 };
-fmod.inherit(fmod.event.EventType, fmod.Object);
+canvasfx.inherit(canvasfx.event.EventType, canvasfx.Object);
 
 /**
  * @return {string}
  */
-fmod.event.EventType.prototype.getName = function() {
+canvasfx.event.EventType.prototype.getName = function() {
     return this.name_;
 };
 
 /**
  * @return {string}
  */
-fmod.event.EventType.prototype.toString = function() {
+canvasfx.event.EventType.prototype.toString = function() {
     return this.getName();
 };

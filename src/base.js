@@ -6,32 +6,32 @@
  */
 
 
-var fmod = fmod || {};
+var canvasfx = canvasfx || {};
 
 
 /**
  * @const
  * @type {string}
  */
-fmod.VERSION = '1.0.0';
+canvasfx.VERSION = '1.0.0';
 
 /**
  * @const
  * @type {string}
  */
-fmod.BASE_FILE_NAME = 'base.js';
+canvasfx.BASE_FILE_NAME = 'base.js';
 
 /**
  * @private
  * @type {Array}
  */
-fmod.loadFiles_ = [];
+canvasfx.loadFiles_ = [];
 
 /**
  * @param {Object} child
  * @param {Object} parent
  */
-fmod.inherit = function(child, parent) {
+canvasfx.inherit = function(child, parent) {
     /** @constructor */
     function t() {}
     t.prototype = parent.prototype;
@@ -45,7 +45,7 @@ fmod.inherit = function(child, parent) {
  * @param {*=} defaultValue Default value if argument value is undefined.
  * @return {*}
  */
-fmod.supplement = function(value, defaultValue) {
+canvasfx.supplement = function(value, defaultValue) {
     if (typeof value === 'undefined' && typeof defaultValue !== 'undefined') {
         return defaultValue;
     }
@@ -57,7 +57,7 @@ fmod.supplement = function(value, defaultValue) {
  * @param {Array} array
  * @return {boolean}
  */
-fmod.inArray = function(value, array) {
+canvasfx.inArray = function(value, array) {
     return array.some(function(element) {
         return (element === value);
     });
@@ -66,7 +66,7 @@ fmod.inArray = function(value, array) {
 /**
  * @param {string} namespace
  */
-fmod.importNameSpace = function(namespace) {
+canvasfx.importNameSpace = function(namespace) {
     var array = namespace.split('.');
     array.shift();
 
@@ -74,64 +74,64 @@ fmod.importNameSpace = function(namespace) {
         return;
     }
 
-    var path = fmod.basePath_();
+    var path = canvasfx.basePath_();
     array.forEach(function(element) {
         path = path + '/' + element;
     });
     path += '.js';
 
-    if (fmod.inArray(path, fmod.loadFiles_)) {
+    if (canvasfx.inArray(path, canvasfx.loadFiles_)) {
         return;
     }
 
-    fmod.loadFiles_.push(path);
+    canvasfx.loadFiles_.push(path);
     document.write('<script src="' + path + '"></script>');
 };
 
 /**
  * @param {Function} application
  */
-fmod.loadApplication = function(application) {
+canvasfx.loadApplication = function(application) {
     new application();
 };
 
 /**
  * For abstract method
  */
-fmod.abstractMethod = function() {};
+canvasfx.abstractMethod = function() {};
 
 /**
  * @private
  * @return {string}
  */
-fmod.basePath_ = function() {
+canvasfx.basePath_ = function() {
     var path = '';
     var scripts = window.document.getElementsByTagName('script');
     for (var i = 0; i < scripts.length; i++)
     {
         var script = scripts[i];
         var src = script.src;
-        if (src.lastIndexOf('/' + fmod.BASE_FILE_NAME) ==
-            src.length - ('/' + fmod.BASE_FILE_NAME).length) {
+        if (src.lastIndexOf('/' + canvasfx.BASE_FILE_NAME) ==
+            src.length - ('/' + canvasfx.BASE_FILE_NAME).length) {
             path = src;
             break;
         }
     }
 
-    return path.slice(0, path.length - ('/' + fmod.BASE_FILE_NAME).length);
+    return path.slice(0, path.length - ('/' + canvasfx.BASE_FILE_NAME).length);
 };
 
 
 /**
  * @constructor
  */
-fmod.Object = function() {
+canvasfx.Object = function() {
 };
 
 /**
  * @return {Object} Cloned object.
  */
-fmod.Object.prototype.clone = function() {
+canvasfx.Object.prototype.clone = function() {
     var clone = {};
     Object.keys(this).forEach(function(key) {
         clone[key] = this[key];
@@ -140,14 +140,14 @@ fmod.Object.prototype.clone = function() {
 };
 
 
-fmod.importNameSpace('fmod.animation');
-fmod.importNameSpace('fmod.application');
-fmod.importNameSpace('fmod.event');
-fmod.importNameSpace('fmod.geometry');
-fmod.importNameSpace('fmod.math');
-fmod.importNameSpace('fmod.scene');
-fmod.importNameSpace('fmod.scene.input');
-fmod.importNameSpace('fmod.scene.paint');
-fmod.importNameSpace('fmod.scene.shape');
-fmod.importNameSpace('fmod.stage');
-fmod.importNameSpace('fmod.time');
+canvasfx.importNameSpace('canvasfx.animation');
+canvasfx.importNameSpace('canvasfx.application');
+canvasfx.importNameSpace('canvasfx.event');
+canvasfx.importNameSpace('canvasfx.geometry');
+canvasfx.importNameSpace('canvasfx.math');
+canvasfx.importNameSpace('canvasfx.scene');
+canvasfx.importNameSpace('canvasfx.scene.input');
+canvasfx.importNameSpace('canvasfx.scene.paint');
+canvasfx.importNameSpace('canvasfx.scene.shape');
+canvasfx.importNameSpace('canvasfx.stage');
+canvasfx.importNameSpace('canvasfx.time');

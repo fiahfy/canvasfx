@@ -7,52 +7,52 @@
  */
 
 
-fmod.animation = {};
+canvasfx.animation = {};
 
 
 /**
  * @param {number=} targetFramerate The custom target frame rate
  *     for this Animation.
  * @constructor
- * @extends {fmod.Object}
+ * @extends {canvasfx.Object}
  */
-fmod.animation.Animation = function(targetFramerate) {
-    fmod.Object.call(this);
+canvasfx.animation.Animation = function(targetFramerate) {
+    canvasfx.Object.call(this);
 };
-fmod.inherit(fmod.animation.Animation, fmod.Object);
+canvasfx.inherit(canvasfx.animation.Animation, canvasfx.Object);
 
 
 /**
- * @param {...fmod.animation.KeyFrame} var_args The keyframes
+ * @param {...canvasfx.animation.KeyFrame} var_args The keyframes
  *     of this Timeline.
  * @constructor
- * @extends {fmod.animation.Animation}
+ * @extends {canvasfx.animation.Animation}
  */
-fmod.animation.Timeline = function(var_args) {
-    fmod.animation.Animation.call(this);
+canvasfx.animation.Timeline = function(var_args) {
+    canvasfx.animation.Animation.call(this);
 };
-fmod.inherit(fmod.animation.Timeline, fmod.animation.Animation);
+canvasfx.inherit(canvasfx.animation.Timeline, canvasfx.animation.Animation);
 
 
 /**
- * @param {fmod.time.Duration} duration The time.
+ * @param {canvasfx.time.Duration} duration The time.
  * @constructor
- * @extends {fmod.Object}
+ * @extends {canvasfx.Object}
  */
-fmod.animation.KeyFrame = function(duration) {
-    fmod.Object.call(this);
+canvasfx.animation.KeyFrame = function(duration) {
+    canvasfx.Object.call(this);
 };
-fmod.inherit(fmod.animation.KeyFrame, fmod.Object);
+canvasfx.inherit(canvasfx.animation.KeyFrame, canvasfx.Object);
 
 
 /**
  * The class AnimationTimer allows to create a timer,
  * that is called in each frame while it is active.
  * @constructor
- * @extends {fmod.Object}
+ * @extends {canvasfx.Object}
  */
-fmod.animation.AnimationTimer = function() {
-    fmod.Object.call(this);
+canvasfx.animation.AnimationTimer = function() {
+    canvasfx.Object.call(this);
 
     /**
      * Timer id
@@ -61,21 +61,21 @@ fmod.animation.AnimationTimer = function() {
      */
     this.id_ = null;
 };
-fmod.inherit(fmod.animation.AnimationTimer, fmod.Object);
+canvasfx.inherit(canvasfx.animation.AnimationTimer, canvasfx.Object);
 
 /**
  * @param {number} now The timestamp of the current frame given in milliseconds.
  */
-fmod.animation.AnimationTimer.prototype.handle = fmod.abstractMethod;
+canvasfx.animation.AnimationTimer.prototype.handle = canvasfx.abstractMethod;
 
 /**
  */
-fmod.animation.AnimationTimer.prototype.start = function() {
+canvasfx.animation.AnimationTimer.prototype.start = function() {
     this.stop();
 
     var me = this;
     (function animationLoop() {
-        me.id_ = fmod.animation.AnimationTimer.requestAnimationFrame_()(
+        me.id_ = canvasfx.animation.AnimationTimer.requestAnimationFrame_()(
             animationLoop
         );
         me.handle(Date.now());
@@ -84,8 +84,8 @@ fmod.animation.AnimationTimer.prototype.start = function() {
 
 /**
  */
-fmod.animation.AnimationTimer.prototype.stop = function() {
-    fmod.animation.AnimationTimer.cancelAnimationFrame_()(
+canvasfx.animation.AnimationTimer.prototype.stop = function() {
+    canvasfx.animation.AnimationTimer.cancelAnimationFrame_()(
         this.id_
     );
     this.id_ = null;
@@ -96,7 +96,7 @@ fmod.animation.AnimationTimer.prototype.stop = function() {
  * @private
  * @return {Function} Enable request animation frame func.
  */
-fmod.animation.AnimationTimer.requestAnimationFrame_ = function() {
+canvasfx.animation.AnimationTimer.requestAnimationFrame_ = function() {
     return window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame ||
@@ -113,7 +113,7 @@ fmod.animation.AnimationTimer.requestAnimationFrame_ = function() {
  * @private
  * @return {Function} Enable cancel animation frame func.
  */
-fmod.animation.AnimationTimer.cancelAnimationFrame_ = function() {
+canvasfx.animation.AnimationTimer.cancelAnimationFrame_ = function() {
     return window.cancelAnimationFrame ||
         window.cancelRequestAnimationFrame ||
         window.webkitCancelRequestAnimationFrame ||

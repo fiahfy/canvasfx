@@ -16,8 +16,9 @@
   "authors": [
     "fiahfy <d.fiahfy@gmail.com>"
   ],
-  "dependencies": {
-  },
+  "homepage": "https://github.com/fiahfy/canvasfx",
   "devDependencies": {
+  },
+  "dependencies": {
   }
 }

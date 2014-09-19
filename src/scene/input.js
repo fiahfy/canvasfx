@@ -7,17 +7,17 @@
  */
 
 
-fmod.scene.input = {};
+canvasfx.scene.input = {};
 
 
 /**
  * @constructor
- * @extends {fmod.event.Event}
+ * @extends {canvasfx.event.Event}
  */
-fmod.scene.input.InputEvent = function() {
-    fmod.event.Event.call(this);
+canvasfx.scene.input.InputEvent = function() {
+    canvasfx.event.Event.call(this);
 };
-fmod.inherit(fmod.scene.input.InputEvent, fmod.event.Event);
+canvasfx.inherit(canvasfx.scene.input.InputEvent, canvasfx.event.Event);
 
 
 /**
@@ -26,10 +26,10 @@ fmod.inherit(fmod.scene.input.InputEvent, fmod.event.Event);
  * @param {number} y Vertical position of the event relative
  *     to the origin of the MouseEvent's source.
  * @constructor
- * @extends {fmod.scene.input.InputEvent}
+ * @extends {canvasfx.scene.input.InputEvent}
  */
-fmod.scene.input.MouseEvent = function(x, y) {
-    fmod.scene.input.InputEvent.call(this);
+canvasfx.scene.input.MouseEvent = function(x, y) {
+    canvasfx.scene.input.InputEvent.call(this);
 
     /**
      * @private
@@ -45,17 +45,17 @@ fmod.scene.input.MouseEvent = function(x, y) {
 
     /**
      * @private
-     * @type {fmod.event.EventType}
+     * @type {canvasfx.event.EventType}
      */
     this.eventType_ = null;
 };
-fmod.inherit(fmod.scene.input.MouseEvent,
-    fmod.scene.input.InputEvent);
+canvasfx.inherit(canvasfx.scene.input.MouseEvent,
+    canvasfx.scene.input.InputEvent);
 
 /**
- * @return {fmod.event.EventType} eventType
+ * @return {canvasfx.event.EventType} eventType
  */
-fmod.scene.input.MouseEvent.prototype.getEventType = function() {
+canvasfx.scene.input.MouseEvent.prototype.getEventType = function() {
     return this.eventType_;
 };
 
@@ -63,7 +63,7 @@ fmod.scene.input.MouseEvent.prototype.getEventType = function() {
  * @return {number} Horizontal position of the event relative
  *     to the origin of the MouseEvent's source.
  */
-fmod.scene.input.MouseEvent.prototype.getX = function() {
+canvasfx.scene.input.MouseEvent.prototype.getX = function() {
     return this.x_;
 };
 
@@ -71,27 +71,27 @@ fmod.scene.input.MouseEvent.prototype.getX = function() {
  * @return {number} Vertical position of the event relative
  *     to the origin of the MouseEvent's source.
  */
-fmod.scene.input.MouseEvent.prototype.getY = function() {
+canvasfx.scene.input.MouseEvent.prototype.getY = function() {
     return this.y_;
 };
 
 /**
- * @param {fmod.event.EventType} eventType
+ * @param {canvasfx.event.EventType} eventType
  */
-fmod.scene.input.MouseEvent.prototype.setEventType = function(eventType) {
+canvasfx.scene.input.MouseEvent.prototype.setEventType = function(eventType) {
     this.eventType_ = eventType;
 };
 
 /**
  * @const
- * @type {fmod.event.EventType}
+ * @type {canvasfx.event.EventType}
  */
-fmod.scene.input.MouseEvent.MOUSE_CLICKED =
-    new fmod.event.EventType('MOUSE_CLICKED');
+canvasfx.scene.input.MouseEvent.MOUSE_CLICKED =
+    new canvasfx.event.EventType('MOUSE_CLICKED');
 
 /**
  * @const
- * @type {fmod.event.EventType}
+ * @type {canvasfx.event.EventType}
  */
-fmod.scene.input.MouseEvent.MOUSE_DRAGGED =
-    new fmod.event.EventType('MOUSE_DRAGGED');
+canvasfx.scene.input.MouseEvent.MOUSE_DRAGGED =
+    new canvasfx.event.EventType('MOUSE_DRAGGED');

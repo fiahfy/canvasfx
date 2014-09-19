@@ -6,31 +6,25 @@
  */
 
 
-var fiahfy = fiahfy || {};
-
-
-/**
- * @type {{}}
- */
-fiahfy.sample = {};
+var test = test || {};
 
 
 /**
  * @constructor
- * @extends {fmod.application.Application}
+ * @extends {canvasfx.application.Application}
  */
-fiahfy.sample.App = function() {
-    fmod.application.Application.call(this);
+test.App = function() {
+    canvasfx.application.Application.call(this);
 };
-fmod.inherit(fiahfy.sample.App, fmod.application.Application);
+canvasfx.inherit(test.App, canvasfx.application.Application);
 
 /**
- * @param {fmod.stage.Stage} stage
+ * @param {canvasfx.stage.Stage} stage
  * @override
  */
-fiahfy.sample.App.prototype.start = function(stage) {
-    var root = new fmod.scene.Group();
-    var scene = new fmod.scene.Scene(root);
+test.App.prototype.start = function(stage) {
+    var root = new canvasfx.scene.Group();
+    var scene = new canvasfx.scene.Scene(root);
     stage.setScene(scene);
 
     var children = root.getChildren();
@@ -38,34 +32,34 @@ fiahfy.sample.App.prototype.start = function(stage) {
     // draw grid
     for (var i = 0; i <= stage.getWidth(); i += 10)
     {
-        var y = new fmod.scene.shape.Line(
+        var y = new canvasfx.scene.shape.Line(
             i, 0,
             i, stage.getHeight()
         );
-        y.setStroke(fmod.scene.paint.Color.GRAY);
+        y.setStroke(canvasfx.scene.paint.Color.GRAY);
         if (i % 100 == 0) y.setStrokeWidth(2.0);
         children.push(y);
     }
     for (var j = 0; j <= stage.getHeight(); j += 10)
     {
-        var x = new fmod.scene.shape.Line(
+        var x = new canvasfx.scene.shape.Line(
             0, j,
             stage.getWidth(), j
         );
-        x.setStroke(fmod.scene.paint.Color.GRAY);
+        x.setStroke(canvasfx.scene.paint.Color.GRAY);
         if (j % 100 == 0) x.setStrokeWidth(2.0);
         children.push(x);
     }
 
-    var circle = new fmod.scene.shape.Circle(0, 0, 100);
-    circle.setFill(new fmod.scene.paint.Color(1, 0, 0, 0.5));
-    var rectangle = new fmod.scene.shape.Rectangle(0, 0, 10, 10);
-    var group = new fmod.scene.Group(circle, rectangle);
+    var circle = new canvasfx.scene.shape.Circle(0, 0, 100);
+    circle.setFill(new canvasfx.scene.paint.Color(1, 0, 0, 0.5));
+    var rectangle = new canvasfx.scene.shape.Rectangle(0, 0, 10, 10);
+    var group = new canvasfx.scene.Group(circle, rectangle);
     children.push(group);
 
 
     scene.setOnMouseDragged((function() {
-        var e = new fmod.event.EventListener();
+        var e = new canvasfx.event.EventListener();
         e.handle = function(event) {
             circle.setLayoutX(event.getX() - circle.getCenterX());
             circle.setLayoutY(event.getY() - circle.getCenterX());
@@ -79,7 +73,7 @@ fiahfy.sample.App.prototype.start = function(stage) {
         var time = 0;
         var sec = 0;
 
-        var t = new fmod.animation.AnimationTimer();
+        var t = new canvasfx.animation.AnimationTimer();
         t.handle = function(now) {
             if (!start) start = now;
             time = now - start;

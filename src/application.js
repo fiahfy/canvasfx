@@ -6,15 +6,15 @@
  */
 
 
-fmod.application = {};
+canvasfx.application = {};
 
 
 /**
  * @constructor
- * @extends {fmod.Object}
+ * @extends {canvasfx.Object}
  */
-fmod.application.Application = function() {
-    fmod.Object.call(this);
+canvasfx.application.Application = function() {
+    canvasfx.Object.call(this);
 
     /**
      * @protected
@@ -24,16 +24,16 @@ fmod.application.Application = function() {
 
     /**
      * @private
-     * @type {fmod.stage.Stage}
+     * @type {canvasfx.stage.Stage}
      */
-    this.stage_ = new fmod.stage.Stage(this.id);
+    this.stage_ = new canvasfx.stage.Stage(this.id);
 
     this.start(this.stage_);
 };
-fmod.inherit(fmod.application.Application, fmod.Object);
+canvasfx.inherit(canvasfx.application.Application, canvasfx.Object);
 
 /**
- * @param {fmod.stage.Stage} stage The primary stage for this application,
+ * @param {canvasfx.stage.Stage} stage The primary stage for this application,
  *     onto which the application scene can be set.
  */
-fmod.application.Application.prototype.start = fmod.abstractMethod;
+canvasfx.application.Application.prototype.start = canvasfx.abstractMethod;

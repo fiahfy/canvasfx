@@ -6,16 +6,16 @@
  */
 
 
-fmod.time = {};
+canvasfx.time = {};
 
 
 /**
  * @param {number} millis Create a new instance with milliseconds.
  * @constructor
- * @extends {fmod.Object}
+ * @extends {canvasfx.Object}
  */
-fmod.time.Duration = function(millis) {
-    fmod.Object.call(this);
+canvasfx.time.Duration = function(millis) {
+    canvasfx.Object.call(this);
 
     /**
      * milliseconds
@@ -24,4 +24,4 @@ fmod.time.Duration = function(millis) {
      */
     this.millis_ = millis;
 };
-fmod.inherit(fmod.time.Duration, fmod.Object);
+canvasfx.inherit(canvasfx.time.Duration, canvasfx.Object);

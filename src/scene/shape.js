@@ -6,13 +6,13 @@
  */
 
 
-fmod.scene.shape = {};
+canvasfx.scene.shape = {};
 
 
 /**
  * @enum {string}
  */
-fmod.scene.shape.StrokeType = {
+canvasfx.scene.shape.StrokeType = {
     CENTERED: 'centered',
     INSIDE: 'inside',
     OUTSIDE: 'outside'
@@ -21,22 +21,22 @@ fmod.scene.shape.StrokeType = {
 
 /**
  * @constructor
- * @extends {fmod.scene.Node}
+ * @extends {canvasfx.scene.Node}
  */
-fmod.scene.shape.Shape = function() {
-    fmod.scene.Node.call(this);
+canvasfx.scene.shape.Shape = function() {
+    canvasfx.scene.Node.call(this);
 
     /**
      * Fill color
      * @protected
-     * @type {?fmod.scene.paint.Color}
+     * @type {?canvasfx.scene.paint.Color}
      */
     this.fill = null;
 
     /**
      * Stroke color
      * @protected
-     * @type {?fmod.scene.paint.Color}
+     * @type {?canvasfx.scene.paint.Color}
      */
     this.stroke = null;
 
@@ -50,37 +50,37 @@ fmod.scene.shape.Shape = function() {
     /**
      * Stroke type
      * @protected
-     * @type {fmod.scene.shape.StrokeType}
+     * @type {canvasfx.scene.shape.StrokeType}
      */
-    this.strokeType = fmod.scene.shape.StrokeType.CENTERED;
+    this.strokeType = canvasfx.scene.shape.StrokeType.CENTERED;
 };
-fmod.inherit(fmod.scene.shape.Shape, fmod.scene.Node);
+canvasfx.inherit(canvasfx.scene.shape.Shape, canvasfx.scene.Node);
 
 /**
- * @param {?fmod.scene.paint.Color} color Fill color.
+ * @param {?canvasfx.scene.paint.Color} color Fill color.
  */
-fmod.scene.shape.Shape.prototype.setFill = function(color) {
+canvasfx.scene.shape.Shape.prototype.setFill = function(color) {
     this.fill = color;
 };
 
 /**
- * @param {?fmod.scene.paint.Color} color Stroke color.
+ * @param {?canvasfx.scene.paint.Color} color Stroke color.
  */
-fmod.scene.shape.Shape.prototype.setStroke = function(color) {
+canvasfx.scene.shape.Shape.prototype.setStroke = function(color) {
     this.stroke = color;
 };
 
 /**
- * @param {fmod.scene.shape.StrokeType} type Stroke type.
+ * @param {canvasfx.scene.shape.StrokeType} type Stroke type.
  */
-fmod.scene.shape.Shape.prototype.setStrokeType = function(type) {
+canvasfx.scene.shape.Shape.prototype.setStrokeType = function(type) {
     this.strokeType = type;
 };
 
 /**
  * @param {number} width Stroke width.
  */
-fmod.scene.shape.Shape.prototype.setStrokeWidth = function(width) {
+canvasfx.scene.shape.Shape.prototype.setStrokeWidth = function(width) {
     this.strokeWidth = width;
 };
 
@@ -90,14 +90,14 @@ fmod.scene.shape.Shape.prototype.setStrokeWidth = function(width) {
  * @param {number=} centerY Center position y.
  * @param {number=} radius Radius.
  * @constructor
- * @extends {fmod.scene.Shape}
+ * @extends {canvasfx.scene.Shape}
  */
-fmod.scene.shape.Circle = function(centerX, centerY, radius) {
-    fmod.scene.shape.Shape.call(this);
+canvasfx.scene.shape.Circle = function(centerX, centerY, radius) {
+    canvasfx.scene.shape.Shape.call(this);
 
-    centerX = fmod.supplement(centerX, 0.0);
-    centerY = fmod.supplement(centerY, 0.0);
-    radius = fmod.supplement(radius, 0.0);
+    centerX = canvasfx.supplement(centerX, 0.0);
+    centerY = canvasfx.supplement(centerY, 0.0);
+    radius = canvasfx.supplement(radius, 0.0);
 
     /**
      * Center x
@@ -120,17 +120,17 @@ fmod.scene.shape.Circle = function(centerX, centerY, radius) {
      */
     this.radius = radius;
 
-    this.fill = fmod.scene.paint.Color.BLACK;
+    this.fill = canvasfx.scene.paint.Color.BLACK;
 };
-fmod.inherit(fmod.scene.shape.Circle, fmod.scene.shape.Shape);
+canvasfx.inherit(canvasfx.scene.shape.Circle, canvasfx.scene.shape.Shape);
 
 /**
- * @param {number|fmod.geometry.Point} x
+ * @param {number|canvasfx.geometry.Point} x
  * @param {number=} y
  * @return {boolean}
  */
-fmod.scene.shape.Circle.prototype.contains = function(x, y) {
-    var point = new fmod.geometry.Point(
+canvasfx.scene.shape.Circle.prototype.contains = function(x, y) {
+    var point = new canvasfx.geometry.Point(
         this.getCurrentCenterX(), this.getCurrentCenterY()
     );
     return (point.distance(x, y) <= this.radius);
@@ -140,7 +140,7 @@ fmod.scene.shape.Circle.prototype.contains = function(x, y) {
  * @param {CanvasRenderingContext2D} context Canvas DOM element.
  * @override
  */
-fmod.scene.shape.Circle.prototype.draw = function(context) {
+canvasfx.scene.shape.Circle.prototype.draw = function(context) {
     if (this.fill) {
         context.beginPath();
         context.fillStyle = this.fill.getWeb();
@@ -162,13 +162,13 @@ fmod.scene.shape.Circle.prototype.draw = function(context) {
 
         var offset = 0;
         switch (this.strokeType) {
-            case fmod.scene.shape.StrokeType.OUTSIDE:
+            case canvasfx.scene.shape.StrokeType.OUTSIDE:
                 offset = 0.5 * this.strokeWidth;
                 break;
-            case fmod.scene.shape.StrokeType.INSIDE:
+            case canvasfx.scene.shape.StrokeType.INSIDE:
                 offset = - 0.5 * this.strokeWidth;
                 break;
-            case fmod.scene.shape.StrokeType.CENTERED:
+            case canvasfx.scene.shape.StrokeType.CENTERED:
             default:
                 offset = 0;
                 break;
@@ -186,14 +186,14 @@ fmod.scene.shape.Circle.prototype.draw = function(context) {
 /**
  * @return {number}
  */
-fmod.scene.shape.Circle.prototype.getCenterX = function() {
+canvasfx.scene.shape.Circle.prototype.getCenterX = function() {
     return this.centerX;
 };
 
 /**
  * @return {number}
  */
-fmod.scene.shape.Circle.prototype.getCenterY = function() {
+canvasfx.scene.shape.Circle.prototype.getCenterY = function() {
     return this.centerY;
 };
 
@@ -201,7 +201,7 @@ fmod.scene.shape.Circle.prototype.getCenterY = function() {
  * @protected
  * @return {number}
  */
-fmod.scene.shape.Circle.prototype.getCurrentCenterX = function() {
+canvasfx.scene.shape.Circle.prototype.getCurrentCenterX = function() {
     return this.centerX + this.layoutX;
 };
 
@@ -209,35 +209,35 @@ fmod.scene.shape.Circle.prototype.getCurrentCenterX = function() {
  * @protected
  * @return {number}
  */
-fmod.scene.shape.Circle.prototype.getCurrentCenterY = function() {
+canvasfx.scene.shape.Circle.prototype.getCurrentCenterY = function() {
     return this.centerY + this.layoutY;
 };
 
 /**
  * @return {number}
  */
-fmod.scene.shape.Circle.prototype.getRadius = function() {
+canvasfx.scene.shape.Circle.prototype.getRadius = function() {
     return this.radius;
 };
 
 /**
  * @param {number} centerX
  */
-fmod.scene.shape.Circle.prototype.setCenterX = function(centerX) {
+canvasfx.scene.shape.Circle.prototype.setCenterX = function(centerX) {
     this.centerX = centerX;
 };
 
 /**
  * @param {number} centerY
  */
-fmod.scene.shape.Circle.prototype.setCenterY = function(centerY) {
+canvasfx.scene.shape.Circle.prototype.setCenterY = function(centerY) {
     this.centerY = centerY;
 };
 
 /**
  * @param {number} radius
  */
-fmod.scene.shape.Circle.prototype.setRadius = function(radius) {
+canvasfx.scene.shape.Circle.prototype.setRadius = function(radius) {
     this.radius = radius;
 };
 
@@ -248,15 +248,15 @@ fmod.scene.shape.Circle.prototype.setRadius = function(radius) {
  * @param {number=} width Size width.
  * @param {number=} height Size height.
  * @constructor
- * @extends {fmod.scene.Shape}
+ * @extends {canvasfx.scene.Shape}
  */
-fmod.scene.shape.Rectangle = function(x, y, width, height) {
-    fmod.scene.shape.Shape.call(this);
+canvasfx.scene.shape.Rectangle = function(x, y, width, height) {
+    canvasfx.scene.shape.Shape.call(this);
 
-    x = fmod.supplement(x, 0.0);
-    y = fmod.supplement(y, 0.0);
-    width = fmod.supplement(width, 0.0);
-    height = fmod.supplement(height, 0.0);
+    x = canvasfx.supplement(x, 0.0);
+    y = canvasfx.supplement(y, 0.0);
+    width = canvasfx.supplement(width, 0.0);
+    height = canvasfx.supplement(height, 0.0);
 
     /**
      * Position x
@@ -286,17 +286,17 @@ fmod.scene.shape.Rectangle = function(x, y, width, height) {
      */
     this.height = height;
 
-    this.fill = fmod.scene.paint.Color.BLACK;
+    this.fill = canvasfx.scene.paint.Color.BLACK;
 };
-fmod.inherit(fmod.scene.shape.Rectangle, fmod.scene.shape.Shape);
+canvasfx.inherit(canvasfx.scene.shape.Rectangle, canvasfx.scene.shape.Shape);
 
 /**
- * @param {number|fmod.geometry.Point} x
+ * @param {number|canvasfx.geometry.Point} x
  * @param {number=} y
  * @return {boolean}
  */
-fmod.scene.shape.Rectangle.prototype.contains = function(x, y) {
-    if (x instanceof fmod.geometry.Dimension) {
+canvasfx.scene.shape.Rectangle.prototype.contains = function(x, y) {
+    if (x instanceof canvasfx.geometry.Dimension) {
         y = x.getY();
         x = x.getX();
     }
@@ -308,7 +308,7 @@ fmod.scene.shape.Rectangle.prototype.contains = function(x, y) {
  * @param {CanvasRenderingContext2D} context Canvas DOM element.
  * @override
  */
-fmod.scene.shape.Rectangle.prototype.draw = function(context) {
+canvasfx.scene.shape.Rectangle.prototype.draw = function(context) {
     if (this.fill) {
         context.fillStyle = this.fill.getWeb();
         context.globalAlpha = this.fill.getOpacity();
@@ -328,15 +328,15 @@ fmod.scene.shape.Rectangle.prototype.draw = function(context) {
         var offsetPosition = 0;
         var offsetSize = 0;
         switch (this.strokeType) {
-            case fmod.scene.shape.StrokeType.OUTSIDE:
+            case canvasfx.scene.shape.StrokeType.OUTSIDE:
                 offsetPosition = - 0.5 * this.strokeWidth;
                 offsetSize = this.strokeWidth;
                 break;
-            case fmod.scene.shape.StrokeType.INSIDE:
+            case canvasfx.scene.shape.StrokeType.INSIDE:
                 offsetPosition = 0.5 * this.strokeWidth;
                 offsetSize = - this.strokeWidth;
                 break;
-            case fmod.scene.shape.StrokeType.CENTERED:
+            case canvasfx.scene.shape.StrokeType.CENTERED:
             default:
                 offsetPosition = 0.5 * (this.strokeWidth % 2);
                 offsetSize = 0;
@@ -355,7 +355,7 @@ fmod.scene.shape.Rectangle.prototype.draw = function(context) {
  * @protected
  * @return {number}
  */
-fmod.scene.shape.Rectangle.prototype.getCurrentX = function() {
+canvasfx.scene.shape.Rectangle.prototype.getCurrentX = function() {
     return this.x + this.layoutX;
 };
 
@@ -363,63 +363,63 @@ fmod.scene.shape.Rectangle.prototype.getCurrentX = function() {
  * @protected
  * @return {number}
  */
-fmod.scene.shape.Rectangle.prototype.getCurrentY = function() {
+canvasfx.scene.shape.Rectangle.prototype.getCurrentY = function() {
     return this.y + this.layoutY;
 };
 
 /**
  * @return {number}
  */
-fmod.scene.shape.Rectangle.prototype.getHeight = function() {
+canvasfx.scene.shape.Rectangle.prototype.getHeight = function() {
     return this.height;
 };
 
 /**
  * @return {number}
  */
-fmod.scene.shape.Rectangle.prototype.getWitdh = function() {
+canvasfx.scene.shape.Rectangle.prototype.getWitdh = function() {
     return this.width;
 };
 
 /**
  * @return {number}
  */
-fmod.scene.shape.Rectangle.prototype.getX = function() {
+canvasfx.scene.shape.Rectangle.prototype.getX = function() {
     return this.x;
 };
 
 /**
  * @return {number}
  */
-fmod.scene.shape.Rectangle.prototype.getY = function() {
+canvasfx.scene.shape.Rectangle.prototype.getY = function() {
     return this.y;
 };
 
 /**
  * @param {number} height
  */
-fmod.scene.shape.Rectangle.prototype.setHeight = function(height) {
+canvasfx.scene.shape.Rectangle.prototype.setHeight = function(height) {
     this.height = height;
 };
 
 /**
  * @param {number} width
  */
-fmod.scene.shape.Rectangle.prototype.setWidth = function(width) {
+canvasfx.scene.shape.Rectangle.prototype.setWidth = function(width) {
     this.width = width;
 };
 
 /**
  * @param {number} x
  */
-fmod.scene.shape.Rectangle.prototype.setX = function(x) {
+canvasfx.scene.shape.Rectangle.prototype.setX = function(x) {
     this.x = x;
 };
 
 /**
  * @param {number} y
  */
-fmod.scene.shape.Rectangle.prototype.setY = function(y) {
+canvasfx.scene.shape.Rectangle.prototype.setY = function(y) {
     this.y = y;
 };
 
@@ -430,15 +430,15 @@ fmod.scene.shape.Rectangle.prototype.setY = function(y) {
  * @param {number=} endX End position x.
  * @param {number=} endY End position y.
  * @constructor
- * @extends {fmod.scene.Shape}
+ * @extends {canvasfx.scene.Shape}
  */
-fmod.scene.shape.Line = function(startX, startY, endX, endY) {
-    fmod.scene.shape.Shape.call(this);
+canvasfx.scene.shape.Line = function(startX, startY, endX, endY) {
+    canvasfx.scene.shape.Shape.call(this);
 
-    startX = fmod.supplement(startX, 0.0);
-    startY = fmod.supplement(startY, 0.0);
-    endX = fmod.supplement(endX, 0.0);
-    endY = fmod.supplement(endY, 0.0);
+    startX = canvasfx.supplement(startX, 0.0);
+    startY = canvasfx.supplement(startY, 0.0);
+    endX = canvasfx.supplement(endX, 0.0);
+    endY = canvasfx.supplement(endY, 0.0);
 
     /**
      * Start position x
@@ -468,16 +468,16 @@ fmod.scene.shape.Line = function(startX, startY, endX, endY) {
      */
     this.endY = endY;
 
-    this.stroke = fmod.scene.paint.Color.BLACK;
+    this.stroke = canvasfx.scene.paint.Color.BLACK;
 };
-fmod.inherit(fmod.scene.shape.Line, fmod.scene.shape.Shape);
+canvasfx.inherit(canvasfx.scene.shape.Line, canvasfx.scene.shape.Shape);
 
 /**
- * @param {number|fmod.geometry.Point} x
+ * @param {number|canvasfx.geometry.Point} x
  * @param {number=} y
  * @return {boolean}
  */
-fmod.scene.shape.Line.prototype.contains = function(x, y) {
+canvasfx.scene.shape.Line.prototype.contains = function(x, y) {
     return false;
 };
 
@@ -485,7 +485,7 @@ fmod.scene.shape.Line.prototype.contains = function(x, y) {
  * @param {CanvasRenderingContext2D} context Canvas DOM element.
  * @override
  */
-fmod.scene.shape.Line.prototype.draw = function(context) {
+canvasfx.scene.shape.Line.prototype.draw = function(context) {
     if (this.stroke === null) return;
 
     context.beginPath();
@@ -509,7 +509,7 @@ fmod.scene.shape.Line.prototype.draw = function(context) {
  * @protected
  * @return {number}
  */
-fmod.scene.shape.Line.prototype.getCurrentEndX = function() {
+canvasfx.scene.shape.Line.prototype.getCurrentEndX = function() {
     return this.endX + this.layoutX;
 };
 
@@ -517,7 +517,7 @@ fmod.scene.shape.Line.prototype.getCurrentEndX = function() {
  * @protected
  * @return {number}
  */
-fmod.scene.shape.Line.prototype.getCurrentEndY = function() {
+canvasfx.scene.shape.Line.prototype.getCurrentEndY = function() {
     return this.endY + this.layoutY;
 };
 
@@ -525,7 +525,7 @@ fmod.scene.shape.Line.prototype.getCurrentEndY = function() {
  * @protected
  * @return {number}
  */
-fmod.scene.shape.Line.prototype.getCurrentStartX = function() {
+canvasfx.scene.shape.Line.prototype.getCurrentStartX = function() {
     return this.startX + this.layoutX;
 };
 
@@ -533,62 +533,62 @@ fmod.scene.shape.Line.prototype.getCurrentStartX = function() {
  * @protected
  * @return {number}
  */
-fmod.scene.shape.Line.prototype.getCurrentStartY = function() {
+canvasfx.scene.shape.Line.prototype.getCurrentStartY = function() {
     return this.startY + this.layoutY;
 };
 
 /**
  * @return {number}
  */
-fmod.scene.shape.Line.prototype.getEndX = function() {
+canvasfx.scene.shape.Line.prototype.getEndX = function() {
     return this.endX;
 };
 
 /**
  * @return {number}
  */
-fmod.scene.shape.Line.prototype.getEndY = function() {
+canvasfx.scene.shape.Line.prototype.getEndY = function() {
     return this.endY;
 };
 
 /**
  * @return {number}
  */
-fmod.scene.shape.Line.prototype.getStartX = function() {
+canvasfx.scene.shape.Line.prototype.getStartX = function() {
     return this.startX;
 };
 
 /**
  * @return {number}
  */
-fmod.scene.shape.Line.prototype.getStartY = function() {
+canvasfx.scene.shape.Line.prototype.getStartY = function() {
     return this.startY;
 };
 
 /**
  * @param {number} endX
  */
-fmod.scene.shape.Line.prototype.setEndX = function(endX) {
+canvasfx.scene.shape.Line.prototype.setEndX = function(endX) {
     this.endX = endX;
 };
 
 /**
  * @param {number} endY
  */
-fmod.scene.shape.Line.prototype.setEndY = function(endY) {
+canvasfx.scene.shape.Line.prototype.setEndY = function(endY) {
     this.endY = endY;
 };
 
 /**
  * @param {number} startX
  */
-fmod.scene.shape.Line.prototype.seStartX = function(startX) {
+canvasfx.scene.shape.Line.prototype.seStartX = function(startX) {
     this.startX = startX;
 };
 
 /**
  * @param {number} startY
  */
-fmod.scene.shape.Line.prototype.seStartY = function(startY) {
+canvasfx.scene.shape.Line.prototype.seStartY = function(startY) {
     this.startY = startY;
 };

@@ -6,17 +6,17 @@
  */
 
 
-fmod.stage = {};
+canvasfx.stage = {};
 
 
 /**
  * The top level container.
  * @param {string} id Target DOM id.
  * @constructor
- * @extends {fmod.Object}
+ * @extends {canvasfx.Object}
  */
-fmod.stage.Stage = function(id) {
-    fmod.Object.call(this);
+canvasfx.stage.Stage = function(id) {
+    canvasfx.Object.call(this);
 
     /**
      * @private
@@ -41,7 +41,7 @@ fmod.stage.Stage = function(id) {
     /**
      * Specify the scene to be used on this stage.
      * @private
-     * @type {fmod.scene.Scene}
+     * @type {canvasfx.scene.Scene}
      */
     this.scene_ = null;
 
@@ -62,27 +62,27 @@ fmod.stage.Stage = function(id) {
     this.element_.appendChild(this.canvas_);
     this.addEventListener_();
 };
-fmod.inherit(fmod.stage.Stage, fmod.Object);
+canvasfx.inherit(canvasfx.stage.Stage, canvasfx.Object);
 
 /**
  * @return {number} The width of this Scene.
  */
-fmod.stage.Stage.prototype.getWidth = function() {
+canvasfx.stage.Stage.prototype.getWidth = function() {
     return this.width_;
 };
 
 /**
  * @return {number} The height of this Scene.
  */
-fmod.stage.Stage.prototype.getHeight = function() {
+canvasfx.stage.Stage.prototype.getHeight = function() {
     return this.height_;
 };
 
 /**
- * @param {fmod.scene.Scene} scene Specify the scene
+ * @param {canvasfx.scene.Scene} scene Specify the scene
  *     to be used on this stage.
  */
-fmod.stage.Stage.prototype.setScene = function(scene) {
+canvasfx.stage.Stage.prototype.setScene = function(scene) {
     this.scene_ = scene;
     if (this.scene_.getWidth() && this.scene_.getHeight()) {
         this.width_ = this.scene_.getWidth();
@@ -97,7 +97,7 @@ fmod.stage.Stage.prototype.setScene = function(scene) {
 
 /**
  */
-fmod.stage.Stage.prototype.show = function() {
+canvasfx.stage.Stage.prototype.show = function() {
     this.clear_();
     this.scene_.getRoot().draw(this.context_);
 };
@@ -105,19 +105,19 @@ fmod.stage.Stage.prototype.show = function() {
 /**
  * @private
  */
-fmod.stage.Stage.prototype.clear_ = function() {
-    var rect = new fmod.scene.shape.Rectangle(
+canvasfx.stage.Stage.prototype.clear_ = function() {
+    var rect = new canvasfx.scene.shape.Rectangle(
         0, 0,
         this.width_, this.height_
     );
-    rect.setFill(fmod.scene.paint.Color.WHITE);
+    rect.setFill(canvasfx.scene.paint.Color.WHITE);
     rect.draw(this.context_);
 };
 
 /**
  * @private
  */
-fmod.stage.Stage.prototype.addEventListener_ = function() {
+canvasfx.stage.Stage.prototype.addEventListener_ = function() {
     var me = this;
     var callback = function(eventType) {
         return function(e) {
@@ -125,8 +125,8 @@ fmod.stage.Stage.prototype.addEventListener_ = function() {
             var x = e.clientX - rect.left;
             var y = e.clientY - rect.top;
 
-            var event = new fmod.scene.input.MouseEvent(x, y);
-            event.setEventType(fmod.scene.input.MouseEvent[eventType]);
+            var event = new canvasfx.scene.input.MouseEvent(x, y);
+            event.setEventType(canvasfx.scene.input.MouseEvent[eventType]);
 
             me.scene_.handleEvent(event);
         };
@@ -153,7 +153,7 @@ fmod.stage.Stage.prototype.addEventListener_ = function() {
 
         var timer = null;
         (function animationLoop() {
-            timer = fmod.animation.AnimationTimer.requestAnimationFrame_()(
+            timer = canvasfx.animation.AnimationTimer.requestAnimationFrame_()(
                 animationLoop
             );
             mousemove(event);
@@ -162,7 +162,7 @@ fmod.stage.Stage.prototype.addEventListener_ = function() {
         var mouseup = function() {
             me.canvas_.removeEventListener('mousemove', mousemove);
             me.canvas_.removeEventListener('mouseup', mouseup);
-            fmod.animation.AnimationTimer.cancelAnimationFrame_()(
+            canvasfx.animation.AnimationTimer.cancelAnimationFrame_()(
                 timer
             );
         };

@@ -7,7 +7,7 @@
  */
 
 
-fmod.geometry = {};
+canvasfx.geometry = {};
 
 
 /**
@@ -15,13 +15,13 @@ fmod.geometry = {};
  * @param {number=} x The x coordinate of the point.
  * @param {number=} y The y coordinate of the point.
  * @constructor
- * @extends {fmod.Object}
+ * @extends {canvasfx.Object}
  */
-fmod.geometry.Point = function(x, y) {
-    fmod.Object.call(this);
+canvasfx.geometry.Point = function(x, y) {
+    canvasfx.Object.call(this);
 
-    x = fmod.supplement(x, 0.0);
-    y = fmod.supplement(y, 0.0);
+    x = canvasfx.supplement(x, 0.0);
+    y = canvasfx.supplement(y, 0.0);
 
     /**
      * The x coordinate of the point.
@@ -37,30 +37,30 @@ fmod.geometry.Point = function(x, y) {
      */
     this.y_ = y;
 };
-fmod.inherit(fmod.geometry.Point, fmod.Object);
+canvasfx.inherit(canvasfx.geometry.Point, canvasfx.Object);
 
 /**
- * @param {number|fmod.geometry.Point} x The X coordinate addition
+ * @param {number|canvasfx.geometry.Point} x The X coordinate addition
  *     or the point whose coordinates are to be added.
  * @param {number=} y The Y coordinate addition.
- * @return {fmod.geometry.Point} The point with added coordinates
+ * @return {canvasfx.geometry.Point} The point with added coordinates
  */
-fmod.geometry.Point.prototype.add = function(x, y) {
-    if (x instanceof fmod.geometry.Point) {
+canvasfx.geometry.Point.prototype.add = function(x, y) {
+    if (x instanceof canvasfx.geometry.Point) {
         y = x.getY();
         x = x.getX();
     }
-    return new fmod.geometry.Point(this.x_ + x, this.y_ + y);
+    return new canvasfx.geometry.Point(this.x_ + x, this.y_ + y);
 };
 
 /**
- * @param {number|fmod.geometry.Point} x The x coordinate of other point
+ * @param {number|canvasfx.geometry.Point} x The x coordinate of other point
  *     or the other point.
  * @param {number=} y The y coordinate of other point.
  * @return {number} The distance between this point and the specified point.
  */
-fmod.geometry.Point.prototype.distance = function(x, y) {
-    if (x instanceof fmod.geometry.Point) {
+canvasfx.geometry.Point.prototype.distance = function(x, y) {
+    if (x instanceof canvasfx.geometry.Point) {
         y = x.getY();
         x = x.getX();
     }
@@ -70,14 +70,14 @@ fmod.geometry.Point.prototype.distance = function(x, y) {
 /**
  * @return {number} The x coordinate.
  */
-fmod.geometry.Point.prototype.getX = function() {
+canvasfx.geometry.Point.prototype.getX = function() {
     return this.x_;
 };
 
 /**
  * @return {number} The y coordinate.
  */
-fmod.geometry.Point.prototype.getY = function() {
+canvasfx.geometry.Point.prototype.getY = function() {
     return this.y_;
 };
 
@@ -87,13 +87,13 @@ fmod.geometry.Point.prototype.getY = function() {
  * @param {number=} width The width.
  * @param {number=} height The height.
  * @constructor
- * @extends {fmod.Object}
+ * @extends {canvasfx.Object}
  */
-fmod.geometry.Dimension = function(width, height) {
-    fmod.Object.call(this);
+canvasfx.geometry.Dimension = function(width, height) {
+    canvasfx.Object.call(this);
 
-    width = fmod.supplement(width, 0.0);
-    height = fmod.supplement(height, 0.0);
+    width = canvasfx.supplement(width, 0.0);
+    height = canvasfx.supplement(height, 0.0);
 
     /**
      * The width.
@@ -109,19 +109,19 @@ fmod.geometry.Dimension = function(width, height) {
      */
     this.height_ = height;
 };
-fmod.inherit(fmod.geometry.Dimension, fmod.Object);
+canvasfx.inherit(canvasfx.geometry.Dimension, canvasfx.Object);
 
 /**
  * @return {number} The height of the dimension.
  */
-fmod.geometry.Dimension.prototype.getHeight = function() {
+canvasfx.geometry.Dimension.prototype.getHeight = function() {
     return this.height_;
 };
 
 /**
  * @return {number} The width of the dimension.
  */
-fmod.geometry.Dimension.prototype.getWidth = function() {
+canvasfx.geometry.Dimension.prototype.getWidth = function() {
     return this.width_;
 };
 
@@ -134,10 +134,10 @@ fmod.geometry.Dimension.prototype.getWidth = function() {
  * @param {number} width The width of the Bounds.
  * @param {number} height The height of the Bounds.
  * @constructor
- * @extends {fmod.Object}
+ * @extends {canvasfx.Object}
  */
-fmod.geometry.Bounds = function(minX, minY, width, height) {
-    fmod.Object.call(this);
+canvasfx.geometry.Bounds = function(minX, minY, width, height) {
+    canvasfx.Object.call(this);
 
     /**
      * The X coordinate of the upper-left corner.
@@ -167,4 +167,4 @@ fmod.geometry.Bounds = function(minX, minY, width, height) {
      */
     this.height_ = height;
 };
-fmod.inherit(fmod.geometry.Bounds, fmod.Object);
+canvasfx.inherit(canvasfx.geometry.Bounds, canvasfx.Object);
