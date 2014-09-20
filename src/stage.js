@@ -59,8 +59,15 @@ canvasfx.stage.Stage = function(id) {
      */
     this.height_ = this.element_.offsetHeight;
 
+    /**
+     * @type {boolean}
+     * @private
+     */
+    this.isShow_ = false;
+
     this.element_.appendChild(this.canvas_);
     this.addEventListener_();
+    this.update_();
 };
 canvasfx.inherit(canvasfx.stage.Stage, canvasfx.Object);
 
@@ -98,8 +105,7 @@ canvasfx.stage.Stage.prototype.setScene = function(scene) {
 /**
  */
 canvasfx.stage.Stage.prototype.show = function() {
-    this.clear_();
-    this.scene_.getRoot().draw(this.context_);
+    this.isShow_ = true;
 };
 
 /**
@@ -112,6 +118,37 @@ canvasfx.stage.Stage.prototype.clear_ = function() {
     );
     rect.setFill(canvasfx.scene.paint.Color.WHITE);
     rect.draw(this.context_);
+};
+
+/**
+ * @private
+ */
+canvasfx.stage.Stage.prototype.draw_ = function() {
+    this.scene_.getRoot().draw(this.context_);
+};
+
+/**
+ * @private
+ */
+canvasfx.stage.Stage.prototype.redraw_ = function() {
+    this.clear_();
+    this.draw_();
+};
+
+/**
+ * @private
+ * @todo
+ */
+canvasfx.stage.Stage.prototype.update_ = function() {
+    var me = this;
+    (function() {
+        var t = new canvasfx.animation.AnimationTimer();
+        t.handle = function() {
+            if (!me.isShow_) return;
+            me.redraw_();
+        };
+        return t;
+    })().start();
 };
 
 /**

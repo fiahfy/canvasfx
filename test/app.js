@@ -67,6 +67,7 @@ test.App.prototype.start = function(stage) {
         return e;
     })());
 
+/*
     (function() {
         var start = 0;
         var before = 0;
@@ -92,9 +93,9 @@ test.App.prototype.start = function(stage) {
         t.update = function() {
             var m = circle.getLayoutX();
             circle.setLayoutX(++m);
-
-            stage.show();
         };
         return t;
     })().start();
+*/
+    stage.show();
 };
