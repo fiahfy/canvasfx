@@ -63,14 +63,14 @@ canvasfx.scene.Scene.prototype.getHeight = function() {
 };
 
 /**
- * @return {canvasfx.event.EventListener}
+ * @return {canvasfx.event.EventHandler}
  */
 canvasfx.scene.Scene.prototype.getOnMouseClicked = function() {
     return this.onMouseClicked_;
 };
 
 /**
- * @return {canvasfx.event.EventListener}
+ * @return {canvasfx.event.EventHandler}
  */
 canvasfx.scene.Scene.prototype.getOnMouseDragged = function() {
     return this.onMouseDragged_;
@@ -197,14 +197,14 @@ canvasfx.scene.Node.prototype.getLayoutY = function() {
 };
 
 /**
- * @return {canvasfx.event.EventListener}
+ * @return {canvasfx.event.EventHandler}
  */
 canvasfx.scene.Node.prototype.getOnMouseClicked = function() {
     return this.onMouseClicked;
 };
 
 /**
- * @return {canvasfx.event.EventListener}
+ * @return {canvasfx.event.EventHandler}
  */
 canvasfx.scene.Node.prototype.getOnMouseDragged = function() {
     return this.onMouseDragged;

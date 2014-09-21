@@ -18,8 +18,88 @@ canvasfx.animation = {};
  */
 canvasfx.animation.Animation = function(targetFramerate) {
     canvasfx.Object.call(this);
+
+    /**
+     * @private
+     * @type {canvasfx.time.Duration}
+     */
+    this.currentTime_ = canvasfx.time.ZERO;
+
+    /**
+     * @private
+     * @type {canvasfx.time.Duration}
+     */
+    this.delay_ = canvasfx.time.ZERO;
+
+    /**
+     * @private
+     * @type {canvasfx.event.EventHandler}
+     */
+    this.onFinished_ = null;
+
+    /**
+     * @private
+     * @type {canvasfx.animation.Animation.Status}
+     */
+    this.status_ = canvasfx.animation.Animation.Status.STOPPED;
 };
 canvasfx.inherit(canvasfx.animation.Animation, canvasfx.Object);
+
+/**
+ * @enum {string}
+ */
+canvasfx.animation.Animation.Status = {
+    PAUSED: 'paused',
+    RUNNING: 'running',
+    STOPPED: 'stopped'
+};
+
+/**
+ * @return {canvasfx.time.Duration}
+ */
+canvasfx.animation.Animation.prototype.getCurrentTime = function() {
+    return this.currentTime_;
+};
+
+/**
+ * @return {canvasfx.time.Duration}
+ */
+canvasfx.animation.Animation.prototype.getDelay = function() {
+    return this.delay_;
+};
+
+/**
+ * @return {canvasfx.event.EventHandler}
+ */
+canvasfx.animation.Animation.prototype.getOnFinished = function() {
+    return this.onFinished_;
+};
+
+/**
+ */
+canvasfx.animation.Animation.prototype.pause = canvasfx.abstractMethod;
+
+/**
+ */
+canvasfx.animation.Animation.prototype.play = canvasfx.abstractMethod;
+
+/**
+ * @param {canvasfx.time.Duration} value
+ */
+canvasfx.animation.Animation.prototype.setDelay = function(value) {
+    this.delay_ = value;
+};
+
+/**
+ * @param {canvasfx.event.EventListener} value
+ */
+canvasfx.animation.Animation.prototype.setOnFinished = function(value) {
+    this.onFinished_ = value;
+};
+
+/**
+ */
+canvasfx.animation.Animation.prototype.stop = canvasfx.abstractMethod;
 
 
 /**
@@ -30,16 +110,36 @@ canvasfx.inherit(canvasfx.animation.Animation, canvasfx.Object);
  */
 canvasfx.animation.Timeline = function(var_args) {
     canvasfx.animation.Animation.call(this);
+
+    /**
+     * @private
+     * @type {Array}
+     */
+    this.keyFrames_ = Array.prototype.slice.call(arguments);
 };
 canvasfx.inherit(canvasfx.animation.Timeline, canvasfx.animation.Animation);
+
+/**
+ * @return {Array}
+ */
+canvasfx.animation.Timeline.prototype.getKeyFrames = function() {
+    return this.keyFrames_;
+};
+
+/**
+ */
+canvasfx.animation.Timeline.prototype.play = function() {
+
+};
 
 
 /**
  * @param {canvasfx.time.Duration} duration The time.
+ * @param {canvasfx.event.EventHandler} onFinished
  * @constructor
  * @extends {canvasfx.Object}
  */
-canvasfx.animation.KeyFrame = function(duration) {
+canvasfx.animation.KeyFrame = function(duration, onFinished) {
     canvasfx.Object.call(this);
 };
 canvasfx.inherit(canvasfx.animation.KeyFrame, canvasfx.Object);
