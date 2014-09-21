@@ -77,11 +77,21 @@ canvasfx.animation.Animation.prototype.getOnFinished = function() {
 
 /**
  */
-canvasfx.animation.Animation.prototype.pause = canvasfx.abstractMethod;
+canvasfx.animation.Animation.prototype.pause = function() {
+    if (this.status_ != canvasfx.animation.Animation.Status.RUNNING) {
+        return;
+    }
+    this.status_ = canvasfx.animation.Animation.Status.PAUSED;
+};
 
 /**
  */
-canvasfx.animation.Animation.prototype.play = canvasfx.abstractMethod;
+canvasfx.animation.Animation.prototype.play = function() {
+    if (this.status_ == canvasfx.animation.Animation.Status.RUNNING) {
+        return;
+    }
+    this.status_ = canvasfx.animation.Animation.Status.RUNNING;
+};
 
 /**
  * @param {canvasfx.time.Duration} value
@@ -99,7 +109,12 @@ canvasfx.animation.Animation.prototype.setOnFinished = function(value) {
 
 /**
  */
-canvasfx.animation.Animation.prototype.stop = canvasfx.abstractMethod;
+canvasfx.animation.Animation.prototype.stop = function() {
+    if (this.status_ != canvasfx.animation.Animation.Status.RUNNING) {
+        return;
+    }
+    this.status_ = canvasfx.animation.Animation.Status.STOPPED;
+};
 
 
 /**
