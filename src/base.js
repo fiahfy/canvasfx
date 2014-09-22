@@ -150,4 +150,4 @@ canvasfx.importNameSpace('canvasfx.scene.input');
 canvasfx.importNameSpace('canvasfx.scene.paint');
 canvasfx.importNameSpace('canvasfx.scene.shape');
 canvasfx.importNameSpace('canvasfx.stage');
-canvasfx.importNameSpace('canvasfx.time');
+canvasfx.importNameSpace('canvasfx.util');

@@ -11,41 +11,6 @@ canvasfx.event = {};
 
 /**
  * @constructor
- * @extends {canvasfx.Object}
- */
-canvasfx.event.Event = function() {
-    canvasfx.Object.call(this);
-};
-canvasfx.inherit(canvasfx.event.Event, canvasfx.Object);
-
-
-/**
- * @constructor
- * @extends {canvasfx.Object}
- */
-canvasfx.event.EventListener = function() {
-    canvasfx.Object.call(this);
-};
-canvasfx.inherit(canvasfx.event.EventListener, canvasfx.Object);
-
-
-/**
- * @constructor
- * @extends {canvasfx.event.EventListener}
- */
-canvasfx.event.EventHandler = function() {
-    canvasfx.event.EventListener.call(this);
-};
-canvasfx.inherit(canvasfx.event.EventHandler, canvasfx.event.EventListener);
-
-/**
- * @param {canvasfx.event.Event} event The event which occurred.
- */
-canvasfx.event.EventHandler.prototype.handle = canvasfx.abstractMethod;
-
-
-/**
- * @constructor
  * @param {string=} name
  * @extends {canvasfx.Object}
  */
@@ -75,3 +40,89 @@ canvasfx.event.EventType.prototype.getName = function() {
 canvasfx.event.EventType.prototype.toString = function() {
     return this.getName();
 };
+
+
+/**
+ * @constructor
+ * @extends {canvasfx.Object}
+ */
+canvasfx.event.Event = function() {
+    canvasfx.Object.call(this);
+
+    /**
+     * @protected
+     * @type {canvasfx.event.EventType}
+     */
+    this.eventType = canvasfx.event.Event.ANY;
+};
+canvasfx.inherit(canvasfx.event.Event, canvasfx.Object);
+
+/**
+ * @return {canvasfx.event.EventType} eventType
+ */
+canvasfx.event.Event.prototype.getEventType = function() {
+    return this.eventType;
+};
+
+/**
+ * @protected
+ * @param {canvasfx.event.EventType} eventType
+ */
+canvasfx.event.Event.prototype.setEventType = function(eventType) {
+    this.eventType = eventType;
+};
+
+/**
+ * @const
+ * @type {canvasfx.event.EventType}
+ */
+canvasfx.event.Event.ANY =
+    new canvasfx.event.EventType('ANY');
+
+
+/**
+ * @constructor
+ * @extends {canvasfx.event.Event}
+ */
+canvasfx.event.ActionEvent = function() {
+    canvasfx.event.Event.call(this);
+
+    /**
+     * @protected
+     * @type {canvasfx.event.EventType}
+     */
+    this.eventType = canvasfx.event.ActionEvent.ACTION;
+};
+canvasfx.inherit(canvasfx.event.ActionEvent, canvasfx.event.Event);
+
+/**
+ * @const
+ * @type {canvasfx.event.EventType}
+ */
+canvasfx.event.ActionEvent.ACTION =
+    new canvasfx.event.EventType('ACTION');
+
+
+/**
+ * @constructor
+ * @extends {canvasfx.Object}
+ */
+canvasfx.event.EventListener = function() {
+    canvasfx.Object.call(this);
+};
+canvasfx.inherit(canvasfx.event.EventListener, canvasfx.Object);
+
+
+/**
+ * @constructor
+ * @extends {canvasfx.event.EventListener}
+ */
+canvasfx.event.EventHandler = function() {
+    canvasfx.event.EventListener.call(this);
+};
+canvasfx.inherit(canvasfx.event.EventHandler, canvasfx.event.EventListener);
+
+/**
+ * @param {canvasfx.event.Event} event The event which occurred.
+ */
+canvasfx.event.EventHandler.prototype.handle = canvasfx.abstractMethod;

@@ -216,11 +216,13 @@ canvasfx.scene.Node.prototype.getOnMouseDragged = function() {
 canvasfx.scene.Node.prototype.handleEvent = function(event) {
     if (this.contains(event.getX(), event.getY())) {
         if (this.onMouseClicked &&
-            event.getEventType() == canvasfx.scene.input.MouseEvent.MOUSE_CLICKED) {
+            event.getEventType() ==
+                canvasfx.scene.input.MouseEvent.MOUSE_CLICKED) {
             this.onMouseClicked.handle(event);
         }
         if (this.onMouseDragged &&
-            event.getEventType() == canvasfx.scene.input.MouseEvent.MOUSE_DRAGGED) {
+            event.getEventType() ==
+                canvasfx.scene.input.MouseEvent.MOUSE_DRAGGED) {
             this.onMouseDragged.handle(event);
         }
     }

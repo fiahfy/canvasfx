@@ -137,7 +137,7 @@ canvasfx.stage.Stage.prototype.redraw_ = function() {
 
 /**
  * @private
- * @todo
+ * @todo private access
  */
 canvasfx.stage.Stage.prototype.update_ = function() {
     var me = this;
@@ -162,8 +162,9 @@ canvasfx.stage.Stage.prototype.addEventListener_ = function() {
             var x = e.clientX - rect.left;
             var y = e.clientY - rect.top;
 
-            var event = new canvasfx.scene.input.MouseEvent(x, y);
-            event.setEventType(canvasfx.scene.input.MouseEvent[eventType]);
+            var event = new canvasfx.scene.input.MouseEvent(
+                canvasfx.scene.input.MouseEvent[eventType], x, y
+            );
 
             me.scene_.handleEvent(event);
         };
