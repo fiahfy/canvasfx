@@ -110,31 +110,31 @@ canvasfx.scene.Scene.prototype.handleEvent = function(event) {
 };
 
 /**
- * @param {canvasfx.event.EventHandler} handler
+ * @param {canvasfx.event.EventHandler} value
  */
-canvasfx.scene.Scene.prototype.setOnMouseClicked = function(handler) {
-    this.onMouseClicked_ = handler;
+canvasfx.scene.Scene.prototype.setOnMouseClicked = function(value) {
+    this.onMouseClicked_ = value;
 };
 
 /**
- * @param {canvasfx.event.EventHandler} handler
+ * @param {canvasfx.event.EventHandler} value
  */
-canvasfx.scene.Scene.prototype.setOnMouseDragged = function(handler) {
-    this.onMouseDragged_ = handler;
+canvasfx.scene.Scene.prototype.setOnMouseDragged = function(value) {
+    this.onMouseDragged_ = value;
 };
 
 /**
- * @param {number} width
+ * @param {number} value
  */
-canvasfx.scene.Scene.prototype.setWidth = function(width) {
-    this.width_ = width;
+canvasfx.scene.Scene.prototype.setWidth = function(value) {
+    this.width_ = value;
 };
 
 /**
- * @param {number} height
+ * @param {number} value
  */
-canvasfx.scene.Scene.prototype.setHeight = function(height) {
-    this.height_ = height;
+canvasfx.scene.Scene.prototype.setHeight = function(value) {
+    this.height_ = value;
 };
 
 
@@ -156,6 +156,12 @@ canvasfx.scene.Node = function() {
      * @type {number}
      */
     this.layoutY = 0.0;
+
+    /**
+     * @protected
+     * @type {number}
+     */
+    this.opacity = 1.0;
 
     /**
      * @protected
@@ -211,6 +217,13 @@ canvasfx.scene.Node.prototype.getOnMouseDragged = function() {
 };
 
 /**
+ * @return {number}
+ */
+canvasfx.scene.Node.prototype.getOpacity = function() {
+    return this.opacity;
+};
+
+/**
  * @param {canvasfx.scene.input.MouseEvent} event
  */
 canvasfx.scene.Node.prototype.handleEvent = function(event) {
@@ -227,31 +240,38 @@ canvasfx.scene.Node.prototype.handleEvent = function(event) {
 };
 
 /**
- * @param {number} layoutX
+ * @param {number} value
  */
-canvasfx.scene.Node.prototype.setLayoutX = function(layoutX) {
-    this.layoutX = layoutX;
+canvasfx.scene.Node.prototype.setLayoutX = function(value) {
+    this.layoutX = value;
 };
 
 /**
- * @param {number} layoutY
+ * @param {number} value
  */
-canvasfx.scene.Node.prototype.setLayoutY = function(layoutY) {
-    this.layoutY = layoutY;
+canvasfx.scene.Node.prototype.setLayoutY = function(value) {
+    this.layoutY = value;
 };
 
 /**
- * @param {canvasfx.event.EventHandler} handler
+ * @param {canvasfx.event.EventHandler} value
  */
-canvasfx.scene.Node.prototype.setOnMouseClicked = function(handler) {
-    this.onMouseClicked = handler;
+canvasfx.scene.Node.prototype.setOnMouseClicked = function(value) {
+    this.onMouseClicked = value;
 };
 
 /**
- * @param {canvasfx.event.EventHandler} handler
+ * @param {canvasfx.event.EventHandler} value
  */
-canvasfx.scene.Node.prototype.setOnMouseDragged = function(handler) {
-    this.onMouseDragged = handler;
+canvasfx.scene.Node.prototype.setOnMouseDragged = function(value) {
+    this.onMouseDragged = value;
+};
+
+/**
+ * @param {number} value
+ */
+canvasfx.scene.Node.prototype.setOpacity = function(value) {
+    this.opacity = value;
 };
 
 
@@ -301,24 +321,24 @@ canvasfx.scene.Group.prototype.getChildren = function() {
 };
 
 /**
- * @param {number} layoutX
+ * @param {number} value
  * @override
  */
-canvasfx.scene.Group.prototype.setLayoutX = function(layoutX) {
-    this.layoutX = layoutX;
+canvasfx.scene.Group.prototype.setLayoutX = function(value) {
+    this.layoutX = value;
     this.children_.forEach(function(element) {
-        element.setLayoutX(layoutX);
+        element.setLayoutX(value);
     });
 };
 
 /**
- * @param {number} layoutY
+ * @param {number} value
  * @override
  */
-canvasfx.scene.Group.prototype.setLayoutY = function(layoutY) {
-    this.layoutY = layoutY;
+canvasfx.scene.Group.prototype.setLayoutY = function(value) {
+    this.layoutY = value;
     this.children_.forEach(function(element) {
-        element.setLayoutY(layoutY);
+        element.setLayoutY(value);
     });
 };
 

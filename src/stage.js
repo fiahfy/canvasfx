@@ -86,11 +86,11 @@ canvasfx.stage.Stage.prototype.getHeight = function() {
 };
 
 /**
- * @param {canvasfx.scene.Scene} scene Specify the scene
+ * @param {canvasfx.scene.Scene} value Specify the scene
  *     to be used on this stage.
  */
-canvasfx.stage.Stage.prototype.setScene = function(scene) {
-    this.scene_ = scene;
+canvasfx.stage.Stage.prototype.setScene = function(value) {
+    this.scene_ = value;
     if (this.scene_.getWidth() && this.scene_.getHeight()) {
         this.width_ = this.scene_.getWidth();
         this.height_ = this.scene_.getHeight();
