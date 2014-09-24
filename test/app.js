@@ -59,7 +59,7 @@ test.App.prototype.start = function(stage) {
 
 
     scene.setOnMouseDragged((function() {
-        var e = new canvasfx.event.EventListener();
+        var e = new canvasfx.event.EventHandler();
         e.handle = function(event) {
             circle.setLayoutX(event.getX() - circle.getCenterX());
             circle.setLayoutY(event.getY() - circle.getCenterX());
@@ -97,5 +97,57 @@ test.App.prototype.start = function(stage) {
         return t;
     })().start();
 */
+
+    var timeline2 = new canvasfx.animation.Timeline(
+        new canvasfx.animation.KeyFrame(
+            new canvasfx.util.Duration(2000),
+            (function() {
+                var e = new canvasfx.event.EventHandler();
+                e.handle = function(event) {
+                    console.log(Date.now(), 'fin222');
+                };
+                return e;
+            })()
+        )
+    );
+
+    var timeline = new canvasfx.animation.Timeline(
+        new canvasfx.animation.KeyFrame(
+            new canvasfx.util.Duration(5000),
+            (function() {
+                var e = new canvasfx.event.EventHandler();
+                e.handle = function(event) {
+                    console.log(Date.now(), 'fin');
+                    timeline2.play();
+                };
+                return e;
+            })()
+        ),
+        new canvasfx.animation.KeyFrame(
+            new canvasfx.util.Duration(6000),
+            (function() {
+                var e = new canvasfx.event.EventHandler();
+                e.handle = function(event) {
+                    console.log(Date.now(), 'st');
+                    timeline2.pause();
+                };
+                return e;
+            })()
+        ),
+        new canvasfx.animation.KeyFrame(
+            new canvasfx.util.Duration(7000),
+            (function() {
+                var e = new canvasfx.event.EventHandler();
+                e.handle = function(event) {
+                    console.log(Date.now(), 'pl');
+                    timeline2.play();
+                };
+                return e;
+            })()
+        )
+    );
+    timeline.play();
+    console.log(Date.now(), 's');
+
     stage.show();
 };

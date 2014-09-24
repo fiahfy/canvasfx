@@ -11,16 +11,24 @@ canvasfx.scene.input = {};
 
 
 /**
+ * @param {canvasfx.event.EventType} eventType The type of the event.
  * @constructor
  * @extends {canvasfx.event.Event}
  */
-canvasfx.scene.input.InputEvent = function() {
+canvasfx.scene.input.InputEvent = function(eventType) {
     canvasfx.event.Event.call(this);
+
+    /**
+     * @protected
+     * @type {canvasfx.event.EventType}
+     */
+    this.eventType = eventType;
 };
 canvasfx.inherit(canvasfx.scene.input.InputEvent, canvasfx.event.Event);
 
 
 /**
+ * @param {canvasfx.event.EventType} eventType The type of the event.
  * @param {number} x Horizontal position of the event relative
  *     to the origin of the MouseEvent's source.
  * @param {number} y Vertical position of the event relative
@@ -28,8 +36,8 @@ canvasfx.inherit(canvasfx.scene.input.InputEvent, canvasfx.event.Event);
  * @constructor
  * @extends {canvasfx.scene.input.InputEvent}
  */
-canvasfx.scene.input.MouseEvent = function(x, y) {
-    canvasfx.scene.input.InputEvent.call(this);
+canvasfx.scene.input.MouseEvent = function(eventType, x, y) {
+    canvasfx.scene.input.InputEvent.call(this, eventType);
 
     /**
      * @private
@@ -42,22 +50,9 @@ canvasfx.scene.input.MouseEvent = function(x, y) {
      * @type {number}
      */
     this.y_ = y;
-
-    /**
-     * @private
-     * @type {canvasfx.event.EventType}
-     */
-    this.eventType_ = null;
 };
 canvasfx.inherit(canvasfx.scene.input.MouseEvent,
     canvasfx.scene.input.InputEvent);
-
-/**
- * @return {canvasfx.event.EventType} eventType
- */
-canvasfx.scene.input.MouseEvent.prototype.getEventType = function() {
-    return this.eventType_;
-};
 
 /**
  * @return {number} Horizontal position of the event relative
@@ -73,13 +68,6 @@ canvasfx.scene.input.MouseEvent.prototype.getX = function() {
  */
 canvasfx.scene.input.MouseEvent.prototype.getY = function() {
     return this.y_;
-};
-
-/**
- * @param {canvasfx.event.EventType} eventType
- */
-canvasfx.scene.input.MouseEvent.prototype.setEventType = function(eventType) {
-    this.eventType_ = eventType;
 };
 
 /**

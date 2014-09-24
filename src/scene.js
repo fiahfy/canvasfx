@@ -63,14 +63,14 @@ canvasfx.scene.Scene.prototype.getHeight = function() {
 };
 
 /**
- * @return {canvasfx.event.EventListener}
+ * @return {canvasfx.event.EventHandler}
  */
 canvasfx.scene.Scene.prototype.getOnMouseClicked = function() {
     return this.onMouseClicked_;
 };
 
 /**
- * @return {canvasfx.event.EventListener}
+ * @return {canvasfx.event.EventHandler}
  */
 canvasfx.scene.Scene.prototype.getOnMouseDragged = function() {
     return this.onMouseDragged_;
@@ -203,14 +203,14 @@ canvasfx.scene.Node.prototype.getLayoutY = function() {
 };
 
 /**
- * @return {canvasfx.event.EventListener}
+ * @return {canvasfx.event.EventHandler}
  */
 canvasfx.scene.Node.prototype.getOnMouseClicked = function() {
     return this.onMouseClicked;
 };
 
 /**
- * @return {canvasfx.event.EventListener}
+ * @return {canvasfx.event.EventHandler}
  */
 canvasfx.scene.Node.prototype.getOnMouseDragged = function() {
     return this.onMouseDragged;
@@ -229,11 +229,13 @@ canvasfx.scene.Node.prototype.getOpacity = function() {
 canvasfx.scene.Node.prototype.handleEvent = function(event) {
     if (this.contains(event.getX(), event.getY())) {
         if (this.onMouseClicked &&
-            event.getEventType() == canvasfx.scene.input.MouseEvent.MOUSE_CLICKED) {
+            event.getEventType() ==
+                canvasfx.scene.input.MouseEvent.MOUSE_CLICKED) {
             this.onMouseClicked.handle(event);
         }
         if (this.onMouseDragged &&
-            event.getEventType() == canvasfx.scene.input.MouseEvent.MOUSE_DRAGGED) {
+            event.getEventType() ==
+                canvasfx.scene.input.MouseEvent.MOUSE_DRAGGED) {
             this.onMouseDragged.handle(event);
         }
     }
