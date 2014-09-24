@@ -57,31 +57,31 @@ canvasfx.scene.shape.Shape = function() {
 canvasfx.inherit(canvasfx.scene.shape.Shape, canvasfx.scene.Node);
 
 /**
- * @param {?canvasfx.scene.paint.Color} color Fill color.
+ * @param {?canvasfx.scene.paint.Color} value Fill color.
  */
-canvasfx.scene.shape.Shape.prototype.setFill = function(color) {
-    this.fill = color;
+canvasfx.scene.shape.Shape.prototype.setFill = function(value) {
+    this.fill = value;
 };
 
 /**
- * @param {?canvasfx.scene.paint.Color} color Stroke color.
+ * @param {?canvasfx.scene.paint.Color} value Stroke color.
  */
-canvasfx.scene.shape.Shape.prototype.setStroke = function(color) {
-    this.stroke = color;
+canvasfx.scene.shape.Shape.prototype.setStroke = function(value) {
+    this.stroke = value;
 };
 
 /**
- * @param {canvasfx.scene.shape.StrokeType} type Stroke type.
+ * @param {canvasfx.scene.shape.StrokeType} value Stroke type.
  */
-canvasfx.scene.shape.Shape.prototype.setStrokeType = function(type) {
-    this.strokeType = type;
+canvasfx.scene.shape.Shape.prototype.setStrokeType = function(value) {
+    this.strokeType = value;
 };
 
 /**
- * @param {number} width Stroke width.
+ * @param {number} value Stroke width.
  */
-canvasfx.scene.shape.Shape.prototype.setStrokeWidth = function(width) {
-    this.strokeWidth = width;
+canvasfx.scene.shape.Shape.prototype.setStrokeWidth = function(value) {
+    this.strokeWidth = value;
 };
 
 
@@ -221,24 +221,24 @@ canvasfx.scene.shape.Circle.prototype.getRadius = function() {
 };
 
 /**
- * @param {number} centerX
+ * @param {number} value
  */
-canvasfx.scene.shape.Circle.prototype.setCenterX = function(centerX) {
-    this.centerX = centerX;
+canvasfx.scene.shape.Circle.prototype.setCenterX = function(value) {
+    this.centerX = value;
 };
 
 /**
- * @param {number} centerY
+ * @param {number} value
  */
-canvasfx.scene.shape.Circle.prototype.setCenterY = function(centerY) {
-    this.centerY = centerY;
+canvasfx.scene.shape.Circle.prototype.setCenterY = function(value) {
+    this.centerY = value;
 };
 
 /**
- * @param {number} radius
+ * @param {number} value
  */
-canvasfx.scene.shape.Circle.prototype.setRadius = function(radius) {
-    this.radius = radius;
+canvasfx.scene.shape.Circle.prototype.setRadius = function(value) {
+    this.radius = value;
 };
 
 
@@ -396,31 +396,31 @@ canvasfx.scene.shape.Rectangle.prototype.getY = function() {
 };
 
 /**
- * @param {number} height
+ * @param {number} value
  */
-canvasfx.scene.shape.Rectangle.prototype.setHeight = function(height) {
-    this.height = height;
+canvasfx.scene.shape.Rectangle.prototype.setHeight = function(value) {
+    this.height = value;
 };
 
 /**
- * @param {number} width
+ * @param {number} value
  */
-canvasfx.scene.shape.Rectangle.prototype.setWidth = function(width) {
-    this.width = width;
+canvasfx.scene.shape.Rectangle.prototype.setWidth = function(value) {
+    this.width = value;
 };
 
 /**
- * @param {number} x
+ * @param {number} value
  */
-canvasfx.scene.shape.Rectangle.prototype.setX = function(x) {
-    this.x = x;
+canvasfx.scene.shape.Rectangle.prototype.setX = function(value) {
+    this.x = value;
 };
 
 /**
- * @param {number} y
+ * @param {number} value
  */
-canvasfx.scene.shape.Rectangle.prototype.setY = function(y) {
-    this.y = y;
+canvasfx.scene.shape.Rectangle.prototype.setY = function(value) {
+    this.y = value;
 };
 
 
@@ -566,29 +566,29 @@ canvasfx.scene.shape.Line.prototype.getStartY = function() {
 };
 
 /**
- * @param {number} endX
+ * @param {number} value
  */
-canvasfx.scene.shape.Line.prototype.setEndX = function(endX) {
-    this.endX = endX;
+canvasfx.scene.shape.Line.prototype.setEndX = function(value) {
+    this.endX = value;
 };
 
 /**
- * @param {number} endY
+ * @param {number} value
  */
-canvasfx.scene.shape.Line.prototype.setEndY = function(endY) {
-    this.endY = endY;
+canvasfx.scene.shape.Line.prototype.setEndY = function(value) {
+    this.endY = value;
 };
 
 /**
- * @param {number} startX
+ * @param {number} value
  */
-canvasfx.scene.shape.Line.prototype.seStartX = function(startX) {
-    this.startX = startX;
+canvasfx.scene.shape.Line.prototype.seStartX = function(value) {
+    this.startX = value;
 };
 
 /**
- * @param {number} startY
+ * @param {number} value
  */
-canvasfx.scene.shape.Line.prototype.seStartY = function(startY) {
-    this.startY = startY;
+canvasfx.scene.shape.Line.prototype.seStartY = function(value) {
+    this.startY = value;
 };

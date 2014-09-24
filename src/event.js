@@ -58,7 +58,7 @@ canvasfx.event.Event = function() {
 canvasfx.inherit(canvasfx.event.Event, canvasfx.Object);
 
 /**
- * @return {canvasfx.event.EventType} eventType
+ * @return {canvasfx.event.EventType}
  */
 canvasfx.event.Event.prototype.getEventType = function() {
     return this.eventType;
@@ -66,10 +66,10 @@ canvasfx.event.Event.prototype.getEventType = function() {
 
 /**
  * @protected
- * @param {canvasfx.event.EventType} eventType
+ * @param {canvasfx.event.EventType} value
  */
-canvasfx.event.Event.prototype.setEventType = function(eventType) {
-    this.eventType = eventType;
+canvasfx.event.Event.prototype.setEventType = function(value) {
+    this.eventType = value;
 };
 
 /**

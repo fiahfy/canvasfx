@@ -54,17 +54,17 @@ canvasfx.geometry.Point.prototype.add = function(x, y) {
 };
 
 /**
- * @param {number|canvasfx.geometry.Point} x The x coordinate of other point
+ * @param {number|canvasfx.geometry.Point} x1 The x coordinate of other point
  *     or the other point.
- * @param {number=} y The y coordinate of other point.
+ * @param {number=} y1 The y coordinate of other point.
  * @return {number} The distance between this point and the specified point.
  */
-canvasfx.geometry.Point.prototype.distance = function(x, y) {
-    if (x instanceof canvasfx.geometry.Point) {
-        y = x.getY();
-        x = x.getX();
+canvasfx.geometry.Point.prototype.distance = function(x1, y1) {
+    if (x1 instanceof canvasfx.geometry.Point) {
+        y1 = x1.getY();
+        x1 = x1.getX();
     }
-    return Math.sqrt(Math.pow(this.x_ - x, 2) + Math.pow(this.y_ - y, 2));
+    return Math.sqrt(Math.pow(this.x_ - x1, 2) + Math.pow(this.y_ - y1, 2));
 };
 
 /**
