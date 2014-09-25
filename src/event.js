@@ -2,7 +2,7 @@
 
 
 /**
- * @fileoverview Provides basic framework, their delivery and handling.
+ * @fileoverview xxx
  */
 
 
@@ -10,8 +10,8 @@ canvasfx.event = {};
 
 
 /**
- * @constructor
  * @param {string=} name
+ * @constructor
  * @extends {canvasfx.Object}
  */
 canvasfx.event.EventType = function(name) {
@@ -123,6 +123,6 @@ canvasfx.event.EventHandler = function() {
 canvasfx.inherit(canvasfx.event.EventHandler, canvasfx.event.EventListener);
 
 /**
- * @param {canvasfx.event.Event} event The event which occurred.
+ * @param {canvasfx.event.Event} event
  */
 canvasfx.event.EventHandler.prototype.handle = canvasfx.abstractMethod;

@@ -2,8 +2,7 @@
 
 
 /**
- * @fileoverview Provides the set of classes
- * for ease of use transition based animations.
+ * @fileoverview xxx
  */
 
 
@@ -11,8 +10,7 @@ canvasfx.animation = {};
 
 
 /**
- * @param {number=} targetFramerate The custom target frame rate
- *     for this Animation.
+ * @param {number=} targetFramerate
  * @constructor
  * @extends {canvasfx.Object}
  */
@@ -161,8 +159,7 @@ canvasfx.animation.Animation.prototype.stop = function() {
 
 
 /**
- * @param {...canvasfx.animation.KeyFrame} var_args The keyframes
- *     of this Timeline.
+ * @param {...canvasfx.animation.KeyFrame} var_args
  * @constructor
  * @extends {canvasfx.animation.Animation}
  */
@@ -191,6 +188,7 @@ canvasfx.animation.Timeline.prototype.getKeyFrames = function() {
 };
 
 /**
+ * @override
  */
 canvasfx.animation.Timeline.prototype.pause = function() {
     this.animations_.forEach(function(element) {
@@ -199,6 +197,7 @@ canvasfx.animation.Timeline.prototype.pause = function() {
 };
 
 /**
+ * @override
  */
 canvasfx.animation.Timeline.prototype.play = function() {
     var me = this;
@@ -221,6 +220,7 @@ canvasfx.animation.Timeline.prototype.play = function() {
 };
 
 /**
+ * @override
  */
 canvasfx.animation.Timeline.prototype.stop = function() {
     this.animations_.forEach(function(element) {
@@ -230,8 +230,8 @@ canvasfx.animation.Timeline.prototype.stop = function() {
 
 
 /**
- * @param {canvasfx.util.Duration} time The time.
- * @param {canvasfx.event.EventHandler} onFinished The onFinished-handler.
+ * @param {canvasfx.util.Duration} time
+ * @param {canvasfx.event.EventHandler} onFinished
  * @constructor
  * @extends {canvasfx.Object}
  */
@@ -257,19 +257,27 @@ canvasfx.inherit(canvasfx.animation.KeyFrame, canvasfx.Object);
  */
 canvasfx.animation.KeyFrame.prototype.getOnFinished = function() {
     return this.onFinished_;
-}
+};
 
 /**
  * @return {canvasfx.util.Duration}
  */
 canvasfx.animation.KeyFrame.prototype.getTime = function() {
     return this.time_;
-}
+};
 
 
 /**
- * The class AnimationTimer allows to create a timer,
- * that is called in each frame while it is active.
+ * @constructor
+ * @extends {canvasfx.animation.Animation}
+ */
+canvasfx.animation.Transition = function() {
+    canvasfx.Object.call(this);
+};
+canvasfx.inherit(canvasfx.animation.Transition, canvasfx.animation.Animation);
+
+
+/**
  * @constructor
  * @extends {canvasfx.Object}
  */
@@ -277,7 +285,6 @@ canvasfx.animation.AnimationTimer = function() {
     canvasfx.Object.call(this);
 
     /**
-     * Timer id
      * @private
      * @type {number}
      */
@@ -286,7 +293,7 @@ canvasfx.animation.AnimationTimer = function() {
 canvasfx.inherit(canvasfx.animation.AnimationTimer, canvasfx.Object);
 
 /**
- * @param {number} now The timestamp of the current frame given in milliseconds.
+ * @param {number} now
  */
 canvasfx.animation.AnimationTimer.prototype.handle = canvasfx.abstractMethod;
 
@@ -316,7 +323,7 @@ canvasfx.animation.AnimationTimer.prototype.stop = function() {
 /**
  * @const
  * @private
- * @return {Function} Enable request animation frame func.
+ * @return {Function}
  */
 canvasfx.animation.AnimationTimer.requestAnimationFrame_ = function() {
     return window.requestAnimationFrame ||
@@ -333,7 +340,7 @@ canvasfx.animation.AnimationTimer.requestAnimationFrame_ = function() {
 /**
  * @const
  * @private
- * @return {Function} Enable cancel animation frame func.
+ * @return {Function}
  */
 canvasfx.animation.AnimationTimer.cancelAnimationFrame_ = function() {
     return window.cancelAnimationFrame ||

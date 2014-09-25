@@ -27,28 +27,24 @@ canvasfx.scene.shape.Shape = function() {
     canvasfx.scene.Node.call(this);
 
     /**
-     * Fill color
      * @protected
      * @type {?canvasfx.scene.paint.Color}
      */
     this.fill = null;
 
     /**
-     * Stroke color
      * @protected
      * @type {?canvasfx.scene.paint.Color}
      */
     this.stroke = null;
 
     /**
-     * Stroke width
      * @protected
      * @type {number}
      */
     this.strokeWidth = 1.0;
 
     /**
-     * Stroke type
      * @protected
      * @type {canvasfx.scene.shape.StrokeType}
      */
@@ -57,28 +53,84 @@ canvasfx.scene.shape.Shape = function() {
 canvasfx.inherit(canvasfx.scene.shape.Shape, canvasfx.scene.Node);
 
 /**
- * @param {?canvasfx.scene.paint.Color} value Fill color.
+ * @protected
+ * @return {?canvasfx.scene.paint.Color}
+ */
+canvasfx.scene.shape.Shape.prototype.getCurrentFill = function() {
+    if (!this.fill) {
+        return null;
+    }
+    return canvasfx.scene.paint.Color.color(
+        this.fill.getRed(), this.fill.getGreen(), this.fill.getBlue(),
+        this.fill.getOpacity() * this.opacity
+    );
+};
+
+/**
+ * @protected
+ * @return {?canvasfx.scene.paint.Color}
+ */
+canvasfx.scene.shape.Shape.prototype.getCurrentStroke = function() {
+    if (!this.stroke) {
+        return null;
+    }
+    return canvasfx.scene.paint.Color.color(
+        this.stroke.getRed(), this.stroke.getGreen(), this.stroke.getBlue(),
+        this.stroke.getOpacity() * this.opacity
+    );
+};
+
+/**
+ * @return {?canvasfx.scene.paint.Color}
+ */
+canvasfx.scene.shape.Shape.prototype.getFill = function() {
+    return this.fill;
+};
+
+/**
+ * @return {?canvasfx.scene.paint.Color}
+ */
+canvasfx.scene.shape.Shape.prototype.getStroke = function() {
+    return this.stroke;
+};
+
+/**
+ * @return {canvasfx.scene.shape.StrokeType}
+ */
+canvasfx.scene.shape.Shape.prototype.getStrokeType = function() {
+    return this.strokeType;
+};
+
+/**
+ * @return {number}
+ */
+canvasfx.scene.shape.Shape.prototype.getStrokeWidth = function() {
+    return this.strokeWidth;
+};
+
+/**
+ * @param {?canvasfx.scene.paint.Color} value
  */
 canvasfx.scene.shape.Shape.prototype.setFill = function(value) {
     this.fill = value;
 };
 
 /**
- * @param {?canvasfx.scene.paint.Color} value Stroke color.
+ * @param {?canvasfx.scene.paint.Color} value
  */
 canvasfx.scene.shape.Shape.prototype.setStroke = function(value) {
     this.stroke = value;
 };
 
 /**
- * @param {canvasfx.scene.shape.StrokeType} value Stroke type.
+ * @param {canvasfx.scene.shape.StrokeType} value
  */
 canvasfx.scene.shape.Shape.prototype.setStrokeType = function(value) {
     this.strokeType = value;
 };
 
 /**
- * @param {number} value Stroke width.
+ * @param {number} value
  */
 canvasfx.scene.shape.Shape.prototype.setStrokeWidth = function(value) {
     this.strokeWidth = value;
@@ -86,9 +138,9 @@ canvasfx.scene.shape.Shape.prototype.setStrokeWidth = function(value) {
 
 
 /**
- * @param {number=} centerX Center position x.
- * @param {number=} centerY Center position y.
- * @param {number=} radius Radius.
+ * @param {number=} centerX
+ * @param {number=} centerY
+ * @param {number=} radius
  * @constructor
  * @extends {canvasfx.scene.Shape}
  */
@@ -100,21 +152,18 @@ canvasfx.scene.shape.Circle = function(centerX, centerY, radius) {
     radius = canvasfx.supplement(radius, 0.0);
 
     /**
-     * Center x
      * @protected
      * @type {number}
      */
     this.centerX = centerX;
 
     /**
-     * Center y
      * @protected
      * @type {number}
      */
     this.centerY = centerY;
 
     /**
-     * Radius
      * @protected
      * @type {number}
      */
@@ -128,6 +177,7 @@ canvasfx.inherit(canvasfx.scene.shape.Circle, canvasfx.scene.shape.Shape);
  * @param {number|canvasfx.geometry.Point} x
  * @param {number=} y
  * @return {boolean}
+ * @override
  */
 canvasfx.scene.shape.Circle.prototype.contains = function(x, y) {
     var point = new canvasfx.geometry.Point(
@@ -137,14 +187,14 @@ canvasfx.scene.shape.Circle.prototype.contains = function(x, y) {
 };
 
 /**
- * @param {CanvasRenderingContext2D} context Canvas DOM element.
+ * @param {CanvasRenderingContext2D} context
  * @override
  */
 canvasfx.scene.shape.Circle.prototype.draw = function(context) {
-    if (this.fill) {
+    if (this.getCurrentFill()) {
         context.beginPath();
-        context.fillStyle = this.fill.getWeb();
-        context.globalAlpha = this.fill.getOpacity();
+        context.fillStyle = this.getCurrentFill().getWeb();
+        context.globalAlpha = this.getCurrentFill().getOpacity();
         context.arc(
             parseInt(this.getCurrentCenterX()),
             parseInt(this.getCurrentCenterY()),
@@ -154,10 +204,10 @@ canvasfx.scene.shape.Circle.prototype.draw = function(context) {
         context.fill();
     }
 
-    if (this.stroke) {
+    if (this.getCurrentStroke()) {
         context.beginPath();
-        context.strokeStyle = this.stroke.getWeb();
-        context.globalAlpha = this.stroke.getOpacity();
+        context.strokeStyle = this.getCurrentStroke().getWeb();
+        context.globalAlpha = this.getCurrentStroke().getOpacity();
         context.lineWidth = this.strokeWidth;
 
         var offset = 0;
@@ -243,10 +293,10 @@ canvasfx.scene.shape.Circle.prototype.setRadius = function(value) {
 
 
 /**
- * @param {number=} x Position x.
- * @param {number=} y Position y.
- * @param {number=} width Size width.
- * @param {number=} height Size height.
+ * @param {number=} x
+ * @param {number=} y
+ * @param {number=} width
+ * @param {number=} height
  * @constructor
  * @extends {canvasfx.scene.Shape}
  */
@@ -259,28 +309,24 @@ canvasfx.scene.shape.Rectangle = function(x, y, width, height) {
     height = canvasfx.supplement(height, 0.0);
 
     /**
-     * Position x
      * @protected
      * @type {number}
      */
     this.x = x;
 
     /**
-     * Position y
      * @protected
      * @type {number}
      */
     this.y = y;
 
     /**
-     * Width
      * @protected
      * @type {number}
      */
     this.width = width;
 
     /**
-     * Height
      * @protected
      * @type {number}
      */
@@ -294,6 +340,7 @@ canvasfx.inherit(canvasfx.scene.shape.Rectangle, canvasfx.scene.shape.Shape);
  * @param {number|canvasfx.geometry.Point} x
  * @param {number=} y
  * @return {boolean}
+ * @override
  */
 canvasfx.scene.shape.Rectangle.prototype.contains = function(x, y) {
     if (x instanceof canvasfx.geometry.Dimension) {
@@ -305,13 +352,13 @@ canvasfx.scene.shape.Rectangle.prototype.contains = function(x, y) {
 };
 
 /**
- * @param {CanvasRenderingContext2D} context Canvas DOM element.
+ * @param {CanvasRenderingContext2D} context
  * @override
  */
 canvasfx.scene.shape.Rectangle.prototype.draw = function(context) {
-    if (this.fill) {
-        context.fillStyle = this.fill.getWeb();
-        context.globalAlpha = this.fill.getOpacity();
+    if (this.getCurrentFill()) {
+        context.fillStyle = this.getCurrentFill().getWeb();
+        context.globalAlpha = this.getCurrentFill().getOpacity();
         context.fillRect(
             parseInt(this.getCurrentX()),
             parseInt(this.getCurrentY()),
@@ -320,9 +367,9 @@ canvasfx.scene.shape.Rectangle.prototype.draw = function(context) {
         );
     }
 
-    if (this.stroke) {
-        context.strokeStyle = this.stroke.getWeb();
-        context.globalAlpha = this.stroke.getOpacity();
+    if (this.getCurrentStroke()) {
+        context.strokeStyle = this.getCurrentStroke().getWeb();
+        context.globalAlpha = this.getCurrentStroke().getOpacity();
         context.lineWidth = this.strokeWidth;
 
         var offsetPosition = 0;
@@ -425,10 +472,10 @@ canvasfx.scene.shape.Rectangle.prototype.setY = function(value) {
 
 
 /**
- * @param {number=} startX Start position x.
- * @param {number=} startY Start position y.
- * @param {number=} endX End position x.
- * @param {number=} endY End position y.
+ * @param {number=} startX
+ * @param {number=} startY
+ * @param {number=} endX
+ * @param {number=} endY
  * @constructor
  * @extends {canvasfx.scene.Shape}
  */
@@ -441,28 +488,24 @@ canvasfx.scene.shape.Line = function(startX, startY, endX, endY) {
     endY = canvasfx.supplement(endY, 0.0);
 
     /**
-     * Start position x
      * @protected
      * @type {number}
      */
     this.startX = startX;
 
     /**
-     * Start position y
      * @protected
      * @type {number}
      */
     this.startY = startY;
 
     /**
-     * End position x
      * @protected
      * @type {number}
      */
     this.endX = endX;
 
     /**
-     * End position y
      * @protected
      * @type {number}
      */
@@ -476,33 +519,34 @@ canvasfx.inherit(canvasfx.scene.shape.Line, canvasfx.scene.shape.Shape);
  * @param {number|canvasfx.geometry.Point} x
  * @param {number=} y
  * @return {boolean}
+ * @override
  */
 canvasfx.scene.shape.Line.prototype.contains = function(x, y) {
     return false;
 };
 
 /**
- * @param {CanvasRenderingContext2D} context Canvas DOM element.
+ * @param {CanvasRenderingContext2D} context
  * @override
  */
 canvasfx.scene.shape.Line.prototype.draw = function(context) {
-    if (this.stroke === null) return;
+    if (this.getCurrentStroke()) {
+        context.beginPath();
+        context.strokeStyle = this.getCurrentStroke().getWeb();
+        context.globalAlpha = this.getCurrentStroke().getOpacity();
+        context.lineWidth = this.strokeWidth;
 
-    context.beginPath();
-    context.strokeStyle = this.stroke.getWeb();
-    context.globalAlpha = this.stroke.getOpacity();
-    context.lineWidth = this.strokeWidth;
-
-    var offset = 0.5 * (this.strokeWidth % 2);
-    context.moveTo(
-        parseInt(this.getCurrentStartX()) + offset,
-        parseInt(this.getCurrentStartY()) + offset
-    );
-    context.lineTo(
-        parseInt(this.getCurrentEndX()) + offset,
-        parseInt(this.getCurrentEndY()) + offset
-    );
-    context.stroke();
+        var offset = 0.5 * (this.strokeWidth % 2);
+        context.moveTo(
+            parseInt(this.getCurrentStartX()) + offset,
+            parseInt(this.getCurrentStartY()) + offset
+        );
+        context.lineTo(
+            parseInt(this.getCurrentEndX()) + offset,
+            parseInt(this.getCurrentEndY()) + offset
+        );
+        context.stroke();
+    }
 };
 
 /**

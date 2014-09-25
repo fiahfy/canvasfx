@@ -10,7 +10,7 @@ canvasfx.util = {};
 
 
 /**
- * @param {number} millis Create a new instance with milliseconds.
+ * @param {number} millis
  * @constructor
  * @extends {canvasfx.Object}
  */
@@ -18,7 +18,6 @@ canvasfx.util.Duration = function(millis) {
     canvasfx.Object.call(this);
 
     /**
-     * milliseconds
      * @private
      * @type {number}
      */
@@ -121,6 +120,7 @@ canvasfx.util.Duration.ONE = new canvasfx.util.Duration(1);
 canvasfx.util.Duration.ZERO = new canvasfx.util.Duration(0);
 
 /**
+ * @const
  * @param {number} h
  * @return {canvasfx.util.Duration}
  */
@@ -129,6 +129,7 @@ canvasfx.util.Duration.hours = function(h) {
 };
 
 /**
+ * @const
  * @param {number} ms
  * @return {canvasfx.util.Duration}
  */
@@ -137,6 +138,7 @@ canvasfx.util.Duration.millis = function(ms) {
 };
 
 /**
+ * @const
  * @param {number} m
  * @return {canvasfx.util.Duration}
  */
@@ -145,6 +147,7 @@ canvasfx.util.Duration.minutes = function(m) {
 };
 
 /**
+ * @const
  * @param {number} s
  * @return {canvasfx.util.Duration}
  */

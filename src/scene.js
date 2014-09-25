@@ -2,7 +2,7 @@
 
 
 /**
- * @fileoverview Provides the core set of base classes for Scene Graph API.
+ * @fileoverview xxx
  */
 
 
@@ -10,10 +10,9 @@ canvasfx.scene = {};
 
 
 /**
- * The Scene class is the container for all content in a scene graph.
- * @param {canvasfx.scene.Node} root The root node of the scene graph.
- * @param {number=} width The width of the scene.
- * @param {number=} height The height of the scene.
+ * @param {canvasfx.scene.Node} root
+ * @param {number=} width
+ * @param {number=} height
  * @constructor
  * @extends {canvasfx.Object}
  */
@@ -21,21 +20,18 @@ canvasfx.scene.Scene = function(root, width, height) {
     canvasfx.Object.call(this);
 
     /**
-     * The root node of the scene graph.
      * @private
      * @type {canvasfx.scene.Node}
      */
     this.root_ = root;
 
     /**
-     * The width of the scene.
      * @private
      * @type {number}
      */
     this.width_ = width;
 
     /**
-     * The height of the scene.
      * @private
      * @type {number}
      */
@@ -56,7 +52,7 @@ canvasfx.scene.Scene = function(root, width, height) {
 canvasfx.inherit(canvasfx.scene.Scene, canvasfx.Object);
 
 /**
- * @return {number} The height of this Scene.
+ * @return {number}
  */
 canvasfx.scene.Scene.prototype.getHeight = function() {
     return this.height_;
@@ -77,14 +73,14 @@ canvasfx.scene.Scene.prototype.getOnMouseDragged = function() {
 };
 
 /**
- * @return {canvasfx.scene.Node} The root node of the scene graph.
+ * @return {canvasfx.scene.Node}
  */
 canvasfx.scene.Scene.prototype.getRoot = function() {
     return this.root_;
 };
 
 /**
- * @return {number} The width of this Scene.
+ * @return {number}
  */
 canvasfx.scene.Scene.prototype.getWidth = function() {
     return this.width_;
@@ -99,11 +95,13 @@ canvasfx.scene.Scene.prototype.handleEvent = function(event) {
     if (0 <= event.getX() && event.getX() <= this.width_ &&
         0 <= event.getY() && event.getY() <= this.height_) {
         if (this.onMouseClicked_ &&
-            event.getEventType() == canvasfx.scene.input.MouseEvent.MOUSE_CLICKED) {
+            event.getEventType() ==
+                canvasfx.scene.input.MouseEvent.MOUSE_CLICKED) {
             this.onMouseClicked_.handle(event);
         }
         if (this.onMouseDragged_ &&
-            event.getEventType() == canvasfx.scene.input.MouseEvent.MOUSE_DRAGGED) {
+            event.getEventType() ==
+                canvasfx.scene.input.MouseEvent.MOUSE_DRAGGED) {
             this.onMouseDragged_.handle(event);
         }
     }
@@ -184,7 +182,7 @@ canvasfx.inherit(canvasfx.scene.Node, canvasfx.Object);
 canvasfx.scene.Node.prototype.contains = canvasfx.abstractMethod;
 
 /**
- * @param {CanvasRenderingContext2D} context Canvas DOM element.
+ * @param {CanvasRenderingContext2D} context
  */
 canvasfx.scene.Node.prototype.draw = canvasfx.abstractMethod;
 
@@ -278,7 +276,7 @@ canvasfx.scene.Node.prototype.setOpacity = function(value) {
 
 
 /**
- * @param {...canvasfx.scene.Node} var_args Child nodes
+ * @param {...canvasfx.scene.Node} var_args
  * @constructor
  * @extends {canvasfx.scene.Node}
  */
@@ -298,6 +296,7 @@ canvasfx.inherit(canvasfx.scene.Group, canvasfx.scene.Node);
  * @param {number} x
  * @param {number} y
  * @return {boolean}
+ * @override
  */
 canvasfx.scene.Group.prototype.contains = function(x, y) {
     return this.children_.some(function(element) {
@@ -306,7 +305,7 @@ canvasfx.scene.Group.prototype.contains = function(x, y) {
 };
 
 /**
- * @param {CanvasRenderingContext2D} context Canvas DOM element.
+ * @param {CanvasRenderingContext2D} context
  * @override
  */
 canvasfx.scene.Group.prototype.draw = function(context) {
@@ -316,7 +315,7 @@ canvasfx.scene.Group.prototype.draw = function(context) {
 };
 
 /**
- * @return {Array} Child nodes.
+ * @return {Array}
  */
 canvasfx.scene.Group.prototype.getChildren = function() {
     return this.children_;
@@ -346,6 +345,7 @@ canvasfx.scene.Group.prototype.setLayoutY = function(value) {
 
 /**
  * @param {canvasfx.scene.input.MouseEvent} event
+ * @override
  */
 canvasfx.scene.Group.prototype.handleEvent = function(event) {
     this.children_.forEach(function(element) {

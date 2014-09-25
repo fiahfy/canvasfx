@@ -47,8 +47,8 @@ canvasfx.inherit = function(child, parent) {
 };
 
 /**
- * @param {*} value Argument value.
- * @param {*=} defaultValue Default value if argument value is undefined.
+ * @param {*} value
+ * @param {*=} defaultValue
  * @return {*}
  */
 canvasfx.supplement = function(value, defaultValue) {
@@ -77,7 +77,6 @@ canvasfx.loadApplication = function(application) {
 };
 
 /**
- * For abstract method
  */
 canvasfx.abstractMethod = function() {};
 
@@ -136,7 +135,7 @@ canvasfx.Object = function() {
 };
 
 /**
- * @return {Object} Cloned object.
+ * @return {Object}
  */
 canvasfx.Object.prototype.clone = function() {
     var clone = {};

@@ -2,9 +2,7 @@
 
 
 /**
- * @fileoverview Provides the set of classes for colors
- * and gradients used to fill shapes
- * and backgrounds when rendering the scene graph.
+ * @fileoverview xxx
  */
 
 
@@ -12,14 +10,10 @@ canvasfx.scene.paint = {};
 
 
 /**
- * The Color class is used to encapsulate colors
- * in the default sRGB color space.
- * @param {number|string=} red Red component ranging from 0 to 1
- *     or the name or numeric representation of the color
- *     in one of the supported formats
- * @param {number=} green Green component ranging from 0 to 1.
- * @param {number=} blue Blue component ranging from 0 to 1.
- * @param {number=} opacity Opacity ranging from 0 to 1.
+ * @param {number|string=} red
+ * @param {number=} green
+ * @param {number=} blue
+ * @param {number=} opacity
  * @constructor
  * @extends {canvasfx.Object}
  */
@@ -46,28 +40,24 @@ canvasfx.scene.paint.Color = function(red, green, blue, opacity) {
     }
 
     /**
-     * Red component ranging from 0 to 1.
      * @private
      * @type {number}
      */
     this.red_ = (red <= 1) ? red : red / 255;
 
     /**
-     * Green component ranging from 0 to 1.
      * @private
      * @type {number}
      */
     this.green_ = (green <= 1) ? green : green / 255;
 
     /**
-     * Blue component ranging from 0 to 1.
      * @private
      * @type {number}
      */
     this.blue_ = (blue <= 1) ? blue : blue / 255;
 
     /**
-     * Opacity ranging from 0 to 1.
      * @private
      * @type {number}
      */
@@ -76,37 +66,35 @@ canvasfx.scene.paint.Color = function(red, green, blue, opacity) {
 canvasfx.inherit(canvasfx.scene.paint.Color, canvasfx.Object);
 
 /**
- * @return {number} The blue component of the Color, in the range 0.0-1.0.
+ * @return {number}
  */
 canvasfx.scene.paint.Color.prototype.getBlue = function() {
     return this.blue_;
 };
 
 /**
- * @return {number} The green component of the Color, in the range 0.0-1.0.
+ * @return {number}
  */
 canvasfx.scene.paint.Color.prototype.getGreen = function() {
     return this.green_;
 };
 
 /**
- * @return {number} The opacity of the Color, in the range 0.0-1.0.
+ * @return {number}
  */
 canvasfx.scene.paint.Color.prototype.getOpacity = function() {
     return this.opacity_;
 };
 
 /**
- * @return {number} The red component of the Color, in the range 0.0-1.0.
+ * @return {number}
  */
 canvasfx.scene.paint.Color.prototype.getRed = function() {
     return this.red_;
 };
 
 /**
- * @const
- * @return {string} The numeric representation of the color
- *     in one of the supported formats
+ * @return {string}
  */
 canvasfx.scene.paint.Color.prototype.getWeb = function() {
     return '#' +
@@ -117,11 +105,11 @@ canvasfx.scene.paint.Color.prototype.getWeb = function() {
 
 /**
  * @const
- * @param {number} red Red component ranging from 0 to 1.
- * @param {number} green Green component ranging from 0 to 1.
- * @param {number} blue Blue component ranging from 0 to 1.
- * @param {number=} opacity Opacity ranging from 0 to 1.
- * @return {canvasfx.scene.paint.Color} The Color.
+ * @param {number} red
+ * @param {number} green
+ * @param {number} blue
+ * @param {number=} opacity
+ * @return {canvasfx.scene.paint.Color}
  */
 canvasfx.scene.paint.Color.color = function(red, green, blue, opacity) {
     return new canvasfx.scene.paint.Color(red, green, blue, opacity);
@@ -129,11 +117,11 @@ canvasfx.scene.paint.Color.color = function(red, green, blue, opacity) {
 
 /**
  * @const
- * @param {number} red The red component, in the range 0-255.
- * @param {number} green The green component, in the range 0-255.
- * @param {number} blue The blue component, in the range 0-255.
- * @param {number=} opacity The opacity component, in the range 0.0-1.0.
- * @return {canvasfx.scene.paint.Color} The Color.
+ * @param {number} red
+ * @param {number} green
+ * @param {number} blue
+ * @param {number=} opacity
+ * @return {canvasfx.scene.paint.Color}
  */
 canvasfx.scene.paint.Color.rgb = function(red, green, blue, opacity) {
     return new canvasfx.scene.paint.Color(red, green, blue, opacity);
@@ -141,9 +129,8 @@ canvasfx.scene.paint.Color.rgb = function(red, green, blue, opacity) {
 
 /**
  * @const
- * @param {string} colorString The name or numeric representation of the color
- *     in one of the supported formats.
- * @return {canvasfx.scene.paint.Color} The Color.
+ * @param {string} colorString
+ * @return {canvasfx.scene.paint.Color}
  */
 canvasfx.scene.paint.Color.web = function(colorString) {
     return new canvasfx.scene.paint.Color(colorString);

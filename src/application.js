@@ -2,7 +2,7 @@
 
 
 /**
- * @fileoverview Application class from which applications extend.
+ * @fileoverview xxx
  */
 
 
@@ -33,7 +33,6 @@ canvasfx.application.Application = function() {
 canvasfx.inherit(canvasfx.application.Application, canvasfx.Object);
 
 /**
- * @param {canvasfx.stage.Stage} stage The primary stage for this application,
- *     onto which the application scene can be set.
+ * @param {canvasfx.stage.Stage} primaryStage
  */
 canvasfx.application.Application.prototype.start = canvasfx.abstractMethod;

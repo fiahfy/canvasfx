@@ -2,7 +2,7 @@
 
 
 /**
- * @fileoverview Provides the top-level container classes.
+ * @fileoverview xxx
  */
 
 
@@ -10,8 +10,7 @@ canvasfx.stage = {};
 
 
 /**
- * The top level container.
- * @param {string} id Target DOM id.
+ * @param {string} id
  * @constructor
  * @extends {canvasfx.Object}
  */
@@ -25,43 +24,38 @@ canvasfx.stage.Stage = function(id) {
     this.element_ = window.document.getElementById(id);
 
     /**
-     * Canvas DOM element.
      * @private
      * @type {HTMLElement}
      */
     this.canvas_ = document.createElement('canvas');
 
     /**
-     * Canvas context.
      * @private
      * @type {CanvasRenderingContext2D}
      */
     this.context_ = this.canvas_.getContext('2d');
 
     /**
-     * Specify the scene to be used on this stage.
      * @private
      * @type {canvasfx.scene.Scene}
      */
     this.scene_ = null;
 
     /**
-     * The width of this Stage.
-     * @type {number}
      * @private
+     * @type {number}
      */
     this.width_ = this.element_.offsetWidth;
 
     /**
-     * The height of this Stage.
-     * @type {number}
      * @private
+     * @type {number}
      */
     this.height_ = this.element_.offsetHeight;
 
     /**
-     * @type {boolean}
      * @private
+     * @type {boolean}
      */
     this.isShow_ = false;
 
@@ -72,22 +66,21 @@ canvasfx.stage.Stage = function(id) {
 canvasfx.inherit(canvasfx.stage.Stage, canvasfx.Object);
 
 /**
- * @return {number} The width of this Scene.
+ * @return {number}
  */
 canvasfx.stage.Stage.prototype.getWidth = function() {
     return this.width_;
 };
 
 /**
- * @return {number} The height of this Scene.
+ * @return {number}
  */
 canvasfx.stage.Stage.prototype.getHeight = function() {
     return this.height_;
 };
 
 /**
- * @param {canvasfx.scene.Scene} value Specify the scene
- *     to be used on this stage.
+ * @param {canvasfx.scene.Scene} value
  */
 canvasfx.stage.Stage.prototype.setScene = function(value) {
     this.scene_ = value;

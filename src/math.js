@@ -8,6 +8,7 @@
 
 canvasfx.math = {};
 
+
 /**
  * @constructor
  * @extends {canvasfx.Object}

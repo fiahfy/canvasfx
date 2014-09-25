@@ -2,8 +2,7 @@
 
 
 /**
- * @fileoverview Provides the set of classes for mouse and keyboard
- * input event handling.
+ * @fileoverview xxx
  */
 
 
@@ -11,7 +10,7 @@ canvasfx.scene.input = {};
 
 
 /**
- * @param {canvasfx.event.EventType} eventType The type of the event.
+ * @param {canvasfx.event.EventType} eventType
  * @constructor
  * @extends {canvasfx.event.Event}
  */
@@ -28,11 +27,9 @@ canvasfx.inherit(canvasfx.scene.input.InputEvent, canvasfx.event.Event);
 
 
 /**
- * @param {canvasfx.event.EventType} eventType The type of the event.
- * @param {number} x Horizontal position of the event relative
- *     to the origin of the MouseEvent's source.
- * @param {number} y Vertical position of the event relative
- *     to the origin of the MouseEvent's source.
+ * @param {canvasfx.event.EventType} eventType
+ * @param {number} x
+ * @param {number} y
  * @constructor
  * @extends {canvasfx.scene.input.InputEvent}
  */
@@ -55,16 +52,14 @@ canvasfx.inherit(canvasfx.scene.input.MouseEvent,
     canvasfx.scene.input.InputEvent);
 
 /**
- * @return {number} Horizontal position of the event relative
- *     to the origin of the MouseEvent's source.
+ * @return {number}
  */
 canvasfx.scene.input.MouseEvent.prototype.getX = function() {
     return this.x_;
 };
 
 /**
- * @return {number} Vertical position of the event relative
- *     to the origin of the MouseEvent's source.
+ * @return {number}
  */
 canvasfx.scene.input.MouseEvent.prototype.getY = function() {
     return this.y_;
