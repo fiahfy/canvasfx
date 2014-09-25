@@ -98,6 +98,7 @@ test.App.prototype.start = function(stage) {
     })().start();
 */
 
+/*
     var timeline2 = new canvasfx.animation.Timeline(
         new canvasfx.animation.KeyFrame(
             new canvasfx.util.Duration(2000),
@@ -148,6 +149,13 @@ test.App.prototype.start = function(stage) {
     );
     timeline.play();
     console.log(Date.now(), 's');
+*/
+
+    var ft = new canvasfx.animation.FadeTransition();
+    ft.setDuration(canvasfx.util.Duration.seconds(3));
+    ft.setNode(circle);
+    ft.setToValue(0.1);
+    ft.play();
 
     stage.show();
 };

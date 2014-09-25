@@ -18,28 +18,28 @@ canvasfx.animation.Animation = function(targetFramerate) {
     canvasfx.Object.call(this);
 
     /**
-     * @private
+     * @protected
      * @type {canvasfx.util.Duration}
      */
-    this.currentTime_ = canvasfx.util.Duration.ZERO;
+    this.currentTime = canvasfx.util.Duration.ZERO;
 
     /**
-     * @private
+     * @protected
      * @type {canvasfx.util.Duration}
      */
-    this.delay_ = canvasfx.util.Duration.ZERO;
+    this.delay = canvasfx.util.Duration.ZERO;
 
     /**
-     * @private
+     * @protected
      * @type {canvasfx.event.EventHandler}
      */
-    this.onFinished_ = null;
+    this.onFinished = null;
 
     /**
-     * @private
+     * @protected
      * @type {canvasfx.animation.Animation.Status}
      */
-    this.status_ = canvasfx.animation.Animation.Status.STOPPED;
+    this.status = canvasfx.animation.Animation.Status.STOPPED;
 
     /**
      * @private
@@ -62,40 +62,40 @@ canvasfx.animation.Animation.Status = {
  * @return {canvasfx.util.Duration}
  */
 canvasfx.animation.Animation.prototype.getCurrentTime = function() {
-    return this.currentTime_;
+    return this.currentTime;
 };
 
 /**
  * @return {canvasfx.util.Duration}
  */
 canvasfx.animation.Animation.prototype.getDelay = function() {
-    return this.delay_;
+    return this.delay;
 };
 
 /**
  * @return {canvasfx.event.EventHandler}
  */
 canvasfx.animation.Animation.prototype.getOnFinished = function() {
-    return this.onFinished_;
+    return this.onFinished;
 };
 
 /**
  */
 canvasfx.animation.Animation.prototype.pause = function() {
-    if (this.status_ != canvasfx.animation.Animation.Status.RUNNING) {
+    if (this.status != canvasfx.animation.Animation.Status.RUNNING) {
         return;
     }
-    this.status_ = canvasfx.animation.Animation.Status.PAUSED;
+    this.status = canvasfx.animation.Animation.Status.PAUSED;
 };
 
 /**
  * @todo private access
  */
 canvasfx.animation.Animation.prototype.play = function() {
-    if (this.status_ == canvasfx.animation.Animation.Status.RUNNING) {
+    if (this.status == canvasfx.animation.Animation.Status.RUNNING) {
         return;
     }
-    this.status_ = canvasfx.animation.Animation.Status.RUNNING;
+    this.status = canvasfx.animation.Animation.Status.RUNNING;
 
     if (this.timer_) {
         return;
@@ -110,15 +110,19 @@ canvasfx.animation.Animation.prototype.play = function() {
             delta = now - beforeTime;
             beforeTime = now;
 
-            if (me.status_ == canvasfx.animation.Animation.Status.RUNNING) {
-                me.currentTime_ =
-                    me.currentTime_.add(new canvasfx.util.Duration(delta));
+            if (me.status == canvasfx.animation.Animation.Status.RUNNING) {
+                me.currentTime =
+                    me.currentTime.add(new canvasfx.util.Duration(delta));
+                if (me.currentTime.greaterThan(me.delay)) {
+                    me.currentTime = me.delay;
+                }
+                me.update();
             }
 
-            if (me.currentTime_.greaterThanOrEqualTo(me.delay_)) {
+            if (me.currentTime.greaterThanOrEqualTo(me.delay)) {
                 var event = new canvasfx.event.ActionEvent();
-                if (me.onFinished_) {
-                    me.onFinished_.handle(event);
+                if (me.onFinished) {
+                    me.onFinished.handle(event);
                 }
                 t.stop();
                 me.stop();
@@ -133,28 +137,34 @@ canvasfx.animation.Animation.prototype.play = function() {
  * @param {canvasfx.util.Duration} value
  */
 canvasfx.animation.Animation.prototype.setDelay = function(value) {
-    this.delay_ = value;
+    this.delay = value;
 };
 
 /**
  * @param {canvasfx.event.EventListener} value
  */
 canvasfx.animation.Animation.prototype.setOnFinished = function(value) {
-    this.onFinished_ = value;
+    this.onFinished = value;
 };
+
+/**
+ * @protected
+ */
+canvasfx.animation.Animation.prototype.update = function() {};
+
 
 /**
  */
 canvasfx.animation.Animation.prototype.stop = function() {
-    if (this.status_ != canvasfx.animation.Animation.Status.RUNNING) {
+    if (this.status != canvasfx.animation.Animation.Status.RUNNING) {
         return;
     }
-    this.status_ = canvasfx.animation.Animation.Status.STOPPED;
+    this.status = canvasfx.animation.Animation.Status.STOPPED;
     if (this.timer_) {
         this.timer_.stop();
         this.timer_ = null;
     }
-    this.currentTime_ = canvasfx.util.Duration.ZERO;
+    this.currentTime = canvasfx.util.Duration.ZERO;
 };
 
 
@@ -204,7 +214,7 @@ canvasfx.animation.Timeline.prototype.play = function() {
     this.keyFrames_.forEach(function(element, index) {
         var animation = me.animations_[index];
         if (animation &&
-            animation.status_ != canvasfx.animation.Animation.Status.STOPPED) {
+            animation.status != canvasfx.animation.Animation.Status.STOPPED) {
             //
         } else {
             animation = new canvasfx.animation.Animation();
@@ -227,6 +237,11 @@ canvasfx.animation.Timeline.prototype.stop = function() {
         element.stop();
     });
 };
+
+/**
+ * @override
+ */
+canvasfx.animation.Timeline.prototype.update = function() {};
 
 
 /**
@@ -272,9 +287,179 @@ canvasfx.animation.KeyFrame.prototype.getTime = function() {
  * @extends {canvasfx.animation.Animation}
  */
 canvasfx.animation.Transition = function() {
-    canvasfx.Object.call(this);
+    canvasfx.animation.Animation.call(this);
 };
 canvasfx.inherit(canvasfx.animation.Transition, canvasfx.animation.Animation);
+
+
+/**
+ * @param {canvasfx.util.Duration=} duration
+ * @param {canvasfx.scene.Node=} node
+ * @constructor
+ * @extends {canvasfx.animation.Transition}
+ */
+canvasfx.animation.FadeTransition = function(duration, node) {
+    canvasfx.animation.Transition.call(this);
+
+    duration = canvasfx.supplement(duration, new canvasfx.util.Duration(400));
+
+    /**
+     * @private
+     * @type {canvasfx.util.Duration}
+     */
+    this.duration_ = duration;
+
+    /**
+     * @private
+     * @type {?canvasfx.scene.Node}
+     */
+    this.node_ = node;
+
+    /**
+     * @private
+     * @type {number}
+     */
+    this.byValue_ = 0.0;
+
+    /**
+     * @private
+     * @type {number|NaN}
+     */
+    this.fromValue_ = NaN;
+
+    /**
+     * @private
+     * @type {number|NaN}
+     */
+    this.toValue_ = NaN;
+
+    /**
+     * @private
+     * @type {number|NaN}
+     */
+    this.start_ = NaN;
+
+    /**
+     * @private
+     * @type {number|NaN}
+     */
+    this.end_ = NaN;
+};
+canvasfx.inherit(canvasfx.animation.FadeTransition,
+    canvasfx.animation.Transition);
+
+/**
+ * @return {number}
+ */
+canvasfx.animation.FadeTransition.prototype.getByValue = function() {
+    return this.byValue_;
+};
+
+/**
+ * @return {canvasfx.util.Duration}
+ */
+canvasfx.animation.FadeTransition.prototype.getDuration = function() {
+    return this.duration_;
+};
+
+/**
+ * @return {number|NaN}
+ */
+canvasfx.animation.FadeTransition.prototype.getFromValue = function() {
+    return this.fromValue_;
+};
+
+/**
+ * @return {canvasfx.scene.Node}
+ */
+canvasfx.animation.FadeTransition.prototype.getNode = function() {
+    return this.node_;
+};
+
+/**
+ * @return {number|NaN}
+ */
+canvasfx.animation.FadeTransition.prototype.getToValue = function() {
+    return this.toValue_;
+};
+
+/**
+ * @override
+ */
+canvasfx.animation.FadeTransition.prototype.play = function() {
+    this.start_ = NaN;
+    this.end_ = NaN;
+
+    if (!this.node_) {
+        return;
+    }
+
+    this.start_ = this.fromValue_;
+    if (isNaN(this.start_)) {
+        this.start_ = this.node_.getOpacity();
+    }
+    this.end_ = this.toValue_;
+    if (isNaN(this.end_)) {
+        if (!this.byValue_) {
+            return;
+        }
+        this.end_ = this.start_ + this.byValue_;
+    }
+
+    this.delay = this.duration_;
+
+    canvasfx.animation.Animation.prototype.play.call(this);
+}
+
+/**
+ * @param {number} value
+ */
+canvasfx.animation.FadeTransition.prototype.setByValue = function(value) {
+    this.byValue_ = value;
+};
+
+/**
+ * @param {canvasfx.util.Duration} value
+ */
+canvasfx.animation.FadeTransition.prototype.setDuration = function(value) {
+    this.duration_ = value;
+};
+
+/**
+ * @param {number|NaN} value
+ */
+canvasfx.animation.FadeTransition.prototype.setFromValue = function(value) {
+    this.fromValue_ = value;
+};
+
+/**
+ * @param {canvasfx.scene.Node} value
+ */
+canvasfx.animation.FadeTransition.prototype.setNode = function(value) {
+    this.node_ = value;
+};
+
+/**
+ * @param {number|NaN} value
+ */
+canvasfx.animation.FadeTransition.prototype.setToValue = function(value) {
+    this.toValue_ = value;
+};
+
+/**
+ * @override
+ */
+canvasfx.animation.FadeTransition.prototype.update = function() {
+    if (!this.node_ || isNaN(this.start_) || isNaN(this.end_)) {
+        return;
+    }
+
+    var opacity = this.start_ -
+        this.start_ * this.currentTime.toMillis() / this.duration_.toMillis() +
+        this.end_ * this.currentTime.toMillis() / this.duration_.toMillis();
+
+    this.node_.setOpacity(opacity);
+};
 
 
 /**

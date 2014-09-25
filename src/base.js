@@ -78,7 +78,7 @@ canvasfx.loadApplication = function(application) {
 
 /**
  */
-canvasfx.abstractMethod = function() {};
+canvasfx.abstractMethod = function() { console.log(arguments.callee.caller); };
 
 /**
  * @private
