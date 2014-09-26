@@ -61,8 +61,8 @@ test.App.prototype.start = function(stage) {
     scene.setOnMouseDragged((function() {
         var e = new canvasfx.event.EventHandler();
         e.handle = function(event) {
-            circle.setLayoutX(event.getX() - circle.getCenterX());
-            circle.setLayoutY(event.getY() - circle.getCenterX());
+            circle.setTranslateX(event.getX() - circle.getCenterX());
+            circle.setTranslateY(event.getY() - circle.getCenterX());
         };
         return e;
     })());
@@ -150,12 +150,24 @@ test.App.prototype.start = function(stage) {
     timeline.play();
     console.log(Date.now(), 's');
 */
-
+/*
     var ft = new canvasfx.animation.FadeTransition();
-    ft.setDuration(canvasfx.util.Duration.seconds(3));
+    ft.setDuration(canvasfx.util.Duration.seconds(0.5));
     ft.setNode(circle);
+    ft.setCycleCount(3);
+    ft.setAutoReverse(true);
     ft.setToValue(0.1);
     ft.play();
+    */
+
+    var tt = new canvasfx.animation.TranslateTransition();
+    tt.setDuration(canvasfx.util.Duration.seconds(0.5));
+    tt.setNode(circle);
+    tt.setCycleCount(3);
+    tt.setAutoReverse(true);
+    tt.setToX(100);
+    tt.setToY(50);
+    tt.play();
 
     stage.show();
 };

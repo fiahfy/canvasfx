@@ -191,6 +191,8 @@ canvasfx.scene.shape.Circle.prototype.contains = function(x, y) {
  * @override
  */
 canvasfx.scene.shape.Circle.prototype.draw = function(context) {
+    context.setTransform(1, 0, 0, 1, 0, 0);
+
     if (this.getCurrentFill()) {
         context.beginPath();
         context.fillStyle = this.getCurrentFill().getWeb();
@@ -252,7 +254,7 @@ canvasfx.scene.shape.Circle.prototype.getCenterY = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Circle.prototype.getCurrentCenterX = function() {
-    return this.centerX + this.layoutX;
+    return this.centerX + this.layoutX + this.translateX;
 };
 
 /**
@@ -260,7 +262,7 @@ canvasfx.scene.shape.Circle.prototype.getCurrentCenterX = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Circle.prototype.getCurrentCenterY = function() {
-    return this.centerY + this.layoutY;
+    return this.centerY + this.layoutY + this.translateY;
 };
 
 /**
@@ -356,6 +358,8 @@ canvasfx.scene.shape.Rectangle.prototype.contains = function(x, y) {
  * @override
  */
 canvasfx.scene.shape.Rectangle.prototype.draw = function(context) {
+    context.setTransform(1, 0, 0, 1, 0, 0);
+
     if (this.getCurrentFill()) {
         context.fillStyle = this.getCurrentFill().getWeb();
         context.globalAlpha = this.getCurrentFill().getOpacity();
@@ -403,7 +407,7 @@ canvasfx.scene.shape.Rectangle.prototype.draw = function(context) {
  * @return {number}
  */
 canvasfx.scene.shape.Rectangle.prototype.getCurrentX = function() {
-    return this.x + this.layoutX;
+    return this.x + this.layoutX + this.translateX;
 };
 
 /**
@@ -411,7 +415,7 @@ canvasfx.scene.shape.Rectangle.prototype.getCurrentX = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Rectangle.prototype.getCurrentY = function() {
-    return this.y + this.layoutY;
+    return this.y + this.layoutY + this.translateY;
 };
 
 /**
@@ -530,6 +534,8 @@ canvasfx.scene.shape.Line.prototype.contains = function(x, y) {
  * @override
  */
 canvasfx.scene.shape.Line.prototype.draw = function(context) {
+    context.setTransform(1, 0, 0, 1, 0, 0);
+
     if (this.getCurrentStroke()) {
         context.beginPath();
         context.strokeStyle = this.getCurrentStroke().getWeb();
@@ -554,7 +560,7 @@ canvasfx.scene.shape.Line.prototype.draw = function(context) {
  * @return {number}
  */
 canvasfx.scene.shape.Line.prototype.getCurrentEndX = function() {
-    return this.endX + this.layoutX;
+    return this.endX + this.layoutX + this.translateX;
 };
 
 /**
@@ -562,7 +568,7 @@ canvasfx.scene.shape.Line.prototype.getCurrentEndX = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Line.prototype.getCurrentEndY = function() {
-    return this.endY + this.layoutY;
+    return this.endY + this.layoutY + this.translateY;
 };
 
 /**
@@ -570,7 +576,7 @@ canvasfx.scene.shape.Line.prototype.getCurrentEndY = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Line.prototype.getCurrentStartX = function() {
-    return this.startX + this.layoutX;
+    return this.startX + this.layoutX + this.translateX;
 };
 
 /**
@@ -578,7 +584,7 @@ canvasfx.scene.shape.Line.prototype.getCurrentStartX = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Line.prototype.getCurrentStartY = function() {
-    return this.startY + this.layoutY;
+    return this.startY + this.layoutY + this.translateY;
 };
 
 /**

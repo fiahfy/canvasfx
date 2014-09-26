@@ -159,6 +159,18 @@ canvasfx.scene.Node = function() {
      * @protected
      * @type {number}
      */
+    this.translateX = 0.0;
+
+    /**
+     * @protected
+     * @type {number}
+     */
+    this.translateY = 0.0;
+
+    /**
+     * @protected
+     * @type {number}
+     */
     this.opacity = 1.0;
 
     /**
@@ -222,6 +234,20 @@ canvasfx.scene.Node.prototype.getOpacity = function() {
 };
 
 /**
+ * @return {number}
+ */
+canvasfx.scene.Node.prototype.getTranslateX = function() {
+    return this.translateX;
+};
+
+/**
+ * @return {number}
+ */
+canvasfx.scene.Node.prototype.getTranslateY = function() {
+    return this.translateY;
+};
+
+/**
  * @param {canvasfx.scene.input.MouseEvent} event
  */
 canvasfx.scene.Node.prototype.handleEvent = function(event) {
@@ -272,6 +298,20 @@ canvasfx.scene.Node.prototype.setOnMouseDragged = function(value) {
  */
 canvasfx.scene.Node.prototype.setOpacity = function(value) {
     this.opacity = value;
+};
+
+/**
+ * @param {number} value
+ */
+canvasfx.scene.Node.prototype.setTranslateX = function(value) {
+    this.translateX = value;
+};
+
+/**
+ * @param {number} value
+ */
+canvasfx.scene.Node.prototype.setTranslateY = function(value) {
+    this.translateY = value;
 };
 
 
