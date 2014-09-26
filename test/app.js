@@ -51,17 +51,22 @@ test.App.prototype.start = function(stage) {
         children.push(x);
     }
 
-    var l = new canvasfx.scene.shape.Line(100, 200, 200, 300);
+    var l = new canvasfx.scene.shape.Line(100, 200, 100, 300);
     l.setStrokeWidth(2);
     l.setStroke(new canvasfx.scene.paint.Color(1, 0, 0, 1));
+    //l.setRotate(45);
+    //l.setScaleX(1);
+    //l.setScaleY(2);
     //l.setRotate(90);
 
-    var circle = new canvasfx.scene.shape.Circle(150, 150, 50);
+    var circle = new canvasfx.scene.shape.Circle(250, 150, 50);
     circle.setFill(new canvasfx.scene.paint.Color(1, 0, 0, 0.7));
     circle.setStroke(new canvasfx.scene.paint.Color(0, 1, 0, 1));
     circle.setStrokeWidth(2);
     circle.setStrokeType(canvasfx.scene.shape.StrokeType.CENTERED);
-    circle.setRotate(45);
+    //circle.setRotate(45);
+    //circle.setScaleX(1);
+    //circle.setScaleY(2);
 
 
     var rectangle = new canvasfx.scene.shape.Rectangle(100, 100, 100, 100);
@@ -69,16 +74,23 @@ test.App.prototype.start = function(stage) {
     rectangle.setStroke(new canvasfx.scene.paint.Color(1, 0, 0, 1));
     rectangle.setStrokeWidth(2);
     rectangle.setStrokeType(canvasfx.scene.shape.StrokeType.CENTERED);
-    rectangle.setRotate(10);
-    var group = new canvasfx.scene.Group(rectangle);
+    //rectangle.setTranslateX(10);
+    //rectangle.setRotate(45);
+    //rectangle.setScaleX(2);
+
+    var group = new canvasfx.scene.Group(rectangle, l, circle);
+    //children.push(rectangle, l, circle);
+    //group.setTranslateX(10);
+    //group.setRotate(45);
+    //group.setScaleX(2);
     children.push(group);
 
 
     scene.setOnMouseDragged((function() {
         var e = new canvasfx.event.EventHandler();
         e.handle = function(event) {
-            circle.setTranslateX(event.getX() - circle.getCenterX());
-            circle.setTranslateY(event.getY() - circle.getCenterX());
+            group.setTranslateX(event.getX() - 200);
+            group.setTranslateY(event.getY() - 200);
         };
         return e;
     })());
@@ -178,7 +190,7 @@ test.App.prototype.start = function(stage) {
 
     var tt = new canvasfx.animation.TranslateTransition();
     tt.setDuration(canvasfx.util.Duration.seconds(3));
-    tt.setNode(rectangle);
+    tt.setNode(group);
     //tt.setCycleCount(3);
     //tt.setAutoReverse(true);
     //tt.setToX(100);
@@ -189,7 +201,7 @@ test.App.prototype.start = function(stage) {
 
     var rt = new canvasfx.animation.RotateTransition();
     rt.setDuration(canvasfx.util.Duration.seconds(3));
-    rt.setNode(rectangle);
+    rt.setNode(group);
     rt.setByAngle(360);
     rt.play();
 

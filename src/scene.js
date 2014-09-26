@@ -177,6 +177,18 @@ canvasfx.scene.Node = function() {
      * @protected
      * @type {number}
      */
+    this.scaleX = 1.0;
+
+    /**
+     * @protected
+     * @type {number}
+     */
+    this.scaleY = 1.0;
+
+    /**
+     * @protected
+     * @type {number}
+     */
     this.opacity = 1.0;
 
     /**
@@ -190,6 +202,12 @@ canvasfx.scene.Node = function() {
      * @type {canvasfx.event.EventHandler}
      */
     this.onMouseDragged = null;
+
+    /**
+     * @protected
+     * @type {canvasfx.scene.Parent}
+     */
+    this.parent = null;
 };
 canvasfx.inherit(canvasfx.scene.Node, canvasfx.Object);
 
@@ -245,12 +263,32 @@ canvasfx.scene.Node.prototype.getOpacity = function() {
 };
 
 /**
+ * @return {canvasfx.scene.Parent}
+ */
+canvasfx.scene.Node.prototype.getParent = function() {
+    return this.parent;
+};
+
+/**
  * @return {number}
  */
 canvasfx.scene.Node.prototype.getRotate = function() {
     return this.rotate;
 };
 
+/**
+ * @return {number}
+ */
+canvasfx.scene.Node.prototype.getScaleX = function() {
+    return this.scaleX;
+};
+
+/**
+ * @return {number}
+ */
+canvasfx.scene.Node.prototype.getScaleY = function() {
+    return this.scaleY;
+};
 /**
  * @return {number}
  */
@@ -328,6 +366,20 @@ canvasfx.scene.Node.prototype.setRotate = function(value) {
 /**
  * @param {number} value
  */
+canvasfx.scene.Node.prototype.setScaleX = function(value) {
+    this.scaleX = value;
+};
+
+/**
+ * @param {number} value
+ */
+canvasfx.scene.Node.prototype.setScaleY = function(value) {
+    this.scaleY = value;
+};
+
+/**
+ * @param {number} value
+ */
 canvasfx.scene.Node.prototype.setTranslateX = function(value) {
     this.translateX = value;
 };
@@ -339,14 +391,69 @@ canvasfx.scene.Node.prototype.setTranslateY = function(value) {
     this.translateY = value;
 };
 
+/**
+ * @param {CanvasRenderingContext2D} context
+ * @protected
+ */
+canvasfx.scene.Node.prototype.transform = function(context) {
+    if (this.parent) {
+        this.parent.transform(context);
+    }
+
+    var lb = this.getLayoutBounds();
+    var plb;
+    if (!this.parent) {
+        plb = new canvasfx.geometry.Bounds(0, 0, 0, 0);
+    } else {
+        plb = this.parent.getLayoutBounds();
+    }
+    context.transform(
+        1, 0, 0, 1,
+        parseInt(lb.getMinX() + lb.getWidth() / 2 -
+            plb.getMinX() - plb.getWidth() / 2),
+        parseInt(lb.getMinY() + lb.getHeight() / 2 -
+            plb.getMinY() - plb.getHeight() / 2)
+    );
+
+    // translate
+    context.transform(
+        1, 0, 0, 1,
+        parseInt(this.translateX + this.layoutX),
+        parseInt(this.translateY + this.layoutY)
+    );
+    // rotate
+    context.transform(
+        Math.cos(this.rotate * Math.PI / 180),
+        Math.sin(this.rotate * Math.PI / 180),
+        -Math.sin(this.rotate * Math.PI / 180),
+        Math.cos(this.rotate * Math.PI / 180),
+        0, 0
+    );
+    // scale
+    context.transform(
+        this.scaleX, 0, 0,
+        this.scaleY, 0, 0
+    );
+};
+
+
+/**
+ * @constructor
+ * @extends {canvasfx.scene.Node}
+ */
+canvasfx.scene.Parent = function() {
+    canvasfx.scene.Node.call(this);
+};
+canvasfx.inherit(canvasfx.scene.Parent, canvasfx.scene.Node);
+
 
 /**
  * @param {...canvasfx.scene.Node} var_args
  * @constructor
- * @extends {canvasfx.scene.Node}
+ * @extends {canvasfx.scene.Parent}
  */
 canvasfx.scene.Group = function(var_args) {
-    canvasfx.scene.Node.call(this);
+    canvasfx.scene.Parent.call(this);
 
     /**
      * Child nodes
@@ -355,7 +462,7 @@ canvasfx.scene.Group = function(var_args) {
      */
     this.children_ = Array.prototype.slice.call(arguments);
 };
-canvasfx.inherit(canvasfx.scene.Group, canvasfx.scene.Node);
+canvasfx.inherit(canvasfx.scene.Group, canvasfx.scene.Parent);
 
 /**
  * @param {number} x
@@ -372,9 +479,12 @@ canvasfx.scene.Group.prototype.contains = function(x, y) {
 /**
  * @param {CanvasRenderingContext2D} context
  * @override
+ * @todo Set parent
  */
 canvasfx.scene.Group.prototype.draw = function(context) {
+    var me = this;
     this.children_.forEach(function(element) {
+        element.parent = me;
         element.draw(context);
     });
 };
@@ -387,27 +497,75 @@ canvasfx.scene.Group.prototype.getChildren = function() {
 };
 
 /**
- * @param {number} value
- * @override
+ * @return {canvasfx.geometry.Bounds}
  */
-canvasfx.scene.Group.prototype.setLayoutX = function(value) {
-    this.layoutX = value;
+canvasfx.scene.Group.prototype.getLayoutBounds = function() {
+    var minXArray = [];
+    var minYArray = [];
+    var maxXArray = [];
+    var maxYArray = [];
     this.children_.forEach(function(element) {
-        element.setLayoutX(value);
+        var lb = element.getLayoutBounds();
+        minXArray.push(lb.getMinX());
+        minYArray.push(lb.getMinY());
+        maxXArray.push(lb.getMaxX());
+        maxYArray.push(lb.getMaxY());
     });
+    var minX = Math.min.apply(null, minXArray);
+    var minY = Math.min.apply(null, minYArray);
+    var maxX = Math.max.apply(null, maxXArray);
+    var maxY = Math.max.apply(null, maxYArray);
+    return new canvasfx.geometry.Bounds(minX, minY, maxX - minX, maxY - minY);
 };
 
 /**
  * @param {number} value
  * @override
  */
+/*
+canvasfx.scene.Group.prototype.setLayoutX = function(value) {
+    this.layoutX = value;
+    this.children_.forEach(function(element) {
+        element.setLayoutX(value);
+    });
+};
+ */
+/**
+ * @param {number} value
+ * @override
+ */
+/*
 canvasfx.scene.Group.prototype.setLayoutY = function(value) {
     this.layoutY = value;
     this.children_.forEach(function(element) {
         element.setLayoutY(value);
     });
 };
-
+ */
+/**
+ * @param {number} value
+ * @override
+ */
+/*
+canvasfx.scene.Group.prototype.setTranslateX = function(value) {
+    this.translateX = value;
+    this.children_.forEach(function(element) {
+        element.setTranslateX(value);
+    });
+};
+ */
+/**
+ * @param {number} value
+ * @override
+ */
+/*
+canvasfx.scene.Group.prototype.setTranslateY = function(value) {
+    this.translateY = value;
+    this.children_.forEach(function(element) {
+        element.setTranslateY(value);
+    });
+};
+*/
 /**
  * @param {canvasfx.scene.input.MouseEvent} event
  * @override

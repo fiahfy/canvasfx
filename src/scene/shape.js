@@ -196,10 +196,7 @@ canvasfx.scene.shape.Circle.prototype.draw = function(context) {
         context.fillStyle = this.getCurrentFill().getWeb();
         context.globalAlpha = this.getCurrentFill().getOpacity();
         context.setTransform(1, 0, 0, 1, 0, 0);
-        context.translate(
-            parseInt(this.getCurrentCenterX()),
-            parseInt(this.getCurrentCenterY())
-        );
+        this.transform(context);
         context.arc(
             0, 0, this.radius,
             0, Math.PI * 2, false
@@ -228,10 +225,7 @@ canvasfx.scene.shape.Circle.prototype.draw = function(context) {
         }
 
         context.setTransform(1, 0, 0, 1, 0, 0);
-        context.translate(
-            parseInt(this.getCurrentCenterX()),
-            parseInt(this.getCurrentCenterY())
-        );
+        this.transform(context);
         context.arc(
             0, 0, this.radius + offset,
             0, Math.PI * 2, false
@@ -378,11 +372,7 @@ canvasfx.scene.shape.Rectangle.prototype.draw = function(context) {
         context.fillStyle = this.getCurrentFill().getWeb();
         context.globalAlpha = this.getCurrentFill().getOpacity();
         context.setTransform(1, 0, 0, 1, 0, 0);
-        context.translate(
-            parseInt(this.getCurrentX() + this.width / 2),
-            parseInt(this.getCurrentY() + this.height / 2)
-        );
-        context.rotate(this.rotate * Math.PI / 180);
+        this.transform(context);
         context.fillRect(
             parseInt(-this.width / 2),
             parseInt(-this.height / 2),
@@ -415,13 +405,12 @@ canvasfx.scene.shape.Rectangle.prototype.draw = function(context) {
         }
 
         context.setTransform(1, 0, 0, 1, 0, 0);
-        context.translate(
-            parseInt(this.getCurrentX() + this.width / 2) +
+        context.transform(
+            1, 0, 0, 1,
                 offsetSize / 2 + offsetPosition,
-            parseInt(this.getCurrentY() + this.height / 2) +
                 offsetSize / 2 + offsetPosition
         );
-        context.rotate(this.rotate * Math.PI / 180);
+        this.transform(context);
         context.strokeRect(
             parseInt(-this.width / 2) - offsetSize / 2,
             parseInt(-this.height / 2) - offsetSize / 2,
@@ -459,7 +448,7 @@ canvasfx.scene.shape.Rectangle.prototype.getHeight = function() {
  * @override
  */
 canvasfx.scene.shape.Rectangle.prototype.getLayoutBounds = function() {
-    return new canvasfx.canvasfx.geometry.Bounds(
+    return new canvasfx.geometry.Bounds(
         this.x, this.y, this.width, this.height
     );
 };
@@ -584,13 +573,8 @@ canvasfx.scene.shape.Line.prototype.draw = function(context) {
         var lb = this.getLayoutBounds();
 
         context.setTransform(1, 0, 0, 1, 0, 0);
-        context.translate(
-            parseInt(lb.getMinX() + lb.getWidth() / 2 +
-                this.layoutX + this.translateX) + offset,
-            parseInt(lb.getMinY() + lb.getHeight() / 2 +
-                this.layoutY + this.translateY) + offset
-        );
-        context.rotate(this.rotate * Math.PI / 180);
+        context.transform(1, 0, 0, 1, offset, offset);
+        this.transform(context);
         context.moveTo(
             parseInt(this.startX - lb.getMinX() - lb.getWidth() / 2),
             parseInt(this.startY - lb.getMinY() - lb.getHeight() / 2)
