@@ -51,10 +51,26 @@ test.App.prototype.start = function(stage) {
         children.push(x);
     }
 
-    var circle = new canvasfx.scene.shape.Circle(0, 0, 100);
-    circle.setFill(new canvasfx.scene.paint.Color(1, 0, 0, 0.5));
-    var rectangle = new canvasfx.scene.shape.Rectangle(0, 0, 10, 10);
-    var group = new canvasfx.scene.Group(circle, rectangle);
+    var l = new canvasfx.scene.shape.Line(100, 200, 200, 300);
+    l.setStrokeWidth(2);
+    l.setStroke(new canvasfx.scene.paint.Color(1, 0, 0, 1));
+    //l.setRotate(90);
+
+    var circle = new canvasfx.scene.shape.Circle(150, 150, 50);
+    circle.setFill(new canvasfx.scene.paint.Color(1, 0, 0, 0.7));
+    circle.setStroke(new canvasfx.scene.paint.Color(0, 1, 0, 1));
+    circle.setStrokeWidth(2);
+    circle.setStrokeType(canvasfx.scene.shape.StrokeType.CENTERED);
+    circle.setRotate(45);
+
+
+    var rectangle = new canvasfx.scene.shape.Rectangle(100, 100, 100, 100);
+    rectangle.setFill(new canvasfx.scene.paint.Color(0, 0, 0, 1));
+    rectangle.setStroke(new canvasfx.scene.paint.Color(1, 0, 0, 1));
+    rectangle.setStrokeWidth(2);
+    rectangle.setStrokeType(canvasfx.scene.shape.StrokeType.CENTERED);
+    rectangle.setRotate(10);
+    var group = new canvasfx.scene.Group(rectangle);
     children.push(group);
 
 
@@ -158,16 +174,24 @@ test.App.prototype.start = function(stage) {
     ft.setAutoReverse(true);
     ft.setToValue(0.1);
     ft.play();
-    */
+*/
 
     var tt = new canvasfx.animation.TranslateTransition();
-    tt.setDuration(canvasfx.util.Duration.seconds(0.5));
-    tt.setNode(circle);
-    tt.setCycleCount(3);
-    tt.setAutoReverse(true);
-    tt.setToX(100);
-    tt.setToY(50);
+    tt.setDuration(canvasfx.util.Duration.seconds(3));
+    tt.setNode(rectangle);
+    //tt.setCycleCount(3);
+    //tt.setAutoReverse(true);
+    //tt.setToX(100);
+    //tt.setToY(50);
+    tt.setByX(100);
     tt.play();
+
+
+    var rt = new canvasfx.animation.RotateTransition();
+    rt.setDuration(canvasfx.util.Duration.seconds(3));
+    rt.setNode(rectangle);
+    rt.setByAngle(360);
+    rt.play();
 
     stage.show();
 };

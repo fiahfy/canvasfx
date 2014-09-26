@@ -191,16 +191,17 @@ canvasfx.scene.shape.Circle.prototype.contains = function(x, y) {
  * @override
  */
 canvasfx.scene.shape.Circle.prototype.draw = function(context) {
-    context.setTransform(1, 0, 0, 1, 0, 0);
-
     if (this.getCurrentFill()) {
         context.beginPath();
         context.fillStyle = this.getCurrentFill().getWeb();
         context.globalAlpha = this.getCurrentFill().getOpacity();
-        context.arc(
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.translate(
             parseInt(this.getCurrentCenterX()),
-            parseInt(this.getCurrentCenterY()),
-            this.radius,
+            parseInt(this.getCurrentCenterY())
+        );
+        context.arc(
+            0, 0, this.radius,
             0, Math.PI * 2, false
         );
         context.fill();
@@ -225,10 +226,14 @@ canvasfx.scene.shape.Circle.prototype.draw = function(context) {
                 offset = 0;
                 break;
         }
-        context.arc(
+
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.translate(
             parseInt(this.getCurrentCenterX()),
-            parseInt(this.getCurrentCenterY()),
-            this.radius + offset,
+            parseInt(this.getCurrentCenterY())
+        );
+        context.arc(
+            0, 0, this.radius + offset,
             0, Math.PI * 2, false
         );
         context.stroke();
@@ -263,6 +268,17 @@ canvasfx.scene.shape.Circle.prototype.getCurrentCenterX = function() {
  */
 canvasfx.scene.shape.Circle.prototype.getCurrentCenterY = function() {
     return this.centerY + this.layoutY + this.translateY;
+};
+
+/**
+ * @return {canvasfx.geometry.Bounds}
+ * @pverride
+ */
+canvasfx.scene.shape.Circle.prototype.getLayoutBounds = function() {
+    return new canvasfx.geometry.Bounds(
+        this.centerX - this.radius, this.centerY - this.radius,
+        2 * this.radius, 2 * this.radius
+    );
 };
 
 /**
@@ -358,14 +374,18 @@ canvasfx.scene.shape.Rectangle.prototype.contains = function(x, y) {
  * @override
  */
 canvasfx.scene.shape.Rectangle.prototype.draw = function(context) {
-    context.setTransform(1, 0, 0, 1, 0, 0);
-
     if (this.getCurrentFill()) {
         context.fillStyle = this.getCurrentFill().getWeb();
         context.globalAlpha = this.getCurrentFill().getOpacity();
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.translate(
+            parseInt(this.getCurrentX() + this.width / 2),
+            parseInt(this.getCurrentY() + this.height / 2)
+        );
+        context.rotate(this.rotate * Math.PI / 180);
         context.fillRect(
-            parseInt(this.getCurrentX()),
-            parseInt(this.getCurrentY()),
+            parseInt(-this.width / 2),
+            parseInt(-this.height / 2),
             parseInt(this.width),
             parseInt(this.height)
         );
@@ -393,9 +413,18 @@ canvasfx.scene.shape.Rectangle.prototype.draw = function(context) {
                 offsetSize = 0;
                 break;
         }
+
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.translate(
+            parseInt(this.getCurrentX() + this.width / 2) +
+                offsetSize / 2 + offsetPosition,
+            parseInt(this.getCurrentY() + this.height / 2) +
+                offsetSize / 2 + offsetPosition
+        );
+        context.rotate(this.rotate * Math.PI / 180);
         context.strokeRect(
-            parseInt(this.getCurrentX()) + offsetPosition,
-            parseInt(this.getCurrentY()) + offsetPosition,
+            parseInt(-this.width / 2) - offsetSize / 2,
+            parseInt(-this.height / 2) - offsetSize / 2,
             parseInt(this.width) + offsetSize,
             parseInt(this.height) + offsetSize
         );
@@ -423,6 +452,16 @@ canvasfx.scene.shape.Rectangle.prototype.getCurrentY = function() {
  */
 canvasfx.scene.shape.Rectangle.prototype.getHeight = function() {
     return this.height;
+};
+
+/**
+ * @return {canvasfx.geometry.Bounds}
+ * @override
+ */
+canvasfx.scene.shape.Rectangle.prototype.getLayoutBounds = function() {
+    return new canvasfx.canvasfx.geometry.Bounds(
+        this.x, this.y, this.width, this.height
+    );
 };
 
 /**
@@ -534,8 +573,6 @@ canvasfx.scene.shape.Line.prototype.contains = function(x, y) {
  * @override
  */
 canvasfx.scene.shape.Line.prototype.draw = function(context) {
-    context.setTransform(1, 0, 0, 1, 0, 0);
-
     if (this.getCurrentStroke()) {
         context.beginPath();
         context.strokeStyle = this.getCurrentStroke().getWeb();
@@ -543,13 +580,24 @@ canvasfx.scene.shape.Line.prototype.draw = function(context) {
         context.lineWidth = this.strokeWidth;
 
         var offset = 0.5 * (this.strokeWidth % 2);
+
+        var lb = this.getLayoutBounds();
+
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.translate(
+            parseInt(lb.getMinX() + lb.getWidth() / 2 +
+                this.layoutX + this.translateX) + offset,
+            parseInt(lb.getMinY() + lb.getHeight() / 2 +
+                this.layoutY + this.translateY) + offset
+        );
+        context.rotate(this.rotate * Math.PI / 180);
         context.moveTo(
-            parseInt(this.getCurrentStartX()) + offset,
-            parseInt(this.getCurrentStartY()) + offset
+            parseInt(this.startX - lb.getMinX() - lb.getWidth() / 2),
+            parseInt(this.startY - lb.getMinY() - lb.getHeight() / 2)
         );
         context.lineTo(
-            parseInt(this.getCurrentEndX()) + offset,
-            parseInt(this.getCurrentEndY()) + offset
+            parseInt(this.endX - lb.getMinX() - lb.getWidth() / 2),
+            parseInt(this.endY - lb.getMinY() - lb.getHeight() / 2)
         );
         context.stroke();
     }
@@ -599,6 +647,17 @@ canvasfx.scene.shape.Line.prototype.getEndX = function() {
  */
 canvasfx.scene.shape.Line.prototype.getEndY = function() {
     return this.endY;
+};
+
+/**
+ * @return {canvasfx.geometry.Bounds}
+ * @override
+ */
+canvasfx.scene.shape.Line.prototype.getLayoutBounds = function() {
+    return new canvasfx.geometry.Bounds(
+        Math.min(this.startX, this.endX), Math.min(this.startY, this.endY),
+        Math.abs(this.startX - this.endX), Math.abs(this.startY - this.endY)
+    );
 };
 
 /**

@@ -591,6 +591,135 @@ canvasfx.animation.FadeTransition.prototype.update = function(progress) {
  * @constructor
  * @extends {canvasfx.animation.Transition}
  */
+canvasfx.animation.RotateTransition = function(duration, node) {
+    canvasfx.animation.Transition.call(this);
+
+    this.duration =
+        canvasfx.supplement(duration, new canvasfx.util.Duration(400));
+    this.node = node;
+
+    /**
+     * @private
+     * @type {number}
+     */
+    this.byAngle_ = 0.0;
+
+    /**
+     * @private
+     * @type {number|NaN}
+     */
+    this.fromAngle_ = NaN;
+
+    /**
+     * @private
+     * @type {number|NaN}
+     */
+    this.toAngle_ = NaN;
+
+    /**
+     * @private
+     * @type {number|NaN}
+     */
+    this.startAngle_ = NaN;
+
+    /**
+     * @private
+     * @type {number|NaN}
+     */
+    this.endAngle_ = NaN;
+};
+canvasfx.inherit(canvasfx.animation.RotateTransition,
+    canvasfx.animation.Transition);
+
+/**
+ * @return {number}
+ */
+canvasfx.animation.RotateTransition.prototype.getByAngle = function() {
+    return this.byAngle_;
+};
+
+/**
+ * @return {number|NaN}
+ */
+canvasfx.animation.RotateTransition.prototype.getFromAngle = function() {
+    return this.fromAngle_;
+};
+
+/**
+ * @return {number|NaN}
+ */
+canvasfx.animation.RotateTransition.prototype.getToAngle = function() {
+    return this.toAngle_;
+};
+
+/**
+ * @override
+ */
+canvasfx.animation.RotateTransition.prototype.play = function() {
+    this.cycleDuration = this.duration;
+
+    if (!this.node) {
+        return;
+    }
+
+    this.startAngle_ = NaN;
+    this.endAngle_ = NaN;
+
+    this.startAngle_ = this.fromAngle_;
+    if (isNaN(this.startAngle_)) {
+        this.startAngle_ = this.node.getRotate();
+    }
+    this.endAngle_ = this.toAngle_;
+    if (isNaN(this.endAngle_)) {
+        this.endAngle_ = this.startAngle_ + this.byAngle_;
+    }
+
+    canvasfx.animation.Animation.prototype.play.call(this);
+};
+
+/**
+ * @param {number} value
+ */
+canvasfx.animation.RotateTransition.prototype.setByAngle = function(value) {
+    this.byAngle_ = value;
+};
+
+/**
+ * @param {number|NaN} value
+ */
+canvasfx.animation.RotateTransition.prototype.setFromAngle = function(value) {
+    this.fromAngle_ = value;
+};
+
+/**
+ * @param {number|NaN} value
+ */
+canvasfx.animation.RotateTransition.prototype.setToAngle = function(value) {
+    this.toAngle_ = value;
+};
+
+/**
+ * @param {boolean} progress
+ * @override
+ */
+canvasfx.animation.RotateTransition.prototype.update = function(progress) {
+    if (!this.node) {
+        return;
+    }
+
+    var angle = this.startAngle_ -
+        this.startAngle_ * progress + this.endAngle_ * progress;
+
+    this.node.setRotate(angle);
+};
+
+
+/**
+ * @param {canvasfx.util.Duration=} duration
+ * @param {canvasfx.scene.Node=} node
+ * @constructor
+ * @extends {canvasfx.animation.Transition}
+ */
 canvasfx.animation.TranslateTransition = function(duration, node) {
     canvasfx.animation.Transition.call(this);
 

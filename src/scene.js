@@ -171,6 +171,12 @@ canvasfx.scene.Node = function() {
      * @protected
      * @type {number}
      */
+    this.rotate = 0.0;
+
+    /**
+     * @protected
+     * @type {number}
+     */
     this.opacity = 1.0;
 
     /**
@@ -197,6 +203,11 @@ canvasfx.scene.Node.prototype.contains = canvasfx.abstractMethod;
  * @param {CanvasRenderingContext2D} context
  */
 canvasfx.scene.Node.prototype.draw = canvasfx.abstractMethod;
+
+/**
+ * @return {canvasfx.geometry.Bounds}
+ */
+canvasfx.scene.Node.prototype.getLayoutBounds = canvasfx.abstractMethod;
 
 /**
  * @return {number}
@@ -231,6 +242,13 @@ canvasfx.scene.Node.prototype.getOnMouseDragged = function() {
  */
 canvasfx.scene.Node.prototype.getOpacity = function() {
     return this.opacity;
+};
+
+/**
+ * @return {number}
+ */
+canvasfx.scene.Node.prototype.getRotate = function() {
+    return this.rotate;
 };
 
 /**
@@ -298,6 +316,13 @@ canvasfx.scene.Node.prototype.setOnMouseDragged = function(value) {
  */
 canvasfx.scene.Node.prototype.setOpacity = function(value) {
     this.opacity = value;
+};
+
+/**
+ * @param {number} value
+ */
+canvasfx.scene.Node.prototype.setRotate = function(value) {
+    this.rotate = value;
 };
 
 /**

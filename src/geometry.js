@@ -153,3 +153,45 @@ canvasfx.geometry.Bounds = function(minX, minY, width, height) {
     this.height_ = height;
 };
 canvasfx.inherit(canvasfx.geometry.Bounds, canvasfx.Object);
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Bounds.prototype.getHeight = function() {
+    return this.height_;
+};
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Bounds.prototype.getMaxX = function() {
+    return this.minX_ + this.width_;
+};
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Bounds.prototype.getMaxY = function() {
+    return this.minY_ + this.height_;
+};
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Bounds.prototype.getMinX = function() {
+    return this.minX_;
+};
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Bounds.prototype.getMinY = function() {
+    return this.minY_;
+};
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Bounds.prototype.getWidth = function() {
+    return this.width_;
+};
