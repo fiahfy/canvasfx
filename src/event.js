@@ -9,37 +9,41 @@
 canvasfx.event = {};
 
 
+
 /**
  * @param {string=} name
  * @constructor
  * @extends {canvasfx.Object}
  */
 canvasfx.event.EventType = function(name) {
-    canvasfx.Object.call(this);
+  canvasfx.Object.call(this);
 
-    name = canvasfx.supplement(name, 'ROOT');
+  name = canvasfx.supplement(name, 'ROOT');
 
-    /**
-     * @private
-     * @type {string}
-     */
-    this.name_ = name;
+  /**
+   * @private
+   * @type {string}
+   */
+  this.name_ = name;
 };
 canvasfx.inherit(canvasfx.event.EventType, canvasfx.Object);
+
 
 /**
  * @return {string}
  */
 canvasfx.event.EventType.prototype.getName = function() {
-    return this.name_;
+  return this.name_;
 };
+
 
 /**
  * @return {string}
  */
 canvasfx.event.EventType.prototype.toString = function() {
-    return this.getName();
+  return this.getName();
 };
+
 
 
 /**
@@ -47,30 +51,33 @@ canvasfx.event.EventType.prototype.toString = function() {
  * @extends {canvasfx.Object}
  */
 canvasfx.event.Event = function() {
-    canvasfx.Object.call(this);
+  canvasfx.Object.call(this);
 
-    /**
-     * @protected
-     * @type {canvasfx.event.EventType}
-     */
-    this.eventType = canvasfx.event.Event.ANY;
+  /**
+   * @protected
+   * @type {canvasfx.event.EventType}
+   */
+  this.eventType = canvasfx.event.Event.ANY;
 };
 canvasfx.inherit(canvasfx.event.Event, canvasfx.Object);
+
 
 /**
  * @return {canvasfx.event.EventType}
  */
 canvasfx.event.Event.prototype.getEventType = function() {
-    return this.eventType;
+  return this.eventType;
 };
+
 
 /**
  * @protected
  * @param {canvasfx.event.EventType} value
  */
 canvasfx.event.Event.prototype.setEventType = function(value) {
-    this.eventType = value;
+  this.eventType = value;
 };
+
 
 /**
  * @const
@@ -80,20 +87,22 @@ canvasfx.event.Event.ANY =
     new canvasfx.event.EventType('ANY');
 
 
+
 /**
  * @constructor
  * @extends {canvasfx.event.Event}
  */
 canvasfx.event.ActionEvent = function() {
-    canvasfx.event.Event.call(this);
+  canvasfx.event.Event.call(this);
 
-    /**
-     * @protected
-     * @type {canvasfx.event.EventType}
-     */
-    this.eventType = canvasfx.event.ActionEvent.ACTION;
+  /**
+   * @protected
+   * @type {canvasfx.event.EventType}
+   */
+  this.eventType = canvasfx.event.ActionEvent.ACTION;
 };
 canvasfx.inherit(canvasfx.event.ActionEvent, canvasfx.event.Event);
+
 
 /**
  * @const
@@ -103,14 +112,16 @@ canvasfx.event.ActionEvent.ACTION =
     new canvasfx.event.EventType('ACTION');
 
 
+
 /**
  * @constructor
  * @extends {canvasfx.Object}
  */
 canvasfx.event.EventListener = function() {
-    canvasfx.Object.call(this);
+  canvasfx.Object.call(this);
 };
 canvasfx.inherit(canvasfx.event.EventListener, canvasfx.Object);
+
 
 
 /**
@@ -118,9 +129,10 @@ canvasfx.inherit(canvasfx.event.EventListener, canvasfx.Object);
  * @extends {canvasfx.event.EventListener}
  */
 canvasfx.event.EventHandler = function() {
-    canvasfx.event.EventListener.call(this);
+  canvasfx.event.EventListener.call(this);
 };
 canvasfx.inherit(canvasfx.event.EventHandler, canvasfx.event.EventListener);
+
 
 /**
  * @param {canvasfx.event.Event} event

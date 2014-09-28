@@ -9,28 +9,30 @@
 canvasfx.application = {};
 
 
+
 /**
  * @constructor
  * @extends {canvasfx.Object}
  */
 canvasfx.application.Application = function() {
-    canvasfx.Object.call(this);
+  canvasfx.Object.call(this);
 
-    /**
-     * @protected
-     * @type {string}
-     */
-    this.id = 'app';
+  /**
+   * @protected
+   * @type {string}
+   */
+  this.id = 'app';
 
-    /**
-     * @private
-     * @type {canvasfx.stage.Stage}
-     */
-    this.stage_ = new canvasfx.stage.Stage(this.id);
+  /**
+   * @private
+   * @type {canvasfx.stage.Stage}
+   */
+  this.stage_ = new canvasfx.stage.Stage(this.id);
 
-    this.start(this.stage_);
+  this.start(this.stage_);
 };
 canvasfx.inherit(canvasfx.application.Application, canvasfx.Object);
+
 
 /**
  * @param {canvasfx.stage.Stage} primaryStage

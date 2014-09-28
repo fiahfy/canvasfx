@@ -9,6 +9,7 @@
 canvasfx.geometry = {};
 
 
+
 /**
  * @param {number=} x
  * @param {number=} y
@@ -16,24 +17,25 @@ canvasfx.geometry = {};
  * @extends {canvasfx.Object}
  */
 canvasfx.geometry.Point = function(x, y) {
-    canvasfx.Object.call(this);
+  canvasfx.Object.call(this);
 
-    x = canvasfx.supplement(x, 0.0);
-    y = canvasfx.supplement(y, 0.0);
+  x = canvasfx.supplement(x, 0.0);
+  y = canvasfx.supplement(y, 0.0);
 
-    /**
-     * @private
-     * @type {number}
-     */
-    this.x_ = x;
+  /**
+   * @private
+   * @type {number}
+   */
+  this.x_ = x;
 
-    /**
-     * @private
-     * @type {number}
-     */
-    this.y_ = y;
+  /**
+   * @private
+   * @type {number}
+   */
+  this.y_ = y;
 };
 canvasfx.inherit(canvasfx.geometry.Point, canvasfx.Object);
+
 
 /**
  * @param {number|canvasfx.geometry.Point} x
@@ -41,12 +43,13 @@ canvasfx.inherit(canvasfx.geometry.Point, canvasfx.Object);
  * @return {canvasfx.geometry.Point}
  */
 canvasfx.geometry.Point.prototype.add = function(x, y) {
-    if (x instanceof canvasfx.geometry.Point) {
-        y = x.getY();
-        x = x.getX();
-    }
-    return new canvasfx.geometry.Point(this.x_ + x, this.y_ + y);
+  if (x instanceof canvasfx.geometry.Point) {
+    y = x.getY();
+    x = x.getX();
+  }
+  return new canvasfx.geometry.Point(this.x_ + x, this.y_ + y);
 };
+
 
 /**
  * @param {number|canvasfx.geometry.Point} x1
@@ -54,26 +57,29 @@ canvasfx.geometry.Point.prototype.add = function(x, y) {
  * @return {number}
  */
 canvasfx.geometry.Point.prototype.distance = function(x1, y1) {
-    if (x1 instanceof canvasfx.geometry.Point) {
-        y1 = x1.getY();
-        x1 = x1.getX();
-    }
-    return Math.sqrt(Math.pow(this.x_ - x1, 2) + Math.pow(this.y_ - y1, 2));
+  if (x1 instanceof canvasfx.geometry.Point) {
+    y1 = x1.getY();
+    x1 = x1.getX();
+  }
+  return Math.sqrt(Math.pow(this.x_ - x1, 2) + Math.pow(this.y_ - y1, 2));
 };
+
 
 /**
  * @return {number}
  */
 canvasfx.geometry.Point.prototype.getX = function() {
-    return this.x_;
+  return this.x_;
 };
+
 
 /**
  * @return {number}
  */
 canvasfx.geometry.Point.prototype.getY = function() {
-    return this.y_;
+  return this.y_;
 };
+
 
 
 /**
@@ -83,38 +89,41 @@ canvasfx.geometry.Point.prototype.getY = function() {
  * @extends {canvasfx.Object}
  */
 canvasfx.geometry.Dimension = function(width, height) {
-    canvasfx.Object.call(this);
+  canvasfx.Object.call(this);
 
-    width = canvasfx.supplement(width, 0.0);
-    height = canvasfx.supplement(height, 0.0);
+  width = canvasfx.supplement(width, 0.0);
+  height = canvasfx.supplement(height, 0.0);
 
-    /**
-     * @private
-     * @type {number}
-     */
-    this.width_ = width;
+  /**
+   * @private
+   * @type {number}
+   */
+  this.width_ = width;
 
-    /**
-     * @private
-     * @type {number}
-     */
-    this.height_ = height;
+  /**
+   * @private
+   * @type {number}
+   */
+  this.height_ = height;
 };
 canvasfx.inherit(canvasfx.geometry.Dimension, canvasfx.Object);
+
 
 /**
  * @return {number}
  */
 canvasfx.geometry.Dimension.prototype.getHeight = function() {
-    return this.height_;
+  return this.height_;
 };
+
 
 /**
  * @return {number}
  */
 canvasfx.geometry.Dimension.prototype.getWidth = function() {
-    return this.width_;
+  return this.width_;
 };
+
 
 
 /**
@@ -126,72 +135,78 @@ canvasfx.geometry.Dimension.prototype.getWidth = function() {
  * @extends {canvasfx.Object}
  */
 canvasfx.geometry.Bounds = function(minX, minY, width, height) {
-    canvasfx.Object.call(this);
+  canvasfx.Object.call(this);
 
-    /**
-     * @private
-     * @type {number}
-     */
-    this.minX_ = minX;
+  /**
+   * @private
+   * @type {number}
+   */
+  this.minX_ = minX;
 
-    /**
-     * @private
-     * @type {number}
-     */
-    this.minY_ = minY;
+  /**
+   * @private
+   * @type {number}
+   */
+  this.minY_ = minY;
 
-    /**
-     * @private
-     * @type {number}
-     */
-    this.width_ = width;
+  /**
+   * @private
+   * @type {number}
+   */
+  this.width_ = width;
 
-    /**
-     * @private
-     * @type {number}
-     */
-    this.height_ = height;
+  /**
+   * @private
+   * @type {number}
+   */
+  this.height_ = height;
 };
 canvasfx.inherit(canvasfx.geometry.Bounds, canvasfx.Object);
+
 
 /**
  * @return {number}
  */
 canvasfx.geometry.Bounds.prototype.getHeight = function() {
-    return this.height_;
+  return this.height_;
 };
+
 
 /**
  * @return {number}
  */
 canvasfx.geometry.Bounds.prototype.getMaxX = function() {
-    return this.minX_ + this.width_;
+  return this.minX_ + this.width_;
 };
+
 
 /**
  * @return {number}
  */
 canvasfx.geometry.Bounds.prototype.getMaxY = function() {
-    return this.minY_ + this.height_;
+  return this.minY_ + this.height_;
 };
+
 
 /**
  * @return {number}
  */
 canvasfx.geometry.Bounds.prototype.getMinX = function() {
-    return this.minX_;
+  return this.minX_;
 };
+
 
 /**
  * @return {number}
  */
 canvasfx.geometry.Bounds.prototype.getMinY = function() {
-    return this.minY_;
+  return this.minY_;
 };
+
 
 /**
  * @return {number}
  */
 canvasfx.geometry.Bounds.prototype.getWidth = function() {
-    return this.width_;
+  return this.width_;
 };

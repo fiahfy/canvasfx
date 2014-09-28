@@ -9,97 +9,109 @@
 canvasfx.util = {};
 
 
+
 /**
  * @param {number} millis
  * @constructor
  * @extends {canvasfx.Object}
  */
 canvasfx.util.Duration = function(millis) {
-    canvasfx.Object.call(this);
+  canvasfx.Object.call(this);
 
-    /**
-     * @private
-     * @type {number}
-     */
-    this.millis_ = millis;
+  /**
+   * @private
+   * @type {number}
+   */
+  this.millis_ = millis;
 };
 canvasfx.inherit(canvasfx.util.Duration, canvasfx.Object);
+
 
 /**
  * @param {canvasfx.util.Duration} other
  * @return {canvasfx.util.Duration}
  */
 canvasfx.util.Duration.prototype.add = function(other) {
-    return new canvasfx.util.Duration(this.millis_ + other.toMillis());
+  return new canvasfx.util.Duration(this.millis_ + other.toMillis());
 };
+
 
 /**
  * @param {canvasfx.util.Duration} obj
  * @return {boolean}
  */
 canvasfx.util.Duration.prototype.equals = function(obj) {
-    return this.millis_ == obj.toMillis();
+  return this.millis_ == obj.toMillis();
 };
+
 
 /**
  * @param {canvasfx.util.Duration} other
  * @return {boolean}
  */
 canvasfx.util.Duration.prototype.greaterThan = function(other) {
-    return this.millis_ > other.toMillis();
+  return this.millis_ > other.toMillis();
 };
+
 
 /**
  * @param {canvasfx.util.Duration} other
  * @return {boolean}
  */
 canvasfx.util.Duration.prototype.greaterThanOrEqualTo = function(other) {
-    return this.millis_ >= other.toMillis();
+  return this.millis_ >= other.toMillis();
 };
+
 
 /**
  * @param {canvasfx.util.Duration} other
  * @return {boolean}
  */
 canvasfx.util.Duration.prototype.lessThan = function(other) {
-    return this.millis_ < other.toMillis();
+  return this.millis_ < other.toMillis();
 };
+
 
 /**
  * @param {canvasfx.util.Duration} other
  * @return {boolean}
  */
 canvasfx.util.Duration.prototype.lessThanOrEqualTo = function(other) {
-    return this.millis_ <= other.toMillis();
+  return this.millis_ <= other.toMillis();
 };
+
 
 /**
  * @return {number}
  */
 canvasfx.util.Duration.prototype.toHours = function() {
-    return this.millis_ / 1000 / 60 / 60;
+  return this.millis_ / 1000 / 60 / 60;
 };
+
 
 /**
  * @return {number}
  */
 canvasfx.util.Duration.prototype.toMillis = function() {
-    return this.millis_;
+  return this.millis_;
 };
+
 
 /**
  * @return {number}
  */
 canvasfx.util.Duration.prototype.toMinutes = function() {
-    return this.millis_ / 1000 / 60;
+  return this.millis_ / 1000 / 60;
 };
+
 
 /**
  * @return {number}
  */
 canvasfx.util.Duration.prototype.toSeconds = function() {
-    return this.millis_ / 1000;
+  return this.millis_ / 1000;
 };
+
 
 /**
  * @const
@@ -107,11 +119,13 @@ canvasfx.util.Duration.prototype.toSeconds = function() {
  */
 canvasfx.util.Duration.INFINITY = new canvasfx.util.Duration(Infinity);
 
+
 /**
  * @const
  * @type {canvasfx.util.Duration}
  */
 canvasfx.util.Duration.ONE = new canvasfx.util.Duration(1);
+
 
 /**
  * @const
@@ -119,14 +133,16 @@ canvasfx.util.Duration.ONE = new canvasfx.util.Duration(1);
  */
 canvasfx.util.Duration.ZERO = new canvasfx.util.Duration(0);
 
+
 /**
  * @const
  * @param {number} h
  * @return {canvasfx.util.Duration}
  */
 canvasfx.util.Duration.hours = function(h) {
-    return new canvasfx.util.Duration(h * 60 * 60 * 1000);
+  return new canvasfx.util.Duration(h * 60 * 60 * 1000);
 };
+
 
 /**
  * @const
@@ -134,8 +150,9 @@ canvasfx.util.Duration.hours = function(h) {
  * @return {canvasfx.util.Duration}
  */
 canvasfx.util.Duration.millis = function(ms) {
-    return new canvasfx.util.Duration(ms);
+  return new canvasfx.util.Duration(ms);
 };
+
 
 /**
  * @const
@@ -143,8 +160,9 @@ canvasfx.util.Duration.millis = function(ms) {
  * @return {canvasfx.util.Duration}
  */
 canvasfx.util.Duration.minutes = function(m) {
-    return new canvasfx.util.Duration(m * 60 * 1000);
+  return new canvasfx.util.Duration(m * 60 * 1000);
 };
+
 
 /**
  * @const
@@ -152,5 +170,5 @@ canvasfx.util.Duration.minutes = function(m) {
  * @return {canvasfx.util.Duration}
  */
 canvasfx.util.Duration.seconds = function(s) {
-    return new canvasfx.util.Duration(s * 1000);
+  return new canvasfx.util.Duration(s * 1000);
 };
