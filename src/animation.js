@@ -11,11 +11,11 @@ canvasfx.animation = {};
 
 
 /**
- * @param {number=} targetFramerate
+ * @param {number=} opt_targetFramerate
  * @constructor
  * @extends {canvasfx.Object}
  */
-canvasfx.animation.Animation = function(targetFramerate) {
+canvasfx.animation.Animation = function(opt_targetFramerate) {
   canvasfx.Object.call(this);
 
   /**
@@ -139,6 +139,7 @@ canvasfx.animation.Animation.prototype.getOnFinished = function() {
 canvasfx.animation.Animation.prototype.getRate = function() {
   return this.rate;
 };
+
 
 /**
  * @return {canvasfx.animation.Animation.Status}
@@ -352,8 +353,6 @@ canvasfx.animation.Timeline.prototype.pause = function() {
 
 
 /**
- * @param {boolean} progress
- * @param {boolean} reverse
  * @override
  */
 canvasfx.animation.Timeline.prototype.play = function() {
@@ -491,17 +490,17 @@ canvasfx.animation.Transition.prototype.setNode = function(value) {
 
 
 /**
- * @param {canvasfx.util.Duration=} duration
- * @param {canvasfx.scene.Node=} node
+ * @param {canvasfx.util.Duration=} opt_duration
+ * @param {canvasfx.scene.Node=} opt_node
  * @constructor
  * @extends {canvasfx.animation.Transition}
  */
-canvasfx.animation.FadeTransition = function(duration, node) {
+canvasfx.animation.FadeTransition = function(opt_duration, opt_node) {
   canvasfx.animation.Transition.call(this);
 
   this.duration =
-      canvasfx.supplement(duration, new canvasfx.util.Duration(400));
-  this.node = node;
+      canvasfx.supplement(opt_duration, new canvasfx.util.Duration(400));
+  this.node = canvasfx.supplement(opt_node, null);
 
   /**
    * @private
@@ -629,17 +628,17 @@ canvasfx.animation.FadeTransition.prototype.update = function(progress) {
 
 
 /**
- * @param {canvasfx.util.Duration=} duration
- * @param {canvasfx.scene.Node=} node
+ * @param {canvasfx.util.Duration=} opt_duration
+ * @param {canvasfx.scene.Node=} opt_node
  * @constructor
  * @extends {canvasfx.animation.Transition}
  */
-canvasfx.animation.RotateTransition = function(duration, node) {
+canvasfx.animation.RotateTransition = function(opt_duration, opt_node) {
   canvasfx.animation.Transition.call(this);
 
   this.duration =
-      canvasfx.supplement(duration, new canvasfx.util.Duration(400));
-  this.node = node;
+      canvasfx.supplement(opt_duration, new canvasfx.util.Duration(400));
+  this.node = canvasfx.supplement(opt_node, null);
 
   /**
    * @private
@@ -767,17 +766,17 @@ canvasfx.animation.RotateTransition.prototype.update = function(progress) {
 
 
 /**
- * @param {canvasfx.util.Duration=} duration
- * @param {canvasfx.scene.Node=} node
+ * @param {canvasfx.util.Duration=} opt_duration
+ * @param {canvasfx.scene.Node=} opt_node
  * @constructor
  * @extends {canvasfx.animation.Transition}
  */
-canvasfx.animation.TranslateTransition = function(duration, node) {
+canvasfx.animation.TranslateTransition = function(opt_duration, opt_node) {
   canvasfx.animation.Transition.call(this);
 
   this.duration =
-      canvasfx.supplement(duration, new canvasfx.util.Duration(400));
-  this.node = node;
+      canvasfx.supplement(opt_duration, new canvasfx.util.Duration(400));
+  this.node = canvasfx.supplement(opt_node, null);
 
   /**
    * @private

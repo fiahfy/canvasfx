@@ -53,12 +53,12 @@ canvasfx.inherit = function(child, parent) {
 
 /**
  * @param {*} value
- * @param {*=} defaultValue
+ * @param {*=} opt_defaultValue
  * @return {*}
  */
-canvasfx.supplement = function(value, defaultValue) {
-  if (typeof value === 'undefined' && typeof defaultValue !== 'undefined') {
-    return defaultValue;
+canvasfx.supplement = function(value, opt_defaultValue) {
+  if (typeof value === 'undefined' && typeof opt_defaultValue !== 'undefined') {
+    return opt_defaultValue;
   }
   return value;
 };

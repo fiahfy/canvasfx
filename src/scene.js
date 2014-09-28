@@ -12,12 +12,12 @@ canvasfx.scene = {};
 
 /**
  * @param {canvasfx.scene.Node} root
- * @param {number=} width
- * @param {number=} height
+ * @param {number=} opt_width
+ * @param {number=} opt_height
  * @constructor
  * @extends {canvasfx.Object}
  */
-canvasfx.scene.Scene = function(root, width, height) {
+canvasfx.scene.Scene = function(root, opt_width, opt_height) {
   canvasfx.Object.call(this);
 
   /**
@@ -30,13 +30,13 @@ canvasfx.scene.Scene = function(root, width, height) {
    * @private
    * @type {number}
    */
-  this.width_ = width;
+  this.width_ = opt_width;
 
   /**
    * @private
    * @type {number}
    */
-  this.height_ = height;
+  this.height_ = opt_height;
 
   /**
    * @private

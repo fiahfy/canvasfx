@@ -11,20 +11,21 @@ canvasfx.scene.paint = {};
 
 
 /**
- * @param {number|string=} red
- * @param {number=} green
- * @param {number=} blue
- * @param {number=} opacity
+ * @param {number|string=} opt_red
+ * @param {number=} opt_green
+ * @param {number=} opt_blue
+ * @param {number=} opt_opacity
  * @constructor
  * @extends {canvasfx.Object}
  */
-canvasfx.scene.paint.Color = function(red, green, blue, opacity) {
+canvasfx.scene.paint.Color = function(
+    opt_red, opt_green, opt_blue, opt_opacity) {
   canvasfx.Object.call(this);
 
-  red = canvasfx.supplement(red, 0.0);
-  green = canvasfx.supplement(green, 0.0);
-  blue = canvasfx.supplement(blue, 0.0);
-  opacity = canvasfx.supplement(opacity, 1.0);
+  var red = canvasfx.supplement(opt_red, 0.0);
+  var green = canvasfx.supplement(opt_green, 0.0);
+  var blue = canvasfx.supplement(opt_blue, 0.0);
+  var opacity = canvasfx.supplement(opt_opacity, 1.0);
 
   // TODO: parse web color string
   if (typeof red === 'string' && red.charAt(0) == '#') {
@@ -115,11 +116,11 @@ canvasfx.scene.paint.Color.prototype.getWeb = function() {
  * @param {number} red
  * @param {number} green
  * @param {number} blue
- * @param {number=} opacity
+ * @param {number=} opt_opacity
  * @return {canvasfx.scene.paint.Color}
  */
-canvasfx.scene.paint.Color.color = function(red, green, blue, opacity) {
-  return new canvasfx.scene.paint.Color(red, green, blue, opacity);
+canvasfx.scene.paint.Color.color = function(red, green, blue, opt_opacity) {
+  return new canvasfx.scene.paint.Color(red, green, blue, opt_opacity);
 };
 
 
@@ -128,11 +129,11 @@ canvasfx.scene.paint.Color.color = function(red, green, blue, opacity) {
  * @param {number} red
  * @param {number} green
  * @param {number} blue
- * @param {number=} opacity
+ * @param {number=} opt_opacity
  * @return {canvasfx.scene.paint.Color}
  */
-canvasfx.scene.paint.Color.rgb = function(red, green, blue, opacity) {
-  return new canvasfx.scene.paint.Color(red, green, blue, opacity);
+canvasfx.scene.paint.Color.rgb = function(red, green, blue, opt_opacity) {
+  return new canvasfx.scene.paint.Color(red, green, blue, opt_opacity);
 };
 
 

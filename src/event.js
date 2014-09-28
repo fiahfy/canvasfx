@@ -11,20 +11,18 @@ canvasfx.event = {};
 
 
 /**
- * @param {string=} name
+ * @param {string=} opt_name
  * @constructor
  * @extends {canvasfx.Object}
  */
-canvasfx.event.EventType = function(name) {
+canvasfx.event.EventType = function(opt_name) {
   canvasfx.Object.call(this);
-
-  name = canvasfx.supplement(name, 'ROOT');
 
   /**
    * @private
    * @type {string}
    */
-  this.name_ = name;
+  this.name_ = canvasfx.supplement(opt_name, 'ROOT');
 };
 canvasfx.inherit(canvasfx.event.EventType, canvasfx.Object);
 

@@ -19,6 +19,7 @@ canvasfx.scene.shape.StrokeType = {
 };
 
 
+
 /**
  * @constructor
  * @extends {canvasfx.scene.Node}
@@ -149,36 +150,32 @@ canvasfx.scene.shape.Shape.prototype.setStrokeWidth = function(value) {
 
 
 /**
- * @param {number=} centerX
- * @param {number=} centerY
- * @param {number=} radius
+ * @param {number=} opt_centerX
+ * @param {number=} opt_centerY
+ * @param {number=} opt_radius
  * @constructor
  * @extends {canvasfx.scene.Shape}
  */
-canvasfx.scene.shape.Circle = function(centerX, centerY, radius) {
+canvasfx.scene.shape.Circle = function(opt_centerX, opt_centerY, opt_radius) {
   canvasfx.scene.shape.Shape.call(this);
 
-  centerX = canvasfx.supplement(centerX, 0.0);
-  centerY = canvasfx.supplement(centerY, 0.0);
-  radius = canvasfx.supplement(radius, 0.0);
+  /**
+   * @protected
+   * @type {number}
+   */
+  this.centerX = canvasfx.supplement(opt_centerX, 0.0);
 
   /**
    * @protected
    * @type {number}
    */
-  this.centerX = centerX;
+  this.centerY = canvasfx.supplement(opt_centerY, 0.0);
 
   /**
    * @protected
    * @type {number}
    */
-  this.centerY = centerY;
-
-  /**
-   * @protected
-   * @type {number}
-   */
-  this.radius = radius;
+  this.radius = canvasfx.supplement(opt_radius, 0.0);
 
   this.fill = canvasfx.scene.paint.Color.BLACK;
 };
@@ -187,15 +184,19 @@ canvasfx.inherit(canvasfx.scene.shape.Circle, canvasfx.scene.shape.Shape);
 
 /**
  * @param {number|canvasfx.geometry.Point} x
- * @param {number=} y
+ * @param {number=} opt_y
  * @return {boolean}
  * @override
  */
-canvasfx.scene.shape.Circle.prototype.contains = function(x, y) {
+canvasfx.scene.shape.Circle.prototype.contains = function(x, opt_y) {
+  if (x instanceof canvasfx.geometry.Point) {
+    opt_y = x.getY();
+    x = x.getX();
+  }
   var point = new canvasfx.geometry.Point(
       this.getCurrentCenterX(), this.getCurrentCenterY()
-  );
-  return (point.distance(x, y) <= this.radius);
+      );
+  return (point.distance(x, opt_y) <= this.radius);
 };
 
 
@@ -328,44 +329,39 @@ canvasfx.scene.shape.Circle.prototype.setRadius = function(value) {
 
 
 /**
- * @param {number=} x
- * @param {number=} y
- * @param {number=} width
- * @param {number=} height
+ * @param {number=} opt_x
+ * @param {number=} opt_y
+ * @param {number=} opt_width
+ * @param {number=} opt_height
  * @constructor
  * @extends {canvasfx.scene.Shape}
  */
-canvasfx.scene.shape.Rectangle = function(x, y, width, height) {
+canvasfx.scene.shape.Rectangle = function(opt_x, opt_y, opt_width, opt_height) {
   canvasfx.scene.shape.Shape.call(this);
 
-  x = canvasfx.supplement(x, 0.0);
-  y = canvasfx.supplement(y, 0.0);
-  width = canvasfx.supplement(width, 0.0);
-  height = canvasfx.supplement(height, 0.0);
+  /**
+   * @protected
+   * @type {number}
+   */
+  this.height = canvasfx.supplement(opt_height, 0.0);
 
   /**
    * @protected
    * @type {number}
    */
-  this.height = height;
+  this.width = canvasfx.supplement(opt_width, 0.0);
 
   /**
    * @protected
    * @type {number}
    */
-  this.width = width;
+  this.x = canvasfx.supplement(opt_x, 0.0);
 
   /**
    * @protected
    * @type {number}
    */
-  this.x = x;
-
-  /**
-   * @protected
-   * @type {number}
-   */
-  this.y = y;
+  this.y = canvasfx.supplement(opt_y, 0.0);
 
   this.fill = canvasfx.scene.paint.Color.BLACK;
 };
@@ -374,17 +370,17 @@ canvasfx.inherit(canvasfx.scene.shape.Rectangle, canvasfx.scene.shape.Shape);
 
 /**
  * @param {number|canvasfx.geometry.Point} x
- * @param {number=} y
+ * @param {number=} opt_y
  * @return {boolean}
  * @override
  */
-canvasfx.scene.shape.Rectangle.prototype.contains = function(x, y) {
-  if (x instanceof canvasfx.geometry.Dimension) {
-    y = x.getY();
+canvasfx.scene.shape.Rectangle.prototype.contains = function(x, opt_y) {
+  if (x instanceof canvasfx.geometry.Point) {
+    opt_y = x.getY();
     x = x.getX();
   }
   return this.getCurrentX() <= x && x <= this.getCurrentX() &&
-      this.getCurrentY() <= y && y <= this.getCurrentY();
+      this.getCurrentY() <= opt_y && opt_y <= this.getCurrentY();
 };
 
 
@@ -541,44 +537,40 @@ canvasfx.scene.shape.Rectangle.prototype.setY = function(value) {
 
 
 /**
- * @param {number=} startX
- * @param {number=} startY
- * @param {number=} endX
- * @param {number=} endY
+ * @param {number=} opt_startX
+ * @param {number=} opt_startY
+ * @param {number=} opt_endX
+ * @param {number=} opt_endY
  * @constructor
  * @extends {canvasfx.scene.Shape}
  */
-canvasfx.scene.shape.Line = function(startX, startY, endX, endY) {
+canvasfx.scene.shape.Line = function(
+    opt_startX, opt_startY, opt_endX, opt_endY) {
   canvasfx.scene.shape.Shape.call(this);
 
-  startX = canvasfx.supplement(startX, 0.0);
-  startY = canvasfx.supplement(startY, 0.0);
-  endX = canvasfx.supplement(endX, 0.0);
-  endY = canvasfx.supplement(endY, 0.0);
+  /**
+   * @protected
+   * @type {number}
+   */
+  this.endX = canvasfx.supplement(opt_endX, 0.0);
 
   /**
    * @protected
    * @type {number}
    */
-  this.endX = endX;
+  this.endY = canvasfx.supplement(opt_endY, 0.0);
 
   /**
    * @protected
    * @type {number}
    */
-  this.endY = endY;
+  this.startX = canvasfx.supplement(opt_startX, 0.0);
 
   /**
    * @protected
    * @type {number}
    */
-  this.startX = startX;
-
-  /**
-   * @protected
-   * @type {number}
-   */
-  this.startY = startY;
+  this.startY = canvasfx.supplement(opt_startY, 0.0);
 
   this.stroke = canvasfx.scene.paint.Color.BLACK;
 };
@@ -587,11 +579,11 @@ canvasfx.inherit(canvasfx.scene.shape.Line, canvasfx.scene.shape.Shape);
 
 /**
  * @param {number|canvasfx.geometry.Point} x
- * @param {number=} y
+ * @param {number=} opt_y
  * @return {boolean}
  * @override
  */
-canvasfx.scene.shape.Line.prototype.contains = function(x, y) {
+canvasfx.scene.shape.Line.prototype.contains = function(x, opt_y) {
   return false;
 };
 
