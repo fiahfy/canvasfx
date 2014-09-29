@@ -55,14 +55,14 @@ canvasfx.stage.Stage = function(id) {
   this.height_ = this.element_.offsetHeight;
 
   /**
-   * @private
+   * @protected
    * @type {boolean}
    */
-  this.isShow_ = false;
+  this.isShow = false;
 
   this.element_.appendChild(this.canvas_);
-  this.addEventListener_();
-  this.update_();
+  this.addEventListener();
+  this.update();
 };
 canvasfx.inherit(canvasfx.stage.Stage, canvasfx.Object);
 
@@ -103,51 +103,46 @@ canvasfx.stage.Stage.prototype.setScene = function(value) {
 /**
  */
 canvasfx.stage.Stage.prototype.show = function() {
-  this.isShow_ = true;
+  this.isShow = true;
 };
 
 
 /**
- * @private
+ * @protected
  */
-canvasfx.stage.Stage.prototype.clear_ = function() {
-  var rect = new canvasfx.scene.shape.Rectangle(
-      0, 0,
-      this.width_, this.height_
-      );
-  rect.setFill(canvasfx.scene.paint.Color.WHITE);
-  rect.draw(this.context_);
+canvasfx.stage.Stage.prototype.clear = function() {
+  this.context_.setTransform(1, 0, 0, 1, 0, 0);
+  this.context_.clearRect(0, 0, this.width_, this.height_);
 };
 
 
 /**
- * @private
+ * @protected
  */
-canvasfx.stage.Stage.prototype.draw_ = function() {
+canvasfx.stage.Stage.prototype.draw = function() {
   this.scene_.getRoot().draw(this.context_);
 };
 
 
 /**
- * @private
+ * @protected
  */
-canvasfx.stage.Stage.prototype.redraw_ = function() {
-  this.clear_();
-  this.draw_();
+canvasfx.stage.Stage.prototype.redraw = function() {
+  this.clear();
+  this.draw();
 };
 
 
 /**
- * @private
- * @todo private access
+ * @protected
  */
-canvasfx.stage.Stage.prototype.update_ = function() {
+canvasfx.stage.Stage.prototype.update = function() {
   var me = this;
   (function() {
     var t = new canvasfx.animation.AnimationTimer();
     t.handle = function() {
-      if (!me.isShow_) return;
-      me.redraw_();
+      if (!me.isShow) return;
+      me.redraw();
     };
     return t;
   })().start();
@@ -155,9 +150,9 @@ canvasfx.stage.Stage.prototype.update_ = function() {
 
 
 /**
- * @private
+ * @protected
  */
-canvasfx.stage.Stage.prototype.addEventListener_ = function() {
+canvasfx.stage.Stage.prototype.addEventListener = function() {
   var me = this;
   var callback = function(eventType) {
     return function(e) {

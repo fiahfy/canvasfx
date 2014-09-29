@@ -170,7 +170,6 @@ canvasfx.animation.Animation.prototype.pause = function() {
 
 
 /**
- * @todo private access
  */
 canvasfx.animation.Animation.prototype.play = function() {
   if (this.status == canvasfx.animation.Animation.Status.RUNNING) {

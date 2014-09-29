@@ -24,17 +24,15 @@ canvasfx.BASE_FILE_NAME = 'base.js';
 
 
 /**
- * @private
  * @type {string}
  */
-canvasfx.basePath_ = '';
+canvasfx.basePath = '';
 
 
 /**
- * @private
  * @type {Array}
  */
-canvasfx.loadFiles_ = [];
+canvasfx.loadFiles = [];
 
 
 /**
@@ -90,9 +88,8 @@ canvasfx.abstractMethod = function() { console.log(arguments.callee.caller); };
 
 
 /**
- * @private
  */
-canvasfx.setBasePath_ = function() {
+canvasfx.setBasePath = function() {
   var path = '';
   var scripts = window.document.getElementsByTagName('script');
   for (var i = 0; i < scripts.length; i++)
@@ -106,16 +103,15 @@ canvasfx.setBasePath_ = function() {
     }
   }
 
-  canvasfx.basePath_ =
+  canvasfx.basePath =
       path.slice(0, path.length - ('/' + canvasfx.BASE_FILE_NAME).length);
 };
 
 
 /**
- * @private
  * @param {string} namespace
  */
-canvasfx.importNameSpace_ = function(namespace) {
+canvasfx.importNameSpace = function(namespace) {
   var array = namespace.split('.');
   array.shift();
 
@@ -123,17 +119,17 @@ canvasfx.importNameSpace_ = function(namespace) {
     return;
   }
 
-  var path = canvasfx.basePath_;
+  var path = canvasfx.basePath;
   array.forEach(function(element) {
     path = path + '/' + element;
   });
   path += '.js';
 
-  if (canvasfx.inArray(path, canvasfx.loadFiles_)) {
+  if (canvasfx.inArray(path, canvasfx.loadFiles)) {
     return;
   }
 
-  canvasfx.loadFiles_.push(path);
+  canvasfx.loadFiles.push(path);
   document.write('<script src="' + path + '"></script>');
 };
 
@@ -158,15 +154,16 @@ canvasfx.Object.prototype.clone = function() {
 };
 
 
-canvasfx.setBasePath_();
-canvasfx.importNameSpace_('canvasfx.animation');
-canvasfx.importNameSpace_('canvasfx.application');
-canvasfx.importNameSpace_('canvasfx.event');
-canvasfx.importNameSpace_('canvasfx.geometry');
-canvasfx.importNameSpace_('canvasfx.math');
-canvasfx.importNameSpace_('canvasfx.scene');
-canvasfx.importNameSpace_('canvasfx.scene.input');
-canvasfx.importNameSpace_('canvasfx.scene.paint');
-canvasfx.importNameSpace_('canvasfx.scene.shape');
-canvasfx.importNameSpace_('canvasfx.stage');
-canvasfx.importNameSpace_('canvasfx.util');
+
+canvasfx.setBasePath();
+canvasfx.importNameSpace('canvasfx.animation');
+canvasfx.importNameSpace('canvasfx.application');
+canvasfx.importNameSpace('canvasfx.event');
+canvasfx.importNameSpace('canvasfx.geometry');
+canvasfx.importNameSpace('canvasfx.math');
+canvasfx.importNameSpace('canvasfx.scene');
+canvasfx.importNameSpace('canvasfx.scene.input');
+canvasfx.importNameSpace('canvasfx.scene.paint');
+canvasfx.importNameSpace('canvasfx.scene.shape');
+canvasfx.importNameSpace('canvasfx.stage');
+canvasfx.importNameSpace('canvasfx.util');

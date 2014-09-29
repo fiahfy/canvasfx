@@ -522,7 +522,7 @@ canvasfx.scene.Group.prototype.contains = function(x, y) {
 /**
  * @param {CanvasRenderingContext2D} context
  * @override
- * @todo Set parent
+ * TODO: set parent
  */
 canvasfx.scene.Group.prototype.draw = function(context) {
   var me = this;
