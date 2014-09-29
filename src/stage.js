@@ -160,8 +160,9 @@ canvasfx.stage.Stage.prototype.addEventListener = function() {
       var x = e.clientX - rect.left;
       var y = e.clientY - rect.top;
 
-      var event = new canvasfx.scene.input.MouseEvent(
-          canvasfx.scene.input.MouseEvent[eventType], x, y
+      var event =
+          new canvasfx.scene.input.MouseEvent(
+              canvasfx.scene.input.MouseEvent[eventType], x, y
           );
 
       me.scene_.handleEvent(event);
@@ -189,8 +190,9 @@ canvasfx.stage.Stage.prototype.addEventListener = function() {
 
     var timer = null;
     (function animationLoop() {
-      timer = canvasfx.animation.AnimationTimer.requestAnimationFrame_()(
-          animationLoop
+      timer =
+          canvasfx.animation.AnimationTimer.requestAnimationFrame_()(
+              animationLoop
           );
       mousemove(event);
     })();

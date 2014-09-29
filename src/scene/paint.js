@@ -34,11 +34,25 @@ canvasfx.scene.paint.Color = function(
       colorString =
           colorString.charAt(0) + colorString.charAt(0) +
           colorString.charAt(1) + colorString.charAt(1) +
-          colorString.charAt(2) + colorString.charAt(2);
+          colorString.charAt(2) + colorString.charAt(2) +
+          'ff';
+    } else if (colorString.length == 4) {
+      colorString =
+          colorString.charAt(0) + colorString.charAt(0) +
+          colorString.charAt(1) + colorString.charAt(1) +
+          colorString.charAt(2) + colorString.charAt(2) +
+          colorString.charAt(3) + colorString.charAt(3);
+    } else if (colorString.length == 6) {
+      colorString += 'ff';
+    } else if (colorString.length == 8) {
+      //
+    } else {
+      throw new TypeError(red + ' is invalid web color string');
     }
     red = parseInt(colorString.substr(0, 2), 16);
     green = parseInt(colorString.substr(2, 2), 16);
     blue = parseInt(colorString.substr(4, 2), 16);
+    opacity = parseInt(colorString.substr(6, 2), 16);
   }
 
   /**
@@ -151,45 +165,39 @@ canvasfx.scene.paint.Color.web = function(colorString) {
  * @const
  * @type {canvasfx.scene.paint.Color}
  */
-canvasfx.scene.paint.Color.RED =
-    canvasfx.scene.paint.Color.web('#ff0000');
+canvasfx.scene.paint.Color.RED = canvasfx.scene.paint.Color.web('#ff0000');
 
 
 /**
  * @const
  * @type {canvasfx.scene.paint.Color}
  */
-canvasfx.scene.paint.Color.GREEN =
-    canvasfx.scene.paint.Color.web('#00ff00');
+canvasfx.scene.paint.Color.GREEN = canvasfx.scene.paint.Color.web('#00ff00');
 
 
 /**
  * @const
  * @type {canvasfx.scene.paint.Color}
  */
-canvasfx.scene.paint.Color.BLUE =
-    canvasfx.scene.paint.Color.web('#0000ff');
+canvasfx.scene.paint.Color.BLUE = canvasfx.scene.paint.Color.web('#0000ff');
 
 
 /**
  * @const
  * @type {canvasfx.scene.paint.Color}
  */
-canvasfx.scene.paint.Color.BLACK =
-    canvasfx.scene.paint.Color.web('#000000');
+canvasfx.scene.paint.Color.BLACK = canvasfx.scene.paint.Color.web('#000000');
 
 
 /**
  * @const
  * @type {canvasfx.scene.paint.Color}
  */
-canvasfx.scene.paint.Color.GRAY =
-    canvasfx.scene.paint.Color.web('#808080');
+canvasfx.scene.paint.Color.GRAY = canvasfx.scene.paint.Color.web('#808080');
 
 
 /**
  * @const
  * @type {canvasfx.scene.paint.Color}
  */
-canvasfx.scene.paint.Color.WHITE =
-    canvasfx.scene.paint.Color.web('#ffffff');
+canvasfx.scene.paint.Color.WHITE = canvasfx.scene.paint.Color.web('#ffffff');
