@@ -160,22 +160,22 @@ canvasfx.scene.shape.Circle = function(opt_centerX, opt_centerY, opt_radius) {
   canvasfx.scene.shape.Shape.call(this);
 
   /**
-   * @protected
+   * @private
    * @type {number}
    */
-  this.centerX = canvasfx.supplement(opt_centerX, 0.0);
+  this.centerX_ = canvasfx.supplement(opt_centerX, 0.0);
 
   /**
-   * @protected
+   * @private
    * @type {number}
    */
-  this.centerY = canvasfx.supplement(opt_centerY, 0.0);
+  this.centerY_ = canvasfx.supplement(opt_centerY, 0.0);
 
   /**
-   * @protected
+   * @private
    * @type {number}
    */
-  this.radius = canvasfx.supplement(opt_radius, 0.0);
+  this.radius_ = canvasfx.supplement(opt_radius, 0.0);
 
   this.fill = canvasfx.scene.paint.Color.BLACK;
 };
@@ -196,7 +196,7 @@ canvasfx.scene.shape.Circle.prototype.contains = function(x, opt_y) {
   var point = new canvasfx.geometry.Point(
       this.getCurrentCenterX(), this.getCurrentCenterY()
       );
-  return (point.distance(x, opt_y) <= this.radius);
+  return (point.distance(x, opt_y) <= this.radius_);
 };
 
 
@@ -212,7 +212,7 @@ canvasfx.scene.shape.Circle.prototype.draw = function(context) {
     this.transform(context);
     context.beginPath();
     context.arc(
-        0, 0, this.radius,
+        0, 0, this.radius_,
         0, Math.PI * 2, false
     );
     context.fill();
@@ -241,7 +241,7 @@ canvasfx.scene.shape.Circle.prototype.draw = function(context) {
     this.transform(context);
     context.beginPath();
     context.arc(
-        0, 0, this.radius + offset,
+        0, 0, this.radius_ + offset,
         0, Math.PI * 2, false
     );
     context.stroke();
@@ -253,7 +253,7 @@ canvasfx.scene.shape.Circle.prototype.draw = function(context) {
  * @return {number}
  */
 canvasfx.scene.shape.Circle.prototype.getCenterX = function() {
-  return this.centerX;
+  return this.centerX_;
 };
 
 
@@ -261,7 +261,7 @@ canvasfx.scene.shape.Circle.prototype.getCenterX = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Circle.prototype.getCenterY = function() {
-  return this.centerY;
+  return this.centerY_;
 };
 
 
@@ -270,7 +270,7 @@ canvasfx.scene.shape.Circle.prototype.getCenterY = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Circle.prototype.getCurrentCenterX = function() {
-  return this.centerX + this.layoutX + this.translateX;
+  return this.centerX_ + this.layoutX + this.translateX;
 };
 
 
@@ -279,7 +279,7 @@ canvasfx.scene.shape.Circle.prototype.getCurrentCenterX = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Circle.prototype.getCurrentCenterY = function() {
-  return this.centerY + this.layoutY + this.translateY;
+  return this.centerY_ + this.layoutY + this.translateY;
 };
 
 
@@ -289,8 +289,8 @@ canvasfx.scene.shape.Circle.prototype.getCurrentCenterY = function() {
  */
 canvasfx.scene.shape.Circle.prototype.getLayoutBounds = function() {
   return new canvasfx.geometry.Bounds(
-      this.centerX - this.radius, this.centerY - this.radius,
-      2 * this.radius, 2 * this.radius
+      this.centerX_ - this.radius_, this.centerY_ - this.radius_,
+      2 * this.radius_, 2 * this.radius_
   );
 };
 
@@ -299,7 +299,7 @@ canvasfx.scene.shape.Circle.prototype.getLayoutBounds = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Circle.prototype.getRadius = function() {
-  return this.radius;
+  return this.radius_;
 };
 
 
@@ -307,7 +307,7 @@ canvasfx.scene.shape.Circle.prototype.getRadius = function() {
  * @param {number} value
  */
 canvasfx.scene.shape.Circle.prototype.setCenterX = function(value) {
-  this.centerX = value;
+  this.centerX_ = value;
 };
 
 
@@ -315,7 +315,7 @@ canvasfx.scene.shape.Circle.prototype.setCenterX = function(value) {
  * @param {number} value
  */
 canvasfx.scene.shape.Circle.prototype.setCenterY = function(value) {
-  this.centerY = value;
+  this.centerY_ = value;
 };
 
 
@@ -323,7 +323,7 @@ canvasfx.scene.shape.Circle.prototype.setCenterY = function(value) {
  * @param {number} value
  */
 canvasfx.scene.shape.Circle.prototype.setRadius = function(value) {
-  this.radius = value;
+  this.radius_ = value;
 };
 
 
@@ -340,28 +340,40 @@ canvasfx.scene.shape.Rectangle = function(opt_x, opt_y, opt_width, opt_height) {
   canvasfx.scene.shape.Shape.call(this);
 
   /**
-   * @protected
+   * @private
    * @type {number}
    */
-  this.height = canvasfx.supplement(opt_height, 0.0);
+  this.arcHeight_ = 0.0;
 
   /**
-   * @protected
+   * @private
    * @type {number}
    */
-  this.width = canvasfx.supplement(opt_width, 0.0);
+  this.arcWidth_ = 0.0;
 
   /**
-   * @protected
+   * @private
    * @type {number}
    */
-  this.x = canvasfx.supplement(opt_x, 0.0);
+  this.height_ = canvasfx.supplement(opt_height, 0.0);
 
   /**
-   * @protected
+   * @private
    * @type {number}
    */
-  this.y = canvasfx.supplement(opt_y, 0.0);
+  this.width_ = canvasfx.supplement(opt_width, 0.0);
+
+  /**
+   * @private
+   * @type {number}
+   */
+  this.x_ = canvasfx.supplement(opt_x, 0.0);
+
+  /**
+   * @private
+   * @type {number}
+   */
+  this.y_ = canvasfx.supplement(opt_y, 0.0);
 
   this.fill = canvasfx.scene.paint.Color.BLACK;
 };
@@ -373,6 +385,7 @@ canvasfx.inherit(canvasfx.scene.shape.Rectangle, canvasfx.scene.shape.Shape);
  * @param {number=} opt_y
  * @return {boolean}
  * @override
+ * TODO: arc corner
  */
 canvasfx.scene.shape.Rectangle.prototype.contains = function(x, opt_y) {
   if (x instanceof canvasfx.geometry.Point) {
@@ -381,6 +394,48 @@ canvasfx.scene.shape.Rectangle.prototype.contains = function(x, opt_y) {
   }
   return this.getCurrentX() <= x && x <= this.getCurrentX() &&
       this.getCurrentY() <= opt_y && opt_y <= this.getCurrentY();
+
+  var x, y;
+  if (this.getCurrentX() + this.arcWidth_ <= x &&
+      x <= this.getCurrentX() + this.width_ - this.arcWidth_ &&
+      this.getCurrentY() <= opt_y &&
+      opt_y <= this.getCurrentY() + this.height_) {
+    return true;
+  } else if (this.getCurrentX() <= x &&
+      x <= this.getCurrentX() + this.width_ &&
+      this.getCurrentY() + this.arcHeight_ <= opt_y &&
+      opt_y <= this.getCurrentY() + this.height_ - this.arcHeight_) {
+    return true;
+  } else if (this.getCurrentX() <= x &&
+      x <= this.getCurrentX() + this.arcWidth_ &&
+      this.getCurrentY() <= opt_y &&
+      opt_y <= this.getCurrentY() + this.arcHeight_) {
+    x = this.getCurrentX() + this.arcWidth_;
+    y = this.getCurrentY() + this.arcHeight_;
+    //
+  } else if (this.getCurrentX() + this.width_ - this.arcWidth_ <= x &&
+      x <= this.getCurrentX() + this.width_ &&
+      this.getCurrentY() <= opt_y &&
+      opt_y <= this.getCurrentY() + this.arcHeight_) {
+    x = this.getCurrentX() + this.width_ - this.arcWidth_;
+    y = this.getCurrentY() + this.arcHeight_;
+    //
+  } else if (this.getCurrentX() + this.width_ - this.arcWidth_ <= x &&
+      x <= this.getCurrentX() + this.width_ &&
+      this.getCurrentY() + this.height_ - this.arcHeight_ <= opt_y &&
+      opt_y <= this.getCurrentY() + this.height_) {
+    x = this.getCurrentX() + this.width_ - this.arcWidth_;
+    y = this.getCurrentY() + this.height_ - this.arcHeight_;
+    //
+  } else if (this.getCurrentX() <= x &&
+      x <= this.getCurrentX() + this.arcWidth_ &&
+      this.getCurrentY() + this.height_ - this.arcHeight_ <= opt_y &&
+      opt_y <= this.getCurrentY() + this.height_) {
+    x = this.getCurrentX() + this.arcWidth_;
+    y = this.getCurrentY() + this.height_ - this.arcHeight_;
+    //
+  }
+  return false;
 };
 
 
@@ -394,12 +449,59 @@ canvasfx.scene.shape.Rectangle.prototype.draw = function(context) {
     context.globalAlpha = this.getCurrentFill().getOpacity();
     context.setTransform(1, 0, 0, 1, 0, 0);
     this.transform(context);
+    /*
     context.fillRect(
-        parseInt(-this.width / 2),
-        parseInt(-this.height / 2),
-        parseInt(this.width),
-        parseInt(this.height)
+        parseInt(-this.width_ / 2),
+        parseInt(-this.height_ / 2),
+        parseInt(this.width_),
+        parseInt(this.height_)
+    );*/
+    context.beginPath();
+    context.moveTo(
+        parseInt(-this.width_ / 2 + this.arcWidth_),
+        parseInt(-this.height_ / 2)
     );
+    context.lineTo(
+        parseInt(this.width_ / 2 - this.arcWidth_),
+        parseInt(-this.height_ / 2)
+    );
+    context.quadraticCurveTo(
+        parseInt(this.width_ / 2),
+        parseInt(-this.height_ / 2),
+        parseInt(this.width_ / 2),
+        parseInt(-this.height_ / 2 + this.arcHeight_)
+    );
+    context.lineTo(
+        parseInt(this.width_ / 2),
+        parseInt(this.height_ / 2 - this.arcHeight_)
+    );
+    context.quadraticCurveTo(
+        parseInt(this.width_ / 2),
+        parseInt(this.height_ / 2),
+        parseInt(this.width_ / 2 - this.arcWidth_),
+        parseInt(this.height_ / 2)
+    );
+    context.lineTo(
+        parseInt(-this.width_ / 2 + this.arcWidth_),
+        parseInt(this.height_ / 2)
+    );
+    context.quadraticCurveTo(
+        parseInt(-this.width_ / 2),
+        parseInt(this.height_ / 2),
+        parseInt(-this.width_ / 2),
+        parseInt(this.height_ / 2 - this.arcHeight_)
+    );
+    context.lineTo(
+        parseInt(-this.width_ / 2),
+        parseInt(-this.height_ / 2 + this.arcHeight_)
+    );
+    context.quadraticCurveTo(
+        parseInt(-this.width_ / 2),
+        parseInt(-this.height_ / 2),
+        parseInt(-this.width_ / 2 + this.arcWidth_),
+        parseInt(-this.height_ / 2)
+    );
+    context.fill();
   }
 
   if (this.getCurrentStroke()) {
@@ -432,12 +534,60 @@ canvasfx.scene.shape.Rectangle.prototype.draw = function(context) {
         offsetSize / 2 + offsetPosition
     );
     this.transform(context);
+    /*
     context.strokeRect(
-        parseInt(-this.width / 2) - offsetSize / 2,
-        parseInt(-this.height / 2) - offsetSize / 2,
-        parseInt(this.width) + offsetSize,
-        parseInt(this.height) + offsetSize
+        parseInt(-this.width_ / 2) - offsetSize / 2,
+        parseInt(-this.height_ / 2) - offsetSize / 2,
+        parseInt(this.width_) + offsetSize,
+        parseInt(this.height_) + offsetSize
     );
+    */
+    context.beginPath();
+    context.moveTo(
+        parseInt(-(this.width_ + offsetSize) / 2 + this.arcWidth_),
+        parseInt(-(this.height_ + offsetSize) / 2)
+    );
+    context.lineTo(
+        parseInt((this.width_ + offsetSize) / 2 - this.arcWidth_),
+        parseInt(-(this.height_ + offsetSize) / 2)
+    );
+    context.quadraticCurveTo(
+        parseInt((this.width_ + offsetSize) / 2),
+        parseInt(-(this.height_ + offsetSize) / 2),
+        parseInt((this.width_ + offsetSize) / 2),
+        parseInt(-(this.height_ + offsetSize) / 2 + this.arcHeight_)
+    );
+    context.lineTo(
+        parseInt((this.width_ + offsetSize) / 2),
+        parseInt((this.height_ + offsetSize) / 2 - this.arcHeight_)
+    );
+    context.quadraticCurveTo(
+        parseInt((this.width_ + offsetSize) / 2),
+        parseInt((this.height_ + offsetSize) / 2),
+        parseInt((this.width_ + offsetSize) / 2 - this.arcWidth_),
+        parseInt((this.height_ + offsetSize) / 2)
+    );
+    context.lineTo(
+        parseInt(-(this.width_ + offsetSize) / 2 + this.arcWidth_),
+        parseInt((this.height_ + offsetSize) / 2)
+    );
+    context.quadraticCurveTo(
+        parseInt(-(this.width_ + offsetSize) / 2),
+        parseInt((this.height_ + offsetSize) / 2),
+        parseInt(-(this.width_ + offsetSize) / 2),
+        parseInt((this.height_ + offsetSize) / 2 - this.arcHeight_)
+    );
+    context.lineTo(
+        parseInt(-(this.width_ + offsetSize) / 2),
+        parseInt(-(this.height_ + offsetSize) / 2 + this.arcHeight_)
+    );
+    context.quadraticCurveTo(
+        parseInt(-(this.width_ + offsetSize) / 2),
+        parseInt(-(this.height_ + offsetSize) / 2),
+        parseInt(-(this.width_ + offsetSize) / 2 + this.arcWidth_),
+        parseInt(-(this.height_ + offsetSize) / 2)
+    );
+    context.stroke();
   }
 };
 
@@ -446,8 +596,26 @@ canvasfx.scene.shape.Rectangle.prototype.draw = function(context) {
  * @protected
  * @return {number}
  */
+canvasfx.scene.shape.Rectangle.prototype.getArcHeight = function() {
+  return this.arcHeight_;
+};
+
+
+/**
+ * @protected
+ * @return {number}
+ */
+canvasfx.scene.shape.Rectangle.prototype.getArcWidth = function() {
+  return this.arcWidth_;
+};
+
+
+/**
+ * @protected
+ * @return {number}
+ */
 canvasfx.scene.shape.Rectangle.prototype.getCurrentX = function() {
-  return this.x + this.layoutX + this.translateX;
+  return this.x_ + this.layoutX + this.translateX;
 };
 
 
@@ -456,7 +624,7 @@ canvasfx.scene.shape.Rectangle.prototype.getCurrentX = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Rectangle.prototype.getCurrentY = function() {
-  return this.y + this.layoutY + this.translateY;
+  return this.y_ + this.layoutY + this.translateY;
 };
 
 
@@ -464,7 +632,7 @@ canvasfx.scene.shape.Rectangle.prototype.getCurrentY = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Rectangle.prototype.getHeight = function() {
-  return this.height;
+  return this.height_;
 };
 
 
@@ -474,7 +642,7 @@ canvasfx.scene.shape.Rectangle.prototype.getHeight = function() {
  */
 canvasfx.scene.shape.Rectangle.prototype.getLayoutBounds = function() {
   return new canvasfx.geometry.Bounds(
-      this.x, this.y, this.width, this.height
+      this.x_, this.y_, this.width_, this.height_
   );
 };
 
@@ -483,7 +651,7 @@ canvasfx.scene.shape.Rectangle.prototype.getLayoutBounds = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Rectangle.prototype.getWitdh = function() {
-  return this.width;
+  return this.width_;
 };
 
 
@@ -491,7 +659,7 @@ canvasfx.scene.shape.Rectangle.prototype.getWitdh = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Rectangle.prototype.getX = function() {
-  return this.x;
+  return this.x_;
 };
 
 
@@ -499,7 +667,23 @@ canvasfx.scene.shape.Rectangle.prototype.getX = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Rectangle.prototype.getY = function() {
-  return this.y;
+  return this.y_;
+};
+
+
+/**
+ * @param {number} value
+ */
+canvasfx.scene.shape.Rectangle.prototype.setArcHeight = function(value) {
+  this.arcHeight_ = value;
+};
+
+
+/**
+ * @param {number} value
+ */
+canvasfx.scene.shape.Rectangle.prototype.setArcWidth = function(value) {
+  this.arcWidth_ = value;
 };
 
 
@@ -507,7 +691,7 @@ canvasfx.scene.shape.Rectangle.prototype.getY = function() {
  * @param {number} value
  */
 canvasfx.scene.shape.Rectangle.prototype.setHeight = function(value) {
-  this.height = value;
+  this.height_ = value;
 };
 
 
@@ -515,7 +699,7 @@ canvasfx.scene.shape.Rectangle.prototype.setHeight = function(value) {
  * @param {number} value
  */
 canvasfx.scene.shape.Rectangle.prototype.setWidth = function(value) {
-  this.width = value;
+  this.width_ = value;
 };
 
 
@@ -523,7 +707,7 @@ canvasfx.scene.shape.Rectangle.prototype.setWidth = function(value) {
  * @param {number} value
  */
 canvasfx.scene.shape.Rectangle.prototype.setX = function(value) {
-  this.x = value;
+  this.x_ = value;
 };
 
 
@@ -531,7 +715,7 @@ canvasfx.scene.shape.Rectangle.prototype.setX = function(value) {
  * @param {number} value
  */
 canvasfx.scene.shape.Rectangle.prototype.setY = function(value) {
-  this.y = value;
+  this.y_ = value;
 };
 
 
@@ -549,28 +733,28 @@ canvasfx.scene.shape.Line = function(
   canvasfx.scene.shape.Shape.call(this);
 
   /**
-   * @protected
+   * @private
    * @type {number}
    */
-  this.endX = canvasfx.supplement(opt_endX, 0.0);
+  this.endX_ = canvasfx.supplement(opt_endX, 0.0);
 
   /**
-   * @protected
+   * @private
    * @type {number}
    */
-  this.endY = canvasfx.supplement(opt_endY, 0.0);
+  this.endY_ = canvasfx.supplement(opt_endY, 0.0);
 
   /**
-   * @protected
+   * @private
    * @type {number}
    */
-  this.startX = canvasfx.supplement(opt_startX, 0.0);
+  this.startX_ = canvasfx.supplement(opt_startX, 0.0);
 
   /**
-   * @protected
+   * @private
    * @type {number}
    */
-  this.startY = canvasfx.supplement(opt_startY, 0.0);
+  this.startY_ = canvasfx.supplement(opt_startY, 0.0);
 
   this.stroke = canvasfx.scene.paint.Color.BLACK;
 };
@@ -607,12 +791,12 @@ canvasfx.scene.shape.Line.prototype.draw = function(context) {
     this.transform(context);
     context.beginPath();
     context.moveTo(
-        parseInt(this.startX - lb.getMinX() - lb.getWidth() / 2),
-        parseInt(this.startY - lb.getMinY() - lb.getHeight() / 2)
+        parseInt(this.startX_ - lb.getMinX() - lb.getWidth() / 2),
+        parseInt(this.startY_ - lb.getMinY() - lb.getHeight() / 2)
     );
     context.lineTo(
-        parseInt(this.endX - lb.getMinX() - lb.getWidth() / 2),
-        parseInt(this.endY - lb.getMinY() - lb.getHeight() / 2)
+        parseInt(this.endX_ - lb.getMinX() - lb.getWidth() / 2),
+        parseInt(this.endY_ - lb.getMinY() - lb.getHeight() / 2)
     );
     context.stroke();
   }
@@ -624,7 +808,7 @@ canvasfx.scene.shape.Line.prototype.draw = function(context) {
  * @return {number}
  */
 canvasfx.scene.shape.Line.prototype.getCurrentEndX = function() {
-  return this.endX + this.layoutX + this.translateX;
+  return this.endX_ + this.layoutX + this.translateX;
 };
 
 
@@ -633,7 +817,7 @@ canvasfx.scene.shape.Line.prototype.getCurrentEndX = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Line.prototype.getCurrentEndY = function() {
-  return this.endY + this.layoutY + this.translateY;
+  return this.endY_ + this.layoutY + this.translateY;
 };
 
 
@@ -642,7 +826,7 @@ canvasfx.scene.shape.Line.prototype.getCurrentEndY = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Line.prototype.getCurrentStartX = function() {
-  return this.startX + this.layoutX + this.translateX;
+  return this.startX_ + this.layoutX + this.translateX;
 };
 
 
@@ -651,7 +835,7 @@ canvasfx.scene.shape.Line.prototype.getCurrentStartX = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Line.prototype.getCurrentStartY = function() {
-  return this.startY + this.layoutY + this.translateY;
+  return this.startY_ + this.layoutY + this.translateY;
 };
 
 
@@ -659,7 +843,7 @@ canvasfx.scene.shape.Line.prototype.getCurrentStartY = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Line.prototype.getEndX = function() {
-  return this.endX;
+  return this.endX_;
 };
 
 
@@ -667,7 +851,7 @@ canvasfx.scene.shape.Line.prototype.getEndX = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Line.prototype.getEndY = function() {
-  return this.endY;
+  return this.endY_;
 };
 
 
@@ -677,8 +861,8 @@ canvasfx.scene.shape.Line.prototype.getEndY = function() {
  */
 canvasfx.scene.shape.Line.prototype.getLayoutBounds = function() {
   return new canvasfx.geometry.Bounds(
-      Math.min(this.startX, this.endX), Math.min(this.startY, this.endY),
-      Math.abs(this.startX - this.endX), Math.abs(this.startY - this.endY)
+      Math.min(this.startX_, this.endX_), Math.min(this.startY_, this.endY_),
+      Math.abs(this.startX_ - this.endX_), Math.abs(this.startY_ - this.endY_)
   );
 };
 
@@ -687,7 +871,7 @@ canvasfx.scene.shape.Line.prototype.getLayoutBounds = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Line.prototype.getStartX = function() {
-  return this.startX;
+  return this.startX_;
 };
 
 
@@ -695,7 +879,7 @@ canvasfx.scene.shape.Line.prototype.getStartX = function() {
  * @return {number}
  */
 canvasfx.scene.shape.Line.prototype.getStartY = function() {
-  return this.startY;
+  return this.startY_;
 };
 
 
@@ -703,7 +887,7 @@ canvasfx.scene.shape.Line.prototype.getStartY = function() {
  * @param {number} value
  */
 canvasfx.scene.shape.Line.prototype.setEndX = function(value) {
-  this.endX = value;
+  this.endX_ = value;
 };
 
 
@@ -711,7 +895,7 @@ canvasfx.scene.shape.Line.prototype.setEndX = function(value) {
  * @param {number} value
  */
 canvasfx.scene.shape.Line.prototype.setEndY = function(value) {
-  this.endY = value;
+  this.endY_ = value;
 };
 
 
@@ -719,7 +903,7 @@ canvasfx.scene.shape.Line.prototype.setEndY = function(value) {
  * @param {number} value
  */
 canvasfx.scene.shape.Line.prototype.seStartX = function(value) {
-  this.startX = value;
+  this.startX_ = value;
 };
 
 
@@ -727,5 +911,5 @@ canvasfx.scene.shape.Line.prototype.seStartX = function(value) {
  * @param {number} value
  */
 canvasfx.scene.shape.Line.prototype.seStartY = function(value) {
-  this.startY = value;
+  this.startY_ = value;
 };

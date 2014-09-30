@@ -88,9 +88,18 @@ test.App.prototype.start = function(primaryStage) {
   children.push(group);
 
 
+  rectangle.setOnMouseClicked((function() {
+    var e = new canvasfx.event.EventHandler();
+    e.handle = function(event) {
+      console.log(1);
+    };
+    return e;
+  })());
+
   scene.setOnMouseDragged((function() {
     var e = new canvasfx.event.EventHandler();
     e.handle = function(event) {
+      return;
       group.setTranslateX(event.getX() - 200);
       group.setTranslateY(event.getY() - 200);
     };
@@ -189,6 +198,9 @@ test.App.prototype.start = function(primaryStage) {
   ft.setToValue(0.1);
   ft.play();
   */
+
+  rectangle.setArcHeight(25);
+  rectangle.setArcWidth(25);
 
   var tt = new canvasfx.animation.ScaleTransition();
   tt.setDuration(canvasfx.util.Duration.seconds(3));
