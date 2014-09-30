@@ -190,22 +190,30 @@ test.App.prototype.start = function(primaryStage) {
   ft.play();
   */
 
-  var tt = new canvasfx.animation.TranslateTransition();
+  var tt = new canvasfx.animation.ScaleTransition();
   tt.setDuration(canvasfx.util.Duration.seconds(3));
   tt.setNode(group);
   //tt.setCycleCount(3);
   //tt.setAutoReverse(true);
   //tt.setToX(100);
   //tt.setToY(50);
-  tt.setByX(100);
-  tt.play();
+  tt.setToX(1.5);
+  //tt.play();
 
 
   var rt = new canvasfx.animation.RotateTransition();
   rt.setDuration(canvasfx.util.Duration.seconds(3));
   rt.setNode(group);
   rt.setByAngle(360);
-  rt.play();
+  //  rt.setAutoReverse(true);
+  //  rt.setCycleCount(canvasfx.animation.Animation.INDEFINITE);
+  //rt.play();
+
+  var ft = new canvasfx.animation.StrokeTransition();
+  ft.setDuration(canvasfx.util.Duration.seconds(3));
+  ft.setShape(circle);
+  ft.setToValue(new canvasfx.scene.paint.Color(1, 1, 0));
+  ft.play();
 
   primaryStage.show();
 };

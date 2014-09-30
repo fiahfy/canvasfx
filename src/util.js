@@ -117,7 +117,7 @@ canvasfx.util.Duration.prototype.toSeconds = function() {
  * @const
  * @type {canvasfx.util.Duration}
  */
-canvasfx.util.Duration.INFINITY = new canvasfx.util.Duration(Infinity);
+canvasfx.util.Duration.INDEFINITE = new canvasfx.util.Duration(Infinity);
 
 
 /**

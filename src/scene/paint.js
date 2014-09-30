@@ -119,9 +119,9 @@ canvasfx.scene.paint.Color.prototype.getRed = function() {
  */
 canvasfx.scene.paint.Color.prototype.getWeb = function() {
   return '#' +
-      ('00' + (this.red_ * 255).toString(16)).slice(-2) +
-      ('00' + (this.green_ * 255).toString(16)).slice(-2) +
-      ('00' + (this.blue_ * 255).toString(16)).slice(-2);
+      ('00' + parseInt(this.red_ * 255).toString(16)).slice(-2) +
+      ('00' + parseInt(this.green_ * 255).toString(16)).slice(-2) +
+      ('00' + parseInt(this.blue_ * 255).toString(16)).slice(-2);
 };
 
 
