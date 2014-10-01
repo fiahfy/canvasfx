@@ -89,7 +89,12 @@ canvasfx.stage.Stage.prototype.addEventListener = function() {
 
   // basic events
   var events = {
-    'click': 'MOUSE_CLICKED'
+    'click': 'MOUSE_CLICKED',
+    'mouseover': 'MOUSE_ENTERED',
+    'mouseout': 'MOUSE_EXITED',
+    'mousemove': 'MOUSE_MOVED',
+    'mousedown': 'MOUSE_PRESSED',
+    'mouseup': 'MOUSE_RELEASED'
   };
   Object.keys(events).forEach(function(key) {
     var value = this[key];

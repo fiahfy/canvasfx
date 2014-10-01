@@ -100,7 +100,7 @@ test.App.prototype.start = function(primaryStage) {
   scene.setOnMouseDragged((function() {
     var e = new canvasfx.event.EventHandler();
     e.handle = function(event) {
-      return;
+      //return;
       group.setTranslateX(event.getX() - 200);
       group.setTranslateY(event.getY() - 200);
     };

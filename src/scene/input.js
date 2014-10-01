@@ -82,5 +82,45 @@ canvasfx.scene.input.MouseEvent.MOUSE_CLICKED =
  * @const
  * @type {canvasfx.event.EventType}
  */
+canvasfx.scene.input.MouseEvent.MOUSE_ENTERED =
+    new canvasfx.event.EventType('MOUSE_ENTERED');
+
+
+/**
+ * @const
+ * @type {canvasfx.event.EventType}
+ */
+canvasfx.scene.input.MouseEvent.MOUSE_EXITED =
+    new canvasfx.event.EventType('MOUSE_EXITED');
+
+
+/**
+ * @const
+ * @type {canvasfx.event.EventType}
+ */
+canvasfx.scene.input.MouseEvent.MOUSE_MOVED =
+    new canvasfx.event.EventType('MOUSE_MOVED');
+
+
+/**
+ * @const
+ * @type {canvasfx.event.EventType}
+ */
+canvasfx.scene.input.MouseEvent.MOUSE_PRESSED =
+    new canvasfx.event.EventType('MOUSE_PRESSED');
+
+
+/**
+ * @const
+ * @type {canvasfx.event.EventType}
+ */
+canvasfx.scene.input.MouseEvent.MOUSE_RELEASED =
+    new canvasfx.event.EventType('MOUSE_RELEASED');
+
+
+/**
+ * @const
+ * @type {canvasfx.event.EventType}
+ */
 canvasfx.scene.input.MouseEvent.MOUSE_DRAGGED =
     new canvasfx.event.EventType('MOUSE_DRAGGED');

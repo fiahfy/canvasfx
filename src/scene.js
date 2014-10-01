@@ -36,6 +36,36 @@ canvasfx.scene.Scene = function(root, opt_width, opt_height) {
    * @private
    * @type {canvasfx.event.EventHandler}
    */
+  this.onMouseEntered_ = null;
+
+  /**
+   * @private
+   * @type {canvasfx.event.EventHandler}
+   */
+  this.onMouseExited_ = null;
+
+  /**
+   * @private
+   * @type {canvasfx.event.EventHandler}
+   */
+  this.onMouseMoved_ = null;
+
+  /**
+   * @private
+   * @type {canvasfx.event.EventHandler}
+   */
+  this.onMousePressed_ = null;
+
+  /**
+   * @private
+   * @type {canvasfx.event.EventHandler}
+   */
+  this.onMouseReleased_ = null;
+
+  /**
+   * @private
+   * @type {canvasfx.event.EventHandler}
+   */
   this.onMouseDragged_ = null;
 
   /**
@@ -66,6 +96,46 @@ canvasfx.scene.Scene.prototype.getHeight = function() {
  */
 canvasfx.scene.Scene.prototype.getOnMouseClicked = function() {
   return this.onMouseClicked_;
+};
+
+
+/**
+ * @return {canvasfx.event.EventHandler}
+ */
+canvasfx.scene.Scene.prototype.getOnMouseEntered = function() {
+  return this.onMouseEntered_;
+};
+
+
+/**
+ * @return {canvasfx.event.EventHandler}
+ */
+canvasfx.scene.Scene.prototype.getOnMouseExited = function() {
+  return this.onMouseExited_;
+};
+
+
+/**
+ * @return {canvasfx.event.EventHandler}
+ */
+canvasfx.scene.Scene.prototype.getOnMouseMoved = function() {
+  return this.onMouseMoved_;
+};
+
+
+/**
+ * @return {canvasfx.event.EventHandler}
+ */
+canvasfx.scene.Scene.prototype.getOnMousePressed = function() {
+  return this.onMousePressed_;
+};
+
+
+/**
+ * @return {canvasfx.event.EventHandler}
+ */
+canvasfx.scene.Scene.prototype.getOnMouseReleased = function() {
+  return this.onMouseReleased_;
 };
 
 
@@ -106,6 +176,31 @@ canvasfx.scene.Scene.prototype.handleEvent = function(event) {
             canvasfx.scene.input.MouseEvent.MOUSE_CLICKED) {
       this.onMouseClicked_.handle(event);
     }
+    if (this.onMouseEntered_ &&
+        event.getEventType() ==
+            canvasfx.scene.input.MouseEvent.MOUSE_ENTERED) {
+      this.onMouseEntered_.handle(event);
+    }
+    if (this.onMouseExited_ &&
+        event.getEventType() ==
+            canvasfx.scene.input.MouseEvent.MOUSE_EXITED) {
+      this.onMouseExited_.handle(event);
+    }
+    if (this.onMouseMoved_ &&
+        event.getEventType() ==
+            canvasfx.scene.input.MouseEvent.MOUSE_MOVED) {
+      this.onMouseMoved_.handle(event);
+    }
+    if (this.onMousePressed_ &&
+        event.getEventType() ==
+            canvasfx.scene.input.MouseEvent.MOUSE_PRESSED) {
+      this.onMousePressed_.handle(event);
+    }
+    if (this.onMouseReleased_ &&
+        event.getEventType() ==
+            canvasfx.scene.input.MouseEvent.MOUSE_RELEASED) {
+      this.onMouseReleased_.handle(event);
+    }
     if (this.onMouseDragged_ &&
         event.getEventType() ==
             canvasfx.scene.input.MouseEvent.MOUSE_DRAGGED) {
@@ -128,6 +223,46 @@ canvasfx.scene.Scene.prototype.setHeight = function(value) {
  */
 canvasfx.scene.Scene.prototype.setOnMouseClicked = function(value) {
   this.onMouseClicked_ = value;
+};
+
+
+/**
+ * @param {canvasfx.event.EventHandler} value
+ */
+canvasfx.scene.Scene.prototype.setOnMouseEntered = function(value) {
+  this.onMouseEntered_ = value;
+};
+
+
+/**
+ * @param {canvasfx.event.EventHandler} value
+ */
+canvasfx.scene.Scene.prototype.setOnMouseExited = function(value) {
+  this.onMouseExited_ = value;
+};
+
+
+/**
+ * @param {canvasfx.event.EventHandler} value
+ */
+canvasfx.scene.Scene.prototype.setOnMouseMoved = function(value) {
+  this.onMouseMoved_ = value;
+};
+
+
+/**
+ * @param {canvasfx.event.EventHandler} value
+ */
+canvasfx.scene.Scene.prototype.setOnMousePressed = function(value) {
+  this.onMousePressed_ = value;
+};
+
+
+/**
+ * @param {canvasfx.event.EventHandler} value
+ */
+canvasfx.scene.Scene.prototype.setOnMouseReleased = function(value) {
+  this.onMouseReleased_ = value;
 };
 
 
@@ -172,6 +307,36 @@ canvasfx.scene.Node = function() {
    * @type {canvasfx.event.EventHandler}
    */
   this.onMouseClicked = null;
+
+  /**
+   * @private
+   * @type {canvasfx.event.EventHandler}
+   */
+  this.onMouseEntered_ = null;
+
+  /**
+   * @private
+   * @type {canvasfx.event.EventHandler}
+   */
+  this.onMouseExited_ = null;
+
+  /**
+   * @private
+   * @type {canvasfx.event.EventHandler}
+   */
+  this.onMouseMoved_ = null;
+
+  /**
+   * @private
+   * @type {canvasfx.event.EventHandler}
+   */
+  this.onMousePressed_ = null;
+
+  /**
+   * @private
+   * @type {canvasfx.event.EventHandler}
+   */
+  this.onMouseReleased_ = null;
 
   /**
    * @protected
@@ -270,6 +435,46 @@ canvasfx.scene.Node.prototype.getOnMouseClicked = function() {
 /**
  * @return {canvasfx.event.EventHandler}
  */
+canvasfx.scene.Node.prototype.getOnMouseEntered = function() {
+  return this.onMouseEntered_;
+};
+
+
+/**
+ * @return {canvasfx.event.EventHandler}
+ */
+canvasfx.scene.Node.prototype.getOnMouseExited = function() {
+  return this.onMouseExited_;
+};
+
+
+/**
+ * @return {canvasfx.event.EventHandler}
+ */
+canvasfx.scene.Node.prototype.getOnMouseMoved = function() {
+  return this.onMouseMoved_;
+};
+
+
+/**
+ * @return {canvasfx.event.EventHandler}
+ */
+canvasfx.scene.Node.prototype.getOnMousePressed = function() {
+  return this.onMousePressed_;
+};
+
+
+/**
+ * @return {canvasfx.event.EventHandler}
+ */
+canvasfx.scene.Node.prototype.getOnMouseReleased = function() {
+  return this.onMouseReleased_;
+};
+
+
+/**
+ * @return {canvasfx.event.EventHandler}
+ */
 canvasfx.scene.Node.prototype.getOnMouseDragged = function() {
   return this.onMouseDragged;
 };
@@ -341,6 +546,31 @@ canvasfx.scene.Node.prototype.handleEvent = function(event) {
             canvasfx.scene.input.MouseEvent.MOUSE_CLICKED) {
       this.onMouseClicked.handle(event);
     }
+    if (this.onMouseEntered_ &&
+        event.getEventType() ==
+            canvasfx.scene.input.MouseEvent.MOUSE_ENTERED) {
+      this.onMouseEntered_.handle(event);
+    }
+    if (this.onMouseExited_ &&
+        event.getEventType() ==
+            canvasfx.scene.input.MouseEvent.MOUSE_EXITED) {
+      this.onMouseExited_.handle(event);
+    }
+    if (this.onMouseMoved_ &&
+        event.getEventType() ==
+            canvasfx.scene.input.MouseEvent.MOUSE_MOVED) {
+      this.onMouseMoved_.handle(event);
+    }
+    if (this.onMousePressed_ &&
+        event.getEventType() ==
+            canvasfx.scene.input.MouseEvent.MOUSE_PRESSED) {
+      this.onMousePressed_.handle(event);
+    }
+    if (this.onMouseReleased_ &&
+        event.getEventType() ==
+            canvasfx.scene.input.MouseEvent.MOUSE_RELEASED) {
+      this.onMouseReleased_.handle(event);
+    }
     if (this.onMouseDragged &&
         event.getEventType() ==
             canvasfx.scene.input.MouseEvent.MOUSE_DRAGGED) {
@@ -371,6 +601,46 @@ canvasfx.scene.Node.prototype.setLayoutY = function(value) {
  */
 canvasfx.scene.Node.prototype.setOnMouseClicked = function(value) {
   this.onMouseClicked = value;
+};
+
+
+/**
+ * @param {canvasfx.event.EventHandler} value
+ */
+canvasfx.scene.Node.prototype.setOnMouseEntered = function(value) {
+  this.onMouseEntered_ = value;
+};
+
+
+/**
+ * @param {canvasfx.event.EventHandler} value
+ */
+canvasfx.scene.Node.prototype.setOnMouseExited = function(value) {
+  this.onMouseExited_ = value;
+};
+
+
+/**
+ * @param {canvasfx.event.EventHandler} value
+ */
+canvasfx.scene.Node.prototype.setOnMouseMoved = function(value) {
+  this.onMouseMoved_ = value;
+};
+
+
+/**
+ * @param {canvasfx.event.EventHandler} value
+ */
+canvasfx.scene.Node.prototype.setOnMousePressed = function(value) {
+  this.onMousePressed_ = value;
+};
+
+
+/**
+ * @param {canvasfx.event.EventHandler} value
+ */
+canvasfx.scene.Node.prototype.setOnMouseReleased = function(value) {
+  this.onMouseReleased_ = value;
 };
 
 

@@ -11,6 +11,132 @@ canvasfx.animation = {};
 
 
 /**
+ * @param {canvasfx.util.Duration} time
+ * @param {canvasfx.event.EventHandler} onFinished
+ * @constructor
+ * @extends {canvasfx.Object}
+ */
+canvasfx.animation.KeyFrame = function(time, onFinished) {
+  canvasfx.Object.call(this);
+
+  /**
+   * @private
+   * @type {canvasfx.event.EventHandler}
+   */
+  this.onFinished_ = onFinished;
+
+  /**
+   * @private
+   * @type {canvasfx.util.Duration}
+   */
+  this.time_ = time;
+};
+canvasfx.inherit(canvasfx.animation.KeyFrame, canvasfx.Object);
+
+
+/**
+ * @return {canvasfx.event.EventHandler}
+ */
+canvasfx.animation.KeyFrame.prototype.getOnFinished = function() {
+  return this.onFinished_;
+};
+
+
+/**
+ * @return {canvasfx.util.Duration}
+ */
+canvasfx.animation.KeyFrame.prototype.getTime = function() {
+  return this.time_;
+};
+
+
+
+/**
+ * @constructor
+ * @extends {canvasfx.Object}
+ */
+canvasfx.animation.AnimationTimer = function() {
+  canvasfx.Object.call(this);
+
+  /**
+   * @private
+   * @type {number}
+   */
+  this.id_ = null;
+};
+canvasfx.inherit(canvasfx.animation.AnimationTimer, canvasfx.Object);
+
+
+/**
+ * @param {number} now
+ */
+canvasfx.animation.AnimationTimer.prototype.handle = canvasfx.abstractMethod;
+
+
+/**
+ */
+canvasfx.animation.AnimationTimer.prototype.start = function() {
+  this.stop();
+
+  var me = this;
+  (function animationLoop() {
+    me.id_ = canvasfx.animation.AnimationTimer.requestAnimationFrame_()(
+        animationLoop
+        );
+    me.handle(Date.now());
+  })();
+};
+
+
+/**
+ */
+canvasfx.animation.AnimationTimer.prototype.stop = function() {
+  canvasfx.animation.AnimationTimer.cancelAnimationFrame_()(
+      this.id_
+  );
+  this.id_ = null;
+};
+
+
+/**
+ * @const
+ * @private
+ * @return {Function}
+ */
+canvasfx.animation.AnimationTimer.requestAnimationFrame_ = function() {
+  return window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      /** @param {Function} callback */
+          function(callback) {
+        window.setTimeout(callback, 1000 / 60);
+      };
+};
+
+
+/**
+ * @const
+ * @private
+ * @return {Function}
+ */
+canvasfx.animation.AnimationTimer.cancelAnimationFrame_ = function() {
+  return window.cancelAnimationFrame ||
+      window.cancelRequestAnimationFrame ||
+      window.webkitCancelRequestAnimationFrame ||
+      window.mozCancelRequestAnimationFrame ||
+      window.oCancelRequestAnimationFrame ||
+      window.msCancelRequestAnimationFrame ||
+      /** @param {number} id */
+          function(id) {
+        window.clearTimeout(id);
+      };
+};
+
+
+
+/**
  * @param {number=} opt_targetFramerate
  * @constructor
  * @extends {canvasfx.Object}
@@ -76,27 +202,18 @@ canvasfx.inherit(canvasfx.animation.Animation, canvasfx.Object);
 
 
 /**
- * @enum {string}
- */
-canvasfx.animation.Animation.Status = {
-  PAUSED: 'paused',
-  RUNNING: 'running',
-  STOPPED: 'stopped'
-};
-
-
-/**
- * @const
- * @type {number}
- */
-canvasfx.animation.Animation.INDEFINITE = -1;
-
-
-/**
  * @return {boolean}
  */
 canvasfx.animation.Animation.prototype.isAutoReverse = function() {
   return this.autoReverse;
+};
+
+
+/**
+ * @return {canvasfx.util.Duration}
+ */
+canvasfx.animation.Animation.prototype.getCurrentTime = function() {
+  return this.currentTime;
 };
 
 
@@ -113,14 +230,6 @@ canvasfx.animation.Animation.prototype.getCycleCount = function() {
  */
 canvasfx.animation.Animation.prototype.getCycleDuration = function() {
   return this.cycleDuration;
-};
-
-
-/**
- * @return {canvasfx.util.Duration}
- */
-canvasfx.animation.Animation.prototype.getCurrentTime = function() {
-  return this.currentTime;
 };
 
 
@@ -298,13 +407,6 @@ canvasfx.animation.Animation.prototype.setRate = function(value) {
 
 
 /**
- * @protected
- * @param {boolean} progress
- */
-canvasfx.animation.Animation.prototype.update = function(progress) {};
-
-
-/**
  */
 canvasfx.animation.Animation.prototype.stop = function() {
   if (this.status != canvasfx.animation.Animation.Status.RUNNING) {
@@ -316,6 +418,30 @@ canvasfx.animation.Animation.prototype.stop = function() {
     this.timer_ = null;
   }
   this.currentTime = canvasfx.util.Duration.ZERO;
+};
+
+
+/**
+ * @protected
+ * @param {boolean} progress
+ */
+canvasfx.animation.Animation.prototype.update = function(progress) {};
+
+
+/**
+ * @const
+ * @type {number}
+ */
+canvasfx.animation.Animation.INDEFINITE = -1;
+
+
+/**
+ * @enum {string}
+ */
+canvasfx.animation.Animation.Status = {
+  PAUSED: 'paused',
+  RUNNING: 'running',
+  STOPPED: 'stopped'
 };
 
 
@@ -332,13 +458,13 @@ canvasfx.animation.Timeline = function(var_args) {
    * @private
    * @type {Array}
    */
-  this.keyFrames_ = Array.prototype.slice.call(arguments);
+  this.animations_ = [];
 
   /**
    * @private
    * @type {Array}
    */
-  this.animations_ = [];
+  this.keyFrames_ = Array.prototype.slice.call(arguments);
 };
 canvasfx.inherit(canvasfx.animation.Timeline, canvasfx.animation.Animation);
 
@@ -388,57 +514,16 @@ canvasfx.animation.Timeline.prototype.play = function() {
 /**
  * @override
  */
-canvasfx.animation.Timeline.prototype.stop = function() {
-  this.animations_.forEach(function(element) {
-    element.stop();
-  });
-};
+canvasfx.animation.Timeline.prototype.update = function() {};
 
 
 /**
  * @override
  */
-canvasfx.animation.Timeline.prototype.update = function() {};
-
-
-
-/**
- * @param {canvasfx.util.Duration} time
- * @param {canvasfx.event.EventHandler} onFinished
- * @constructor
- * @extends {canvasfx.Object}
- */
-canvasfx.animation.KeyFrame = function(time, onFinished) {
-  canvasfx.Object.call(this);
-
-  /**
-   * @private
-   * @type {canvasfx.util.Duration}
-   */
-  this.time_ = time;
-
-  /**
-   * @private
-   * @type {canvasfx.event.EventHandler}
-   */
-  this.onFinished_ = onFinished;
-};
-canvasfx.inherit(canvasfx.animation.KeyFrame, canvasfx.Object);
-
-
-/**
- * @return {canvasfx.event.EventHandler}
- */
-canvasfx.animation.KeyFrame.prototype.getOnFinished = function() {
-  return this.onFinished_;
-};
-
-
-/**
- * @return {canvasfx.util.Duration}
- */
-canvasfx.animation.KeyFrame.prototype.getTime = function() {
-  return this.time_;
+canvasfx.animation.Timeline.prototype.stop = function() {
+  this.animations_.forEach(function(element) {
+    element.stop();
+  });
 };
 
 
@@ -515,13 +600,13 @@ canvasfx.animation.FadeTransition = function(opt_duration, opt_node) {
    * @private
    * @type {number|NaN}
    */
-  this.fromValue_ = NaN;
+  this.endValue_ = NaN;
 
   /**
    * @private
    * @type {number|NaN}
    */
-  this.toValue_ = NaN;
+  this.fromValue_ = NaN;
 
   /**
    * @private
@@ -533,7 +618,7 @@ canvasfx.animation.FadeTransition = function(opt_duration, opt_node) {
    * @private
    * @type {number|NaN}
    */
-  this.endValue_ = NaN;
+  this.toValue_ = NaN;
 };
 canvasfx.inherit(canvasfx.animation.FadeTransition,
     canvasfx.animation.Transition);
@@ -630,6 +715,188 @@ canvasfx.animation.FadeTransition.prototype.update = function(progress) {
 
 /**
  * @param {canvasfx.util.Duration=} opt_duration
+ * @param {canvasfx.scene.shape.Shape=} opt_shape
+ * @constructor
+ * @extends {canvasfx.animation.Transition}
+ */
+canvasfx.animation.FillTransition = function(opt_duration, opt_shape) {
+  canvasfx.animation.Transition.call(this);
+
+  this.cycleDuration =
+      canvasfx.supplement(opt_duration, new canvasfx.util.Duration(400));
+
+  /**
+   * @private
+   * @type {?canvasfx.scene.paint.Color}
+   */
+  this.endValue_ = null;
+
+  /**
+   * @private
+   * @type {?canvasfx.scene.paint.Color}
+   */
+  this.fromValue_ = null;
+
+  /**
+   * @protected
+   * @type {canvasfx.scene.shape.Shape}
+   */
+  this.node = canvasfx.supplement(opt_shape, null);
+
+  /**
+   * @private
+   * @type {?canvasfx.scene.paint.Color}
+   */
+  this.startValue_ = null;
+
+  /**
+   * @private
+   * @type {?canvasfx.scene.paint.Color}
+   */
+  this.toValue_ = null;
+};
+canvasfx.inherit(canvasfx.animation.FillTransition,
+    canvasfx.animation.Transition);
+
+
+/**
+ * @return {?canvasfx.scene.paint.Color}
+ */
+canvasfx.animation.FillTransition.prototype.getFromValue = function() {
+  return this.fromValue_;
+};
+
+
+/**
+ * @return {?canvasfx.scene.paint.Color}
+ */
+canvasfx.animation.FillTransition.prototype.getToValue = function() {
+  return this.toValue_;
+};
+
+
+/**
+ * @override
+ */
+canvasfx.animation.FillTransition.prototype.play = function() {
+  if (!this.node) {
+    return;
+  }
+
+  this.startValue_ = null;
+  this.endValue_ = null;
+
+  this.startValue_ = this.fromValue_;
+  if (!this.startValue_) {
+    this.startValue_ = this.node.getFill();
+  }
+  this.endValue_ = this.toValue_;
+  if (!this.endValue_) {
+    this.endValue_ = this.startValue_;
+  }
+
+  canvasfx.animation.Animation.prototype.play.call(this);
+};
+
+
+/**
+ * @param {?canvasfx.scene.paint.Color} value
+ */
+canvasfx.animation.FillTransition.prototype.setFromValue = function(value) {
+  this.fromValue_ = value;
+};
+
+
+/**
+ * @param {canvasfx.scene.shape.Shape} value
+ */
+canvasfx.animation.FillTransition.prototype.setShape = function(value) {
+  this.node = value;
+};
+
+
+/**
+ * @param {?canvasfx.scene.paint.Color} value
+ */
+canvasfx.animation.FillTransition.prototype.setToValue = function(value) {
+  this.toValue_ = value;
+};
+
+
+/**
+ * @param {boolean} progress
+ * @override
+ */
+canvasfx.animation.FillTransition.prototype.update = function(progress) {
+  if (!this.node) {
+    return;
+  }
+
+  var red = this.startValue_.getRed() -
+      this.startValue_.getRed() * progress +
+      this.endValue_.getRed() * progress;
+  var green = this.startValue_.getGreen() -
+      this.startValue_.getGreen() * progress +
+      this.endValue_.getGreen() * progress;
+  var blue = this.startValue_.getBlue() -
+      this.startValue_.getBlue() * progress +
+      this.endValue_.getBlue() * progress;
+  var opacity = this.startValue_.getOpacity() -
+      this.startValue_.getOpacity() * progress +
+      this.endValue_.getOpacity() * progress;
+
+  this.node.setFill(new canvasfx.scene.paint.Color(red, green, blue, opacity));
+};
+
+
+
+///**
+// * @param {canvasfx.scene.Node=} opt_node
+// * @param {...canvasfx.animation.Animation} var_args
+// * @constructor
+// * @extends {canvasfx.animation.Transition}
+// */
+//canvasfx.animation.ParallelTransition = function(opt_node, var_args) {
+//  var children = [];
+//  if (opt_node instanceof canvasfx.scene.Node) {
+//    this.node = opt_node;
+//    children = Array.prototype.slice.call(arguments);
+//    children.shift();
+//  } else if (opt_node instanceof canvasfx.animation.Animation) {
+//    children = Array.prototype.slice.call(arguments);
+//  }
+//
+//  /**
+//   * @private
+//   * @type {Array}
+//   */
+//  this.children_ = children;
+//};
+//canvasfx.inherit(canvasfx.animation.ParallelTransition,
+//    canvasfx.animation.Transition);
+//
+//
+///**
+// * @return {Array}
+// */
+//canvasfx.animation.ParallelTransition.prototype.getChildren = function() {
+//  return this.children_;
+//};
+//
+//
+///**
+// * @override
+// */
+//canvasfx.animation.ParallelTransition.prototype.play = function() {
+//  this.children_.forEach(function(element) {
+//    element.play();
+//  });
+//};
+
+
+
+/**
+ * @param {canvasfx.util.Duration=} opt_duration
  * @param {canvasfx.scene.Node=} opt_node
  * @constructor
  * @extends {canvasfx.animation.Transition}
@@ -651,13 +918,13 @@ canvasfx.animation.RotateTransition = function(opt_duration, opt_node) {
    * @private
    * @type {number|NaN}
    */
-  this.fromAngle_ = NaN;
+  this.endAngle_ = NaN;
 
   /**
    * @private
    * @type {number|NaN}
    */
-  this.toAngle_ = NaN;
+  this.fromAngle_ = NaN;
 
   /**
    * @private
@@ -669,7 +936,7 @@ canvasfx.animation.RotateTransition = function(opt_duration, opt_node) {
    * @private
    * @type {number|NaN}
    */
-  this.endAngle_ = NaN;
+  this.toAngle_ = NaN;
 };
 canvasfx.inherit(canvasfx.animation.RotateTransition,
     canvasfx.animation.Transition);
@@ -793,6 +1060,18 @@ canvasfx.animation.ScaleTransition = function(opt_duration, opt_node) {
    * @private
    * @type {number|NaN}
    */
+  this.endX_ = NaN;
+
+  /**
+   * @private
+   * @type {number|NaN}
+   */
+  this.endY_ = NaN;
+
+  /**
+   * @private
+   * @type {number|NaN}
+   */
   this.fromX_ = NaN;
 
   /**
@@ -800,18 +1079,6 @@ canvasfx.animation.ScaleTransition = function(opt_duration, opt_node) {
    * @type {number|NaN}
    */
   this.fromY_ = NaN;
-
-  /**
-   * @private
-   * @type {number|NaN}
-   */
-  this.toX_ = NaN;
-
-  /**
-   * @private
-   * @type {number|NaN}
-   */
-  this.toY_ = NaN;
 
   /**
    * @private
@@ -829,13 +1096,13 @@ canvasfx.animation.ScaleTransition = function(opt_duration, opt_node) {
    * @private
    * @type {number|NaN}
    */
-  this.endX_ = NaN;
+  this.toX_ = NaN;
 
   /**
    * @private
    * @type {number|NaN}
    */
-  this.endY_ = NaN;
+  this.toY_ = NaN;
 };
 canvasfx.inherit(canvasfx.animation.ScaleTransition,
     canvasfx.animation.Transition);
@@ -995,6 +1262,145 @@ canvasfx.animation.ScaleTransition.prototype.update = function(progress) {
 
 /**
  * @param {canvasfx.util.Duration=} opt_duration
+ * @param {canvasfx.scene.shape.Shape=} opt_shape
+ * @constructor
+ * @extends {canvasfx.animation.Transition}
+ */
+canvasfx.animation.StrokeTransition = function(opt_duration, opt_shape) {
+  canvasfx.animation.Transition.call(this);
+
+  this.cycleDuration =
+      canvasfx.supplement(opt_duration, new canvasfx.util.Duration(400));
+
+  /**
+   * @private
+   * @type {?canvasfx.scene.paint.Color}
+   */
+  this.endValue_ = null;
+
+  /**
+   * @private
+   * @type {?canvasfx.scene.paint.Color}
+   */
+  this.fromValue_ = null;
+
+  /**
+   * @protected
+   * @type {canvasfx.scene.shape.Shape}
+   */
+  this.node = canvasfx.supplement(opt_shape, null);
+
+  /**
+   * @private
+   * @type {?canvasfx.scene.paint.Color}
+   */
+  this.startValue_ = null;
+
+  /**
+   * @private
+   * @type {?canvasfx.scene.paint.Color}
+   */
+  this.toValue_ = null;
+};
+canvasfx.inherit(canvasfx.animation.StrokeTransition,
+    canvasfx.animation.Transition);
+
+
+/**
+ * @return {?canvasfx.scene.paint.Color}
+ */
+canvasfx.animation.StrokeTransition.prototype.getFromValue = function() {
+  return this.fromValue_;
+};
+
+
+/**
+ * @return {?canvasfx.scene.paint.Color}
+ */
+canvasfx.animation.StrokeTransition.prototype.getToValue = function() {
+  return this.toValue_;
+};
+
+
+/**
+ * @override
+ */
+canvasfx.animation.StrokeTransition.prototype.play = function() {
+  if (!this.node) {
+    return;
+  }
+
+  this.startValue_ = null;
+  this.endValue_ = null;
+
+  this.startValue_ = this.fromValue_;
+  if (!this.startValue_) {
+    this.startValue_ = this.node.getStroke();
+  }
+  this.endValue_ = this.toValue_;
+  if (!this.endValue_) {
+    this.endValue_ = this.startValue_;
+  }
+
+  canvasfx.animation.Animation.prototype.play.call(this);
+};
+
+
+/**
+ * @param {?canvasfx.scene.paint.Color} value
+ */
+canvasfx.animation.StrokeTransition.prototype.setFromValue = function(value) {
+  this.fromValue_ = value;
+};
+
+
+/**
+ * @param {canvasfx.scene.shape.Shape} value
+ */
+canvasfx.animation.StrokeTransition.prototype.setShape = function(value) {
+  this.node = value;
+};
+
+
+/**
+ * @param {?canvasfx.scene.paint.Color} value
+ */
+canvasfx.animation.StrokeTransition.prototype.setToValue = function(value) {
+  this.toValue_ = value;
+};
+
+
+/**
+ * @param {boolean} progress
+ * @override
+ */
+canvasfx.animation.StrokeTransition.prototype.update = function(progress) {
+  if (!this.node) {
+    return;
+  }
+
+  var red = this.startValue_.getRed() -
+      this.startValue_.getRed() * progress +
+      this.endValue_.getRed() * progress;
+  var green = this.startValue_.getGreen() -
+      this.startValue_.getGreen() * progress +
+      this.endValue_.getGreen() * progress;
+  var blue = this.startValue_.getBlue() -
+      this.startValue_.getBlue() * progress +
+      this.endValue_.getBlue() * progress;
+  var opacity = this.startValue_.getOpacity() -
+      this.startValue_.getOpacity() * progress +
+      this.endValue_.getOpacity() * progress;
+
+  this.node.setStroke(
+      new canvasfx.scene.paint.Color(red, green, blue, opacity)
+  );
+};
+
+
+
+/**
+ * @param {canvasfx.util.Duration=} opt_duration
  * @param {canvasfx.scene.Node=} opt_node
  * @constructor
  * @extends {canvasfx.animation.Transition}
@@ -1022,6 +1428,18 @@ canvasfx.animation.TranslateTransition = function(opt_duration, opt_node) {
    * @private
    * @type {number|NaN}
    */
+  this.endX_ = NaN;
+
+  /**
+   * @private
+   * @type {number|NaN}
+   */
+  this.endY_ = NaN;
+
+  /**
+   * @private
+   * @type {number|NaN}
+   */
   this.fromX_ = NaN;
 
   /**
@@ -1029,18 +1447,6 @@ canvasfx.animation.TranslateTransition = function(opt_duration, opt_node) {
    * @type {number|NaN}
    */
   this.fromY_ = NaN;
-
-  /**
-   * @private
-   * @type {number|NaN}
-   */
-  this.toX_ = NaN;
-
-  /**
-   * @private
-   * @type {number|NaN}
-   */
-  this.toY_ = NaN;
 
   /**
    * @private
@@ -1058,13 +1464,13 @@ canvasfx.animation.TranslateTransition = function(opt_duration, opt_node) {
    * @private
    * @type {number|NaN}
    */
-  this.endX_ = NaN;
+  this.toX_ = NaN;
 
   /**
    * @private
    * @type {number|NaN}
    */
-  this.endY_ = NaN;
+  this.toY_ = NaN;
 };
 canvasfx.inherit(canvasfx.animation.TranslateTransition,
     canvasfx.animation.Transition);
@@ -1218,365 +1624,4 @@ canvasfx.animation.TranslateTransition.prototype.update = function(progress) {
 
   this.node.setTranslateX(x);
   this.node.setTranslateY(y);
-};
-
-
-
-/**
- * @param {canvasfx.util.Duration=} opt_duration
- * @param {canvasfx.scene.shape.Shape=} opt_shape
- * @constructor
- * @extends {canvasfx.animation.Transition}
- */
-canvasfx.animation.FillTransition = function(opt_duration, opt_shape) {
-  canvasfx.animation.Transition.call(this);
-
-  this.cycleDuration =
-      canvasfx.supplement(opt_duration, new canvasfx.util.Duration(400));
-
-  /**
-   * @protected
-   * @type {canvasfx.scene.shape.Shape}
-   */
-  this.node = canvasfx.supplement(opt_shape, null);
-
-  /**
-   * @private
-   * @type {?canvasfx.scene.paint.Color}
-   */
-  this.fromValue_ = null;
-
-  /**
-   * @private
-   * @type {?canvasfx.scene.paint.Color}
-   */
-  this.toValue_ = null;
-
-  /**
-   * @private
-   * @type {?canvasfx.scene.paint.Color}
-   */
-  this.startValue_ = null;
-
-  /**
-   * @private
-   * @type {?canvasfx.scene.paint.Color}
-   */
-  this.endValue_ = null;
-};
-canvasfx.inherit(canvasfx.animation.FillTransition,
-    canvasfx.animation.Transition);
-
-
-/**
- * @return {?canvasfx.scene.paint.Color}
- */
-canvasfx.animation.FillTransition.prototype.getFromValue = function() {
-  return this.fromValue_;
-};
-
-
-/**
- * @return {?canvasfx.scene.paint.Color}
- */
-canvasfx.animation.FillTransition.prototype.getToValue = function() {
-  return this.toValue_;
-};
-
-
-/**
- * @override
- */
-canvasfx.animation.FillTransition.prototype.play = function() {
-  if (!this.node) {
-    return;
-  }
-
-  this.startValue_ = null;
-  this.endValue_ = null;
-
-  this.startValue_ = this.fromValue_;
-  if (!this.startValue_) {
-    this.startValue_ = this.node.getFill();
-  }
-  this.endValue_ = this.toValue_;
-  if (!this.endValue_) {
-    this.endValue_ = this.startValue_;
-  }
-
-  canvasfx.animation.Animation.prototype.play.call(this);
-};
-
-
-/**
- * @param {?canvasfx.scene.paint.Color} value
- */
-canvasfx.animation.FillTransition.prototype.setFromValue = function(value) {
-  this.fromValue_ = value;
-};
-
-
-/**
- * @param {canvasfx.scene.shape.Shape} value
- */
-canvasfx.animation.FillTransition.prototype.setShape = function(value) {
-  this.node = value;
-};
-
-
-/**
- * @param {?canvasfx.scene.paint.Color} value
- */
-canvasfx.animation.FillTransition.prototype.setToValue = function(value) {
-  this.toValue_ = value;
-};
-
-
-/**
- * @param {boolean} progress
- * @override
- */
-canvasfx.animation.FillTransition.prototype.update = function(progress) {
-  if (!this.node) {
-    return;
-  }
-
-  var red = this.startValue_.getRed() -
-      this.startValue_.getRed() * progress +
-      this.endValue_.getRed() * progress;
-  var green = this.startValue_.getGreen() -
-      this.startValue_.getGreen() * progress +
-      this.endValue_.getGreen() * progress;
-  var blue = this.startValue_.getBlue() -
-      this.startValue_.getBlue() * progress +
-      this.endValue_.getBlue() * progress;
-  var opacity = this.startValue_.getOpacity() -
-      this.startValue_.getOpacity() * progress +
-      this.endValue_.getOpacity() * progress;
-
-  this.node.setFill(new canvasfx.scene.paint.Color(red, green, blue, opacity));
-};
-
-
-
-/**
- * @param {canvasfx.util.Duration=} opt_duration
- * @param {canvasfx.scene.shape.Shape=} opt_shape
- * @constructor
- * @extends {canvasfx.animation.Transition}
- */
-canvasfx.animation.StrokeTransition = function(opt_duration, opt_shape) {
-  canvasfx.animation.Transition.call(this);
-
-  this.cycleDuration =
-      canvasfx.supplement(opt_duration, new canvasfx.util.Duration(400));
-
-  /**
-   * @protected
-   * @type {canvasfx.scene.shape.Shape}
-   */
-  this.node = canvasfx.supplement(opt_shape, null);
-
-  /**
-   * @private
-   * @type {?canvasfx.scene.paint.Color}
-   */
-  this.fromValue_ = null;
-
-  /**
-   * @private
-   * @type {?canvasfx.scene.paint.Color}
-   */
-  this.toValue_ = null;
-
-  /**
-   * @private
-   * @type {?canvasfx.scene.paint.Color}
-   */
-  this.startValue_ = null;
-
-  /**
-   * @private
-   * @type {?canvasfx.scene.paint.Color}
-   */
-  this.endValue_ = null;
-};
-canvasfx.inherit(canvasfx.animation.StrokeTransition,
-    canvasfx.animation.Transition);
-
-
-/**
- * @return {?canvasfx.scene.paint.Color}
- */
-canvasfx.animation.StrokeTransition.prototype.getFromValue = function() {
-  return this.fromValue_;
-};
-
-
-/**
- * @return {?canvasfx.scene.paint.Color}
- */
-canvasfx.animation.StrokeTransition.prototype.getToValue = function() {
-  return this.toValue_;
-};
-
-
-/**
- * @override
- */
-canvasfx.animation.StrokeTransition.prototype.play = function() {
-  if (!this.node) {
-    return;
-  }
-
-  this.startValue_ = null;
-  this.endValue_ = null;
-
-  this.startValue_ = this.fromValue_;
-  if (!this.startValue_) {
-    this.startValue_ = this.node.getStroke();
-  }
-  this.endValue_ = this.toValue_;
-  if (!this.endValue_) {
-    this.endValue_ = this.startValue_;
-  }
-
-  canvasfx.animation.Animation.prototype.play.call(this);
-};
-
-
-/**
- * @param {?canvasfx.scene.paint.Color} value
- */
-canvasfx.animation.StrokeTransition.prototype.setFromValue = function(value) {
-  this.fromValue_ = value;
-};
-
-
-/**
- * @param {canvasfx.scene.shape.Shape} value
- */
-canvasfx.animation.StrokeTransition.prototype.setShape = function(value) {
-  this.node = value;
-};
-
-
-/**
- * @param {?canvasfx.scene.paint.Color} value
- */
-canvasfx.animation.StrokeTransition.prototype.setToValue = function(value) {
-  this.toValue_ = value;
-};
-
-
-/**
- * @param {boolean} progress
- * @override
- */
-canvasfx.animation.StrokeTransition.prototype.update = function(progress) {
-  if (!this.node) {
-    return;
-  }
-
-  var red = this.startValue_.getRed() -
-      this.startValue_.getRed() * progress +
-      this.endValue_.getRed() * progress;
-  var green = this.startValue_.getGreen() -
-      this.startValue_.getGreen() * progress +
-      this.endValue_.getGreen() * progress;
-  var blue = this.startValue_.getBlue() -
-      this.startValue_.getBlue() * progress +
-      this.endValue_.getBlue() * progress;
-  var opacity = this.startValue_.getOpacity() -
-      this.startValue_.getOpacity() * progress +
-      this.endValue_.getOpacity() * progress;
-
-  this.node.setStroke(
-      new canvasfx.scene.paint.Color(red, green, blue, opacity)
-  );
-};
-
-
-
-/**
- * @constructor
- * @extends {canvasfx.Object}
- */
-canvasfx.animation.AnimationTimer = function() {
-  canvasfx.Object.call(this);
-
-  /**
-   * @private
-   * @type {number}
-   */
-  this.id_ = null;
-};
-canvasfx.inherit(canvasfx.animation.AnimationTimer, canvasfx.Object);
-
-
-/**
- * @param {number} now
- */
-canvasfx.animation.AnimationTimer.prototype.handle = canvasfx.abstractMethod;
-
-
-/**
- */
-canvasfx.animation.AnimationTimer.prototype.start = function() {
-  this.stop();
-
-  var me = this;
-  (function animationLoop() {
-    me.id_ = canvasfx.animation.AnimationTimer.requestAnimationFrame_()(
-        animationLoop
-        );
-    me.handle(Date.now());
-  })();
-};
-
-
-/**
- */
-canvasfx.animation.AnimationTimer.prototype.stop = function() {
-  canvasfx.animation.AnimationTimer.cancelAnimationFrame_()(
-      this.id_
-  );
-  this.id_ = null;
-};
-
-
-/**
- * @const
- * @private
- * @return {Function}
- */
-canvasfx.animation.AnimationTimer.requestAnimationFrame_ = function() {
-  return window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.oRequestAnimationFrame ||
-      window.msRequestAnimationFrame ||
-      /** @param {Function} callback */
-      function(callback) {
-        window.setTimeout(callback, 1000 / 60);
-      };
-};
-
-
-/**
- * @const
- * @private
- * @return {Function}
- */
-canvasfx.animation.AnimationTimer.cancelAnimationFrame_ = function() {
-  return window.cancelAnimationFrame ||
-      window.cancelRequestAnimationFrame ||
-      window.webkitCancelRequestAnimationFrame ||
-      window.mozCancelRequestAnimationFrame ||
-      window.oCancelRequestAnimationFrame ||
-      window.msCancelRequestAnimationFrame ||
-      /** @param {number} id */
-      function(id) {
-        window.clearTimeout(id);
-      };
 };
