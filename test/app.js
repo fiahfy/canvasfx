@@ -62,7 +62,8 @@ test.App.prototype.start = function(primaryStage) {
   //l.setRotate(90);
 
   var circle = new canvasfx.scene.shape.Circle(250, 150, 50);
-  circle.setFill(new canvasfx.scene.paint.Color('#ff0000cc'));
+  //circle.setFill(new canvasfx.scene.paint.Color('#ff0000cc'));
+  circle.setFill(canvasfx.scene.paint.Color.RED);
   circle.setStroke(new canvasfx.scene.paint.Color(0, 1, 0, 1));
   circle.setStrokeWidth(2);
   circle.setStrokeType(canvasfx.scene.shape.StrokeType.CENTERED);

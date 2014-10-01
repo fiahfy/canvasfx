@@ -115,27 +115,6 @@ canvasfx.util.Duration.prototype.toSeconds = function() {
 
 /**
  * @const
- * @type {canvasfx.util.Duration}
- */
-canvasfx.util.Duration.INDEFINITE = new canvasfx.util.Duration(Infinity);
-
-
-/**
- * @const
- * @type {canvasfx.util.Duration}
- */
-canvasfx.util.Duration.ONE = new canvasfx.util.Duration(1);
-
-
-/**
- * @const
- * @type {canvasfx.util.Duration}
- */
-canvasfx.util.Duration.ZERO = new canvasfx.util.Duration(0);
-
-
-/**
- * @const
  * @param {number} h
  * @return {canvasfx.util.Duration}
  */
@@ -172,3 +151,24 @@ canvasfx.util.Duration.minutes = function(m) {
 canvasfx.util.Duration.seconds = function(s) {
   return new canvasfx.util.Duration(s * 1000);
 };
+
+
+/**
+ * @const
+ * @type {canvasfx.util.Duration}
+ */
+canvasfx.util.Duration.INDEFINITE = canvasfx.util.Duration.millis(Infinity);
+
+
+/**
+ * @const
+ * @type {canvasfx.util.Duration}
+ */
+canvasfx.util.Duration.ONE = canvasfx.util.Duration.millis(1);
+
+
+/**
+ * @const
+ * @type {canvasfx.util.Duration}
+ */
+canvasfx.util.Duration.ZERO = canvasfx.util.Duration.millis(0);

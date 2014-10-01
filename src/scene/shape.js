@@ -392,10 +392,10 @@ canvasfx.scene.shape.Rectangle.prototype.contains = function(x, opt_y) {
     opt_y = x.getY();
     x = x.getX();
   }
-  return this.getCurrentX() <= x && x <= this.getCurrentX() &&
-      this.getCurrentY() <= opt_y && opt_y <= this.getCurrentY();
+  //return this.getCurrentX() <= x && x <= this.getCurrentX() &&
+  //    this.getCurrentY() <= opt_y && opt_y <= this.getCurrentY();
 
-  var x, y;
+  var centerX, centerY;
   if (this.getCurrentX() + this.arcWidth_ <= x &&
       x <= this.getCurrentX() + this.width_ - this.arcWidth_ &&
       this.getCurrentY() <= opt_y &&
@@ -410,29 +410,29 @@ canvasfx.scene.shape.Rectangle.prototype.contains = function(x, opt_y) {
       x <= this.getCurrentX() + this.arcWidth_ &&
       this.getCurrentY() <= opt_y &&
       opt_y <= this.getCurrentY() + this.arcHeight_) {
-    x = this.getCurrentX() + this.arcWidth_;
-    y = this.getCurrentY() + this.arcHeight_;
+    centerX = this.getCurrentX() + this.arcWidth_;
+    centerY = this.getCurrentY() + this.arcHeight_;
     //
   } else if (this.getCurrentX() + this.width_ - this.arcWidth_ <= x &&
       x <= this.getCurrentX() + this.width_ &&
       this.getCurrentY() <= opt_y &&
       opt_y <= this.getCurrentY() + this.arcHeight_) {
-    x = this.getCurrentX() + this.width_ - this.arcWidth_;
-    y = this.getCurrentY() + this.arcHeight_;
+    centerX = this.getCurrentX() + this.width_ - this.arcWidth_;
+    centerY = this.getCurrentY() + this.arcHeight_;
     //
   } else if (this.getCurrentX() + this.width_ - this.arcWidth_ <= x &&
       x <= this.getCurrentX() + this.width_ &&
       this.getCurrentY() + this.height_ - this.arcHeight_ <= opt_y &&
       opt_y <= this.getCurrentY() + this.height_) {
-    x = this.getCurrentX() + this.width_ - this.arcWidth_;
-    y = this.getCurrentY() + this.height_ - this.arcHeight_;
+    centerX = this.getCurrentX() + this.width_ - this.arcWidth_;
+    centerY = this.getCurrentY() + this.height_ - this.arcHeight_;
     //
   } else if (this.getCurrentX() <= x &&
       x <= this.getCurrentX() + this.arcWidth_ &&
       this.getCurrentY() + this.height_ - this.arcHeight_ <= opt_y &&
       opt_y <= this.getCurrentY() + this.height_) {
-    x = this.getCurrentX() + this.arcWidth_;
-    y = this.getCurrentY() + this.height_ - this.arcHeight_;
+    centerX = this.getCurrentX() + this.arcWidth_;
+    centerY = this.getCurrentY() + this.height_ - this.arcHeight_;
     //
   }
   return false;

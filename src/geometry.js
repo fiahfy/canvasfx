@@ -11,6 +11,134 @@ canvasfx.geometry = {};
 
 
 /**
+ * @param {number} minX
+ * @param {number} minY
+ * @param {number} width
+ * @param {number} height
+ * @constructor
+ * @extends {canvasfx.Object}
+ */
+canvasfx.geometry.Bounds = function(minX, minY, width, height) {
+  canvasfx.Object.call(this);
+
+  /**
+   * @private
+   * @type {number}
+   */
+  this.minX_ = minX;
+
+  /**
+   * @private
+   * @type {number}
+   */
+  this.minY_ = minY;
+
+  /**
+   * @private
+   * @type {number}
+   */
+  this.height_ = height;
+
+  /**
+   * @private
+   * @type {number}
+   */
+  this.width_ = width;
+};
+canvasfx.inherit(canvasfx.geometry.Bounds, canvasfx.Object);
+
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Bounds.prototype.getHeight = function() {
+  return this.height_;
+};
+
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Bounds.prototype.getMaxX = function() {
+  return this.minX_ + this.width_;
+};
+
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Bounds.prototype.getMaxY = function() {
+  return this.minY_ + this.height_;
+};
+
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Bounds.prototype.getMinX = function() {
+  return this.minX_;
+};
+
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Bounds.prototype.getMinY = function() {
+  return this.minY_;
+};
+
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Bounds.prototype.getWidth = function() {
+  return this.width_;
+};
+
+
+
+/**
+ * @param {number=} opt_width
+ * @param {number=} opt_height
+ * @constructor
+ * @extends {canvasfx.Object}
+ */
+canvasfx.geometry.Dimension = function(opt_width, opt_height) {
+  canvasfx.Object.call(this);
+
+  /**
+   * @private
+   * @type {number}
+   */
+  this.height_ = canvasfx.supplement(opt_height, 0.0);
+
+  /**
+   * @private
+   * @type {number}
+   */
+  this.width_ = canvasfx.supplement(opt_width, 0.0);
+};
+canvasfx.inherit(canvasfx.geometry.Dimension, canvasfx.Object);
+
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Dimension.prototype.getHeight = function() {
+  return this.height_;
+};
+
+
+/**
+ * @return {number}
+ */
+canvasfx.geometry.Dimension.prototype.getWidth = function() {
+  return this.width_;
+};
+
+
+
+/**
  * @param {number=} opt_x
  * @param {number=} opt_y
  * @constructor
@@ -75,132 +203,4 @@ canvasfx.geometry.Point.prototype.getX = function() {
  */
 canvasfx.geometry.Point.prototype.getY = function() {
   return this.y_;
-};
-
-
-
-/**
- * @param {number=} opt_width
- * @param {number=} opt_height
- * @constructor
- * @extends {canvasfx.Object}
- */
-canvasfx.geometry.Dimension = function(opt_width, opt_height) {
-  canvasfx.Object.call(this);
-
-  /**
-   * @private
-   * @type {number}
-   */
-  this.width_ = canvasfx.supplement(opt_width, 0.0);
-
-  /**
-   * @private
-   * @type {number}
-   */
-  this.height_ = canvasfx.supplement(opt_height, 0.0);
-};
-canvasfx.inherit(canvasfx.geometry.Dimension, canvasfx.Object);
-
-
-/**
- * @return {number}
- */
-canvasfx.geometry.Dimension.prototype.getHeight = function() {
-  return this.height_;
-};
-
-
-/**
- * @return {number}
- */
-canvasfx.geometry.Dimension.prototype.getWidth = function() {
-  return this.width_;
-};
-
-
-
-/**
- * @param {number} minX
- * @param {number} minY
- * @param {number} width
- * @param {number} height
- * @constructor
- * @extends {canvasfx.Object}
- */
-canvasfx.geometry.Bounds = function(minX, minY, width, height) {
-  canvasfx.Object.call(this);
-
-  /**
-   * @private
-   * @type {number}
-   */
-  this.minX_ = minX;
-
-  /**
-   * @private
-   * @type {number}
-   */
-  this.minY_ = minY;
-
-  /**
-   * @private
-   * @type {number}
-   */
-  this.width_ = width;
-
-  /**
-   * @private
-   * @type {number}
-   */
-  this.height_ = height;
-};
-canvasfx.inherit(canvasfx.geometry.Bounds, canvasfx.Object);
-
-
-/**
- * @return {number}
- */
-canvasfx.geometry.Bounds.prototype.getHeight = function() {
-  return this.height_;
-};
-
-
-/**
- * @return {number}
- */
-canvasfx.geometry.Bounds.prototype.getMaxX = function() {
-  return this.minX_ + this.width_;
-};
-
-
-/**
- * @return {number}
- */
-canvasfx.geometry.Bounds.prototype.getMaxY = function() {
-  return this.minY_ + this.height_;
-};
-
-
-/**
- * @return {number}
- */
-canvasfx.geometry.Bounds.prototype.getMinX = function() {
-  return this.minX_;
-};
-
-
-/**
- * @return {number}
- */
-canvasfx.geometry.Bounds.prototype.getMinY = function() {
-  return this.minY_;
-};
-
-
-/**
- * @return {number}
- */
-canvasfx.geometry.Bounds.prototype.getWidth = function() {
-  return this.width_;
 };

@@ -59,7 +59,7 @@ canvasfx.scene.paint.Color = function(
    * @private
    * @type {number}
    */
-  this.red_ = (red <= 1) ? red : red / 255;
+  this.blue_ = (blue <= 1) ? blue : blue / 255;
 
   /**
    * @private
@@ -71,13 +71,13 @@ canvasfx.scene.paint.Color = function(
    * @private
    * @type {number}
    */
-  this.blue_ = (blue <= 1) ? blue : blue / 255;
+  this.opacity_ = (opacity <= 1) ? opacity : opacity / 255;
 
   /**
    * @private
    * @type {number}
    */
-  this.opacity_ = (opacity <= 1) ? opacity : opacity / 255;
+  this.red_ = (red <= 1) ? red : red / 255;
 };
 canvasfx.inherit(canvasfx.scene.paint.Color, canvasfx.Object);
 
@@ -165,14 +165,7 @@ canvasfx.scene.paint.Color.web = function(colorString) {
  * @const
  * @type {canvasfx.scene.paint.Color}
  */
-canvasfx.scene.paint.Color.RED = canvasfx.scene.paint.Color.web('#ff0000');
-
-
-/**
- * @const
- * @type {canvasfx.scene.paint.Color}
- */
-canvasfx.scene.paint.Color.GREEN = canvasfx.scene.paint.Color.web('#00ff00');
+canvasfx.scene.paint.Color.BLACK = canvasfx.scene.paint.Color.web('#000000');
 
 
 /**
@@ -186,14 +179,21 @@ canvasfx.scene.paint.Color.BLUE = canvasfx.scene.paint.Color.web('#0000ff');
  * @const
  * @type {canvasfx.scene.paint.Color}
  */
-canvasfx.scene.paint.Color.BLACK = canvasfx.scene.paint.Color.web('#000000');
+canvasfx.scene.paint.Color.GRAY = canvasfx.scene.paint.Color.web('#808080');
 
 
 /**
  * @const
  * @type {canvasfx.scene.paint.Color}
  */
-canvasfx.scene.paint.Color.GRAY = canvasfx.scene.paint.Color.web('#808080');
+canvasfx.scene.paint.Color.GREEN = canvasfx.scene.paint.Color.web('#00ff00');
+
+
+/**
+ * @const
+ * @type {canvasfx.scene.paint.Color}
+ */
+canvasfx.scene.paint.Color.RED = canvasfx.scene.paint.Color.web('#ff0000');
 
 
 /**

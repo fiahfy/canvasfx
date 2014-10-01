@@ -22,18 +22,6 @@ canvasfx.scene.Scene = function(root, opt_width, opt_height) {
 
   /**
    * @private
-   * @type {canvasfx.scene.Node}
-   */
-  this.root_ = root;
-
-  /**
-   * @private
-   * @type {number}
-   */
-  this.width_ = opt_width;
-
-  /**
-   * @private
    * @type {number}
    */
   this.height_ = opt_height;
@@ -49,6 +37,18 @@ canvasfx.scene.Scene = function(root, opt_width, opt_height) {
    * @type {canvasfx.event.EventHandler}
    */
   this.onMouseDragged_ = null;
+
+  /**
+   * @private
+   * @type {canvasfx.scene.Node}
+   */
+  this.root_ = root;
+
+  /**
+   * @private
+   * @type {number}
+   */
+  this.width_ = opt_width;
 };
 canvasfx.inherit(canvasfx.scene.Scene, canvasfx.Object);
 
@@ -116,6 +116,14 @@ canvasfx.scene.Scene.prototype.handleEvent = function(event) {
 
 
 /**
+ * @param {number} value
+ */
+canvasfx.scene.Scene.prototype.setHeight = function(value) {
+  this.height_ = value;
+};
+
+
+/**
  * @param {canvasfx.event.EventHandler} value
  */
 canvasfx.scene.Scene.prototype.setOnMouseClicked = function(value) {
@@ -136,14 +144,6 @@ canvasfx.scene.Scene.prototype.setOnMouseDragged = function(value) {
  */
 canvasfx.scene.Scene.prototype.setWidth = function(value) {
   this.width_ = value;
-};
-
-
-/**
- * @param {number} value
- */
-canvasfx.scene.Scene.prototype.setHeight = function(value) {
-  this.height_ = value;
 };
 
 
@@ -564,54 +564,6 @@ canvasfx.scene.Group.prototype.getLayoutBounds = function() {
 };
 
 
-/**
- * @param {number} value
- * @override
- */
-/*
-canvasfx.scene.Group.prototype.setLayoutX = function(value) {
-    this.layoutX = value;
-    this.children_.forEach(function(element) {
-        element.setLayoutX(value);
-    });
-};
- */
-/**
- * @param {number} value
- * @override
- */
-/*
-canvasfx.scene.Group.prototype.setLayoutY = function(value) {
-    this.layoutY = value;
-    this.children_.forEach(function(element) {
-        element.setLayoutY(value);
-    });
-};
- */
-/**
- * @param {number} value
- * @override
- */
-/*
-canvasfx.scene.Group.prototype.setTranslateX = function(value) {
-    this.translateX = value;
-    this.children_.forEach(function(element) {
-        element.setTranslateX(value);
-    });
-};
- */
-/**
- * @param {number} value
- * @override
- */
-/*
-canvasfx.scene.Group.prototype.setTranslateY = function(value) {
-    this.translateY = value;
-    this.children_.forEach(function(element) {
-        element.setTranslateY(value);
-    });
-};
-*/
 /**
  * @param {canvasfx.scene.input.MouseEvent} event
  * @override
